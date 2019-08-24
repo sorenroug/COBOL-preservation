@@ -1,0 +1,23 @@
+FORMS2 V1.3                     HELP SCREEN                          SCREEN H02
+
+MANIPULATION COMMAND SUMMARY:
+                             F  = Invoke FOREGROUND/BACKGROUND manipulation
+                             Fx = Invoke FOREGROUND/BACKGROUND option "x"
+                             O  = Turn on  automatic WORK screen preparation
+                             O1 = Turn off automatic WORK screen preparation
+                             Cn = Insert n spaces at cursor position
+                             Dn = Delete n chars at cursor position
+                             In = Insert n blank lines before cursor line
+                             Kn = Delete n lines including cursor line
+                             An = Overwrite n lines with data of cursor line
+                             Un = Move cursor up n lines
+                             Vn = Move cursor down n lines
+
+    HELP option     [_]     (_  = Re-enter EDIT mode)
+                            (?  = Display next HELP screen)
+                            (!  = Abandon FORMS2 run immediately)
+
+Press RETURN when complete
+
+
+

@@ -1,0 +1,23 @@
+FORMS2 V1.3                     HELP SCREEN                          SCREEN H01
+
+GENERAL COMMAND SUMMARY:
+                         SPACE  = Process the work screen
+                             _  = Re-enter EDIT mode
+                             ?  = Display the next HELP screen
+                             ?n = Display the nth HELP screen
+                             Q  = Re-enter WORK PHASE screen selection
+                             !  = Terminate FORMS run immediately
+                             X  = Position commands at EDIT mode cursor
+                             *  = Indicate Index Form's data area start
+
+    NOTE:    SPACE is the command to process the EDIT mode screen
+
+
+    HELP option     [_]     (_  = Re-enter EDIT mode)
+                            (?  = Display next HELP screen)
+                            (!  = Abandon FORMS2 run immediately)
+
+Press RETURN when complete
+
+
+

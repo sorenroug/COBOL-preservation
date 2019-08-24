@@ -1,0 +1,15 @@
+       CHECK-END.
+           MOVE "N" TO W-REPLY.
+           DISPLAY SPACE UPON CRT.
+           DISPLAY "CHECK-OUT completed" AT 0101.
+           DISPLAY "Repeat? [N] (Y=Yes)" AT 0201.
+           ACCEPT W-REPLY AT 0210.
+           IF W-REPLY = "Y" GO TO FORM-CHECK.
+           IF W-REPLY = "y" GO TO FORM-CHECK.
+           DISPLAY SPACE UPON CRT.
+           DISPLAY "END OF FORMS2 CHECK-OUT" UPON CONSOLE.
+       EXIT-PROGRAM.
+           EXIT PROGRAM.
+       STOP-RUN.
+           STOP RUN.
+

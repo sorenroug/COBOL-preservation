@@ -1,0 +1,15 @@
+Forms2gn.com had the following modifactions made:
+
+Take that FORMS2.COM from the Z80 coprocessor and do...
+
+1856: CD 80 2B -> 00 00 00
+2A55: CD F4 FF -> 00 00 00
+2A65: CD F4 FF -> 00 00 00
+2AC4: 00 -> 20
+
+I have not bothered to search exactly what these calls do,
+the code itself just tells anyone which value it expects at 2AC4.
+
+Probably just a few Z80 coprocessor specific calls
+"Read/Write I/O memory" and "Cursor Controls".
+

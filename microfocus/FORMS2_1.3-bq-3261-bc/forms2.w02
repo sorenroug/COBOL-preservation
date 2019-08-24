@@ -1,0 +1,23 @@
+FORMS2 V1.3                      WORK PHASE                          SCREEN W02
+
+FOREGROUND/BACKGROUND OPERATIONS:
+
+                 OPTION       [ ]     (A = Re-enter EDIT MODE)
+                                      (B = Clear FOREGROUND)
+                                      (C = Clear BACKGROUND)
+                                      (D = Merge BACKGROUND into FOREGROUND)
+                                      (E = Merge FOREGROUND into BACKGROUND)
+                                      (F = Merge screen image into FOREGROUND)
+                                      (G = Merge screen image into BACKGROUND)
+                                      (H = Display FOREGROUND)
+                                      (I = Display BACKGROUND)
+                                      (J = Display screen image)
+                            NOTE:
+                                      (H & I & J display until RETURN pressed)
+
+                 FILE-NAME [                                                  ]
+                                      (F & G & J only)
+Press RETURN when complete
+
+
+

@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+ARCHIVE=CIS-COBOL_4.4-bg-0026-bf.zip
+MEMBERS="call.asm call.hex call.prn cobol.com cobol.i01 cobol.i02 cobol.i03 cobol.i04 filemark.com pi.cbl runa.com stock1.cbl stock2.cbl"
+
+rm -f "$ARCHIVE"
+zip --archive-comment "$ARCHIVE" $MEMBERS <README

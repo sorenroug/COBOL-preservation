@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+ARCHIVE=ANIMATOR_1.0-bq-3261-bc.zip
+MEMBERS='$anim.v45'
+
+rm -f "$ARCHIVE"
+zip --archive-comment "$ARCHIVE" "$MEMBERS" <README

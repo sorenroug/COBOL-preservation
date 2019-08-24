@@ -1,0 +1,23 @@
+FORMS2 V1.3                  INITIALISATION PHASE                    SCREEN I02
+
+
+FILES TO BE CREATED:
+
+             FILE COMBINATIONS         [C]        (A = DDS)
+                                                  (B = DDS & CHK)
+                                                  (C = DDS & CHK & Snn)
+                                                  (D = DDS & Snn)
+                                                  (E = Snn)
+                                                  (F = No files output)
+                                                  (G = DDS & Snn & GEN)
+
+
+DEVICE/DIRECTORY PREFIX (0-40 Chars) [                                        ]
+
+
+
+
+Press RETURN when complete
+
+
+

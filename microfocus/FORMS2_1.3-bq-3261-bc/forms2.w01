@@ -1,0 +1,23 @@
+FORMS2 V1.3                      WORK PHASE                          SCREEN W01
+
+
+WORK SCREEN SELECTION:
+
+            SCREEN TYPE       [ ]     (A = Fixed text on clear screen)
+                                      (B = Fixed text on last screen)
+                                      (C = Variable data redefines last screen)
+                                      (D = Variable data without redefinition)
+                                      (! = Complete this FORMS run)
+
+            Fixed Text allows:        All characters
+
+            Variable Data allows:     X or Y to define alphanumeric fields
+                                      9 or 8 to define numeric fields
+                                      edit chars to define numeric edit fields
+
+
+
+Press RETURN when complete
+
+
+

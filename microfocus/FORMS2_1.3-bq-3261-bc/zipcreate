@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+ARCHIVE=FORMS2_1.3-bq-3261-bc.zip
+MEMBERS="forms2.com forms2ad.com forms2gn.com forms2.ch1 forms2.ch2 forms2.gn1 forms2.gn2 forms2.h01 forms2.h02 forms2.h03 forms2.h04 forms2.i01 forms2.i02 forms2.i51 forms2.i52 forms2.i53 forms2.w01 forms2.w02"
+
+rm -f "$ARCHIVE"
+zip --archive-comment "$ARCHIVE" $MEMBERS <README

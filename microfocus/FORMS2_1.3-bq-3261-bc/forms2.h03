@@ -1,0 +1,23 @@
+FORMS2 V1.3                     HELP SCREEN                          SCREEN H03
+
+PROGRAMMING COMMAND SUMMARY:
+                             G  = Give datanames screen coordinates suffix
+                             G1 = Give datanames sequential number suffix
+                             Jn = Allow up to n consec. spaces in fixed text
+                             Mx = Interpret "x" as "space"
+                             S  = Cancel previous Sn command
+                             S1 = Inhibit DDS & CHK output at next processing
+                             S2 = Inhibit Snn output at next processing
+                             S3 = Prompt for Snn file-name at next processing
+                             S9 = Line edit DDS output at next processing
+                             P  = Display cursor position coordinates
+
+
+    HELP option     [_]     (_  = Re-enter EDIT mode)
+                            (?  = Display next HELP screen)
+                            (!  = Abandon FORMS2 run immediately)
+
+Press RETURN when complete
+
+
+

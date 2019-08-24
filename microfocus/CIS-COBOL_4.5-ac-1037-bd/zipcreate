@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+ARCHIVE=CIS-COBOL_4.5-ac-1037-bd.zip
+MEMBERS="cobol.com cobol.i01 cobol.i02 cobol.i03 cobol.i04"
+
+rm -f "$ARCHIVE"
+zip --archive-comment "$ARCHIVE" $MEMBERS <README

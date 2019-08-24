@@ -1,0 +1,23 @@
+FORMS2 V1.3                     HELP SCREEN                          SCREEN H04
+
+WINDOW COMMAND SUMMARY:
+                             W  = Position cursor to current window start
+                             W1 = Start window at cursor line
+                             W2 = End window at cursor line
+                             W3 = Start window at cursor line, no delim's
+                             W4 = End window at cursor line, no delim's
+                             W5 = Display start window delimiters
+                             W6 = Display end window delimiters
+                             W7 = Re-display data overwritten by start delim's
+                             W8 = Re-display data overwritten by end delim's
+                             W9 = Position cursor to current window end
+
+
+    HELP option     [_]     (_  = Re-enter EDIT mode)
+                            (?  = Display next HELP screen)
+                            (!  = Abandon FORMS2 run immediately)
+
+Press RETURN when complete
+
+
+
