@@ -25,9 +25,9 @@
       * If G = -1 then computer has just made move
        77  G   PIC S9.
        77  H   PIC S9.
-       77  COMP-MARK                   PIC S9 VALUE -1.
-       77  UNOCCUPIED                  PIC S9 VALUE 0.
-       77  OPPO-MARK                   PIC S9 VALUE 1.
+       01  COMP-MARK                   CONSTANT AS -1.
+       01  UNOCCUPIED                  CONSTANT AS 0.
+       01  OPPO-MARK                   CONSTANT AS 1.
       * C = Player choice of O or X
        77  C   PIC X.
        77  P   PIC X.
@@ -170,7 +170,7 @@
            MOVE COMP-MARK TO S(9).
 
        DISP-COMP-MOVE.
-           DISPLAY " ".
+           DISPLAY SPACE.
            DISPLAY "THE COMPUTER MOVES TO...".
            PERFORM PRINT-BOARD THRU PRINT-BOARD-EXIT.
            GO TO ASK-PLAYER.
@@ -189,7 +189,7 @@
            MOVE "X" TO P.
            MOVE "O" TO Q.
        ASK-PLAYER.
-           DISPLAY " ".
+           DISPLAY SPACE.
            DISPLAY "WHERE DO YOU MOVE? (0 = END)" WITH NO ADVANCING.
            ACCEPT M.
            IF M = 0 THEN
@@ -198,8 +198,8 @@
            IF S(M) = UNOCCUPIED GO TO MARK-CHOICE.
        ILLEGAL-MOVE.
            DISPLAY "THAT SQUARE IS OCCUPIED.".
-           DISPLAY " ".
-           DISPLAY " ".
+           DISPLAY SPACE.
+           DISPLAY SPACE.
            GO TO ASK-PLAYER.
       * Set player's marker in cell
        MARK-CHOICE.
@@ -209,7 +209,7 @@
            GO TO NEXT-ROUND.
 
        PRINT-BOARD.
-           DISPLAY " ".
+           DISPLAY SPACE.
            PERFORM PRINT-ROW VARYING J FROM 1 BY 1 UNTIL J > 3.
            GO TO BOARD-STATUS.
 
@@ -228,8 +228,8 @@
 
       * Check board status
        BOARD-STATUS.
-           DISPLAY " ".
-           DISPLAY " ".
+           DISPLAY SPACE.
+           DISPLAY SPACE.
            MOVE 1 TO I.
       * Check horizontally
        NEXT-ROW.
