@@ -1,0 +1,28 @@
+
+Cobol compiler for MS-DOS ca. 1988.
+Originally Micro Focus, but licensed to Microsoft.
+
+Micro Focus COBOL/2 Version 1.0.30 L2.0 revision 041
+
+Downloaded from http://www.thaiall.com/downloadx/cobol3.zip
+See also http://www.thaiall.com/programming/cpsc317_cobol.ppt
+
+
+ADIS is the video run-time system.  You run a program called ADISCF (ADIS
+ConFiguration), which modifies a file called ADISCTRL, that contains the
+specifications for your video hardware interface.  When you run a program
+with a Screen Section, ADIS is loaded and used to interface with the video.
+
+ADIS.EXE is the screen accept display module.  If you link it
+into existence, the Cobol code will execute it as soon as the
+code execute screen i/o.  If it does not find it, you will get a
+run time error. To create ADIS.exe, link ADIS.OBJ, ADITINIT.OBJ
+and ADISKEY.OBJ.  Alternatively, you can link the above with
+the .OBJ created by the compiler, and then you do not need
+ADIS.EXE.  Note that the isam module behaves the same.  I link as
+follows, where the compiled program was RIR.CBL and the compiler
+produced RIR..OBJ. LINK @RIR.LNK RIR.LNK contains the following:
+\LIBRARY\RIR\RIRO\RIR+\COBOL\ADIS+\COBOL\ADISINIT+\COBOL\ADISKEY+\COBOL\IXSI
+\LIBRARY\RIR\RIRO\RIR.LIB
+
+The IXSIO is the indexed sequential I/O module.
