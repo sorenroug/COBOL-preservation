@@ -16,8 +16,6 @@
        01  O-MAN  CONSTANT AS 1.
        01  O-KING CONSTANT AS 2.
       * Dimensions of S and R are base 0 in BASIC
-       01  VECTOR.
-           10  R OCCURS 5              PIC S99.
        01  BOARD.
            10  ROW OCCURS 8.
                20 S OCCURS 8           PIC S9.
@@ -39,6 +37,11 @@
        77  M                           PIC 9.
        77  Q                           PIC S99.
        77  P                           PIC XXX.
+       77  R0                          PIC S99.
+       77  R1                          PIC S99.
+       77  R2                          PIC S99.
+       77  R3                          PIC S99.
+       77  R4                          PIC S99.
        77  T                           PIC 9.
        77  U                           PIC S99.
        77  V                           PIC S99.
@@ -49,18 +52,18 @@
        SCREEN SECTION.
        01  MOVE-MASK LINE 2 COL 1.
            05  VALUE "COMPUTER MOVES FROM ".
-           05  FROM-X                  PIC 9 FROM R(2).
+           05  FROM-X                  PIC 9 FROM R1.
            05  VALUE ",".
-           05  FROM-Y                  PIC 9 FROM R(3).
+           05  FROM-Y                  PIC 9 FROM R2.
            05  VALUE " TO ".
-           05  TO-X                    PIC 9 FROM R(4).
+           05  TO-X                    PIC 9 FROM R3.
            05  VALUE ",".
-           05  TO-Y                    PIC 9 FROM R(5).
+           05  TO-Y                    PIC 9 FROM R4.
        01  EXTRA-TO-MASK.
            05  VALUE "TO ".
-           05  TO-X                    PIC 9 FROM R(4).
+           05  TO-X                    PIC 9 FROM R3.
            05  VALUE ",".
-           05  TO-Y                    PIC 9 FROM R(5).
+           05  TO-Y                    PIC 9 FROM R4.
        01 FROM-ENTRY LINE 23 COL 1.
            05 VALUE "ENTER FROM: ".
            05 X-INPUT                  PIC 9 TO E AUTO-SKIP.
@@ -112,7 +115,7 @@
 000065     DISPLAY " " BLANK SCREEN
 000080*    DIM R(5),S(7,7)
            MOVE -1 TO G.
-           MOVE -99 TO R(1).
+           MOVE -99 TO R0.
 000090*    DATA 1,0,1,0,0,0,-1,0,0,1,0,0,0,-1,0,-1,15
            MOVE 1 TO I.
 000120     PERFORM VARYING X FROM 1 BY 1 UNTIL X > 8
@@ -146,8 +149,8 @@
            GO TO LINE1140.
 
 000650 LINE0650.
-           ADD X TO A GIVING U
-           ADD Y TO B GIVING V
+           ADD X, A GIVING U
+           ADD Y, B GIVING V
            IF U < 1 OR U > 8 OR V < 1 OR V > 8 THEN EXIT PARAGRAPH.
 000740     IF S(U,V) = EMPTY THEN
                PERFORM LINE0910
@@ -179,31 +182,31 @@
                    THEN SUBTRACT 2 FROM Q
                END-IF
 001080     END-PERFORM
-           IF Q > R(1) THEN
-               MOVE Q TO R(1)
-               MOVE X TO R(2)
-               MOVE Y TO R(3)
-               MOVE U TO R(4)
-               MOVE V TO R(5)
+           IF Q > R0 THEN
+               MOVE Q TO R0
+               MOVE X TO R1
+               MOVE Y TO R2
+               MOVE U TO R3
+               MOVE V TO R4
            END-IF
 001100     MOVE 0 TO Q.
       * Display computer move
 001140 LINE1140.
-           IF R(1) = -99 THEN GO TO LINE1880.
+           IF R0 = -99 THEN GO TO LINE1880.
            DISPLAY SPACE AT 0201 BLANK LINE
 001230     DISPLAY MOVE-MASK
-           MOVE -99 TO R(1)
+           MOVE -99 TO R0
            MOVE 32 TO I.
 001240 LINE1240.
-           IF R(5) = 1 THEN
-               MOVE X-KING TO S(R(4),R(5))
+           IF R4 = 1 THEN
+               MOVE X-KING TO S(R3,R4)
            ELSE
-001250         MOVE S(R(2),R(3)) TO S(R(4),R(5)).
-001310     MOVE EMPTY TO S(R(2),R(3))
-           IF ABS(R(2) - R(4)) <> 2 THEN GO TO LINE1420.
-001330     MOVE EMPTY TO S((R(2)+R(4))/2, (R(3)+R(5))/2).
-001340     MOVE R(4) TO X.
-           MOVE R(5) TO Y.
+001250         MOVE S(R1,R2) TO S(R3,R4).
+001310     MOVE EMPTY TO S(R1,R2)
+           IF ABS(R1 - R3) <> 2 THEN GO TO LINE1420.
+001330     MOVE EMPTY TO S((R1+R3)/2, (R2+R4)/2).
+001340     MOVE R3 TO X.
+           MOVE R4 TO Y.
            IF S(X,Y) = X-MAN THEN
                MOVE -2 TO B
                PERFORM LINE1370
@@ -216,16 +219,16 @@
 001360             END-PERFORM
                END-IF
            END-IF
-           IF R(1) <> -99 THEN
+           IF R0 <> -99 THEN
                DISPLAY EXTRA-TO-MASK AT LINE 02 COLUMN I
                ADD 7 TO I
-               MOVE -99 TO R(1)
+               MOVE -99 TO R0
                GO TO LINE1240.
 001365     GO TO LINE1420.
       * See if there is a piece to jump over.
 001370 LINE1370.
-           ADD X TO A GIVING U
-           ADD Y TO B GIVING V
+           ADD X, A GIVING U
+           ADD Y, B GIVING V
            IF U<1 OR U>8 OR V<1 OR V>8 THEN EXIT PARAGRAPH.
 001380     IF S(U,V) = EMPTY AND S(X + A / 2, Y + B / 2) > 0 THEN
                PERFORM LINE0910.
