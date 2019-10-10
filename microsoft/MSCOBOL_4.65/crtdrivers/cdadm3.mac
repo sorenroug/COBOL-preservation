@@ -1,0 +1,172 @@
+	TITLE	CDADM3 - CRT DRIVER FOR LEAR-SIEGLER ADM-3A
+;**********************************************************************
+;***                                                                ***
+;***	COPYRIGHT (C) 1980, MICROSOFT                               ***
+;***                                                                ***
+;**********************************************************************
+
+	ENTRY	$CRLEN,$CRWID,$SETCR,$CURON,$CUROF
+	ENTRY	$CURBK,$ERASE,$ALARM
+	ENTRY	$EOL,$HILIT,$LOLIT
+	ENTRY	$CLIST,$TLIST,$FLIST
+	ENTRY	$INCRT,$OUCRT
+
+	EXT	$OUTCH,$INKEY
+	EXT	$CMPL,$CMPR,$MULDE,$ROWCL
+
+
+;****************************************************
+; KEYBOARD CODE DEFINITIONS
+;****************************************************
+;
+
+$CLIST:				;EDITING KEY DEFINITIONS
+	DB	X'15'		;LINE DELETE (CTL-U)
+	DB	X'7F'		;CHAR DELETE (DEL)
+	DB	X'0C'		;FORWARD SPACE (CTL-L)
+	DB	X'08'		;BACK SPACE (CTL-H)
+	DB	X'2B'		;PLUS SIGN
+	DB	X'2D'		;MINUS SIGN
+	DB	0		;END OF LIST
+
+$TLIST:				;TERMINATOR KEY DEFINITIONS
+	DB	X'02'		;BACKTAB (CTL-B)
+	DB	X'1B'		;ESCAPE KEY (ESC)
+	DB	X'09'		;FORWARD TAB (CTL-I)
+	DB	X'0D'		;CARRIAGE RETURN
+	DB	X'0A'		;LINE FEED
+	DB	0		;END OF LIST
+
+$FLIST:				;FUNCTION KEY DEFINITIONS
+	DB	X'01'		;CTL-A
+	DB	X'03'		;CTL-C
+	DB	X'18'		;CTL-X
+	DB	0		;END OF LIST
+
+
+;****************************************************
+; TERMINAL SCREEN DIMENSIONS
+;****************************************************
+;
+$CRLEN:	DB	24D	;24 LINES
+$CRWID:	DB	80D	;80 COLUMNS
+
+;****************************************************
+; TERMINAL OUTPUT CODES
+;****************************************************
+;
+ESCAPE	EQU	X'1B'
+BSPACE	EQU	X'08'
+BELL	EQU	X'07'
+CLEAR	EQU	X'1A'
+
+;****************************************************
+;	O U T P U T   F U N C T I O N S
+;****************************************************
+; SET CURSOR POSITION
+;	[H] = ROW NUMBER
+;	[L] = COLUMN NUMBER
+;****************************************************
+;
+$SETCR:
+	MVI	A,ESCAPE
+	CALL	$OUTCH	;SEND ESC
+	MVI	A,"="
+	CALL	$OUTCH	;SEND =
+	MOV	A,H
+	ADI	X'1F'	;ADJUST ROW NUMBER
+	CALL	$OUTCH	;SEND ROW
+	MOV	A,L
+	ADI	X'1F'	;ADJUST COLUMN NUMBER
+	JMP	$OUTCH	;SEND COLUMN
+
+;****************************************************
+; CURSOR ON/OFF - NOT AVAILABLE ON ADM-3A
+; HIGHLIGHT VIDEO - NOT AVAILABLE ON ADM-3A
+;****************************************************
+;
+$CURON:
+$CUROF:
+$HILIT:
+$LOLIT:
+	RET		;NOT AVAILABLE ON ADM-3A
+
+;****************************************************
+; BACKSPACE CURSOR
+;****************************************************
+;
+$CURBK:	MVI	A,BSPACE
+	JMP	$OUTCH
+
+;****************************************************
+; ERASE TO END OF SCREEN
+;	[HL] = SEQUENTIAL CURSOR POSITION
+;****************************************************
+;
+$ERASE:	LXI	D,1	;SEQUENTIAL POSITION 1 (HOME)
+	CALL	$CMPR	;	VS CURRENT POSITION
+	JZ	CLSCR	;IF HOME POSITION, USE CLEAR SCREEN CODE
+	PUSH	H	;CURRENT CURSOR POSITION
+	CALL	$CMPL	;NEGATE IT
+	PUSH	H	;	AND SAVE ON STACK
+	LDA	$CRLEN	;SCREEN LENGTH
+	MOV	D,A	;	TO D
+	LDA	$CRWID	;SCREEN WIDTH
+	MOV	E,A	;	TO E
+	CALL	$MULDE	;PRODUCT IS SEQ POS OF END OF SCREEN
+	POP	D	;- CURRENT POS
+	DAD	D	;DIFFERENCE
+	INX	H	;	PLUS ONE IS NUMBER OF SPACES TO SEND
+ERASLP:	MVI	A,' '	;ASCII SPACE
+	CALL	$OUTCH	;SEND THE SPACE
+	DCX	H	;DECR COUNTER
+	MOV	A,H	;IF SPACE COUNTER
+	ORA	L	;	IS NOT ZERO
+	JNZ	ERASLP	;	MORE SPACES TO SEND
+	POP	H	;ORIGINAL CURSOR POSITION
+	CALL	$ROWCL	;CONVERT TO ROW AND COLUMN FORMAT
+	JMP	$SETCR	;PUT CURSOR BACK TO ORIGINAL POSITION
+CLSCR:	MVI	A,CLEAR	;CLEAR SCREEN CODE
+	JMP	$OUTCH	;SEND IT AND RETURN
+
+;****************************************************
+; ERASE TO END OF LINE
+;	[H] = CURRENT ROW NUMBER
+;	[L] = CURRENT COLUMN NUMBER
+;****************************************************
+;
+$EOL:	PUSH	H	;CURRENT CURSOR POSITION
+	LDA	$CRWID	;SCREEN WIDTH
+	MOV	E,A	;	TO E
+EOLOOP:	MVI	A,' '	;ASCII SPACE
+	CALL	$OUTCH	;SEND IT
+	INR	L	;BUMP CURRENT COLUMN
+	MOV	A,E	;SCREEN WIDTH
+	CMP	L	;	VS CURRENT COLUMN
+	JNC	EOLOOP	;LOOP IF COLUMN <= WIDTH
+	POP	H	;ORIGINAL CURSOR POSITION
+	JMP	$SETCR	;SET CURSOR AND RETURN
+
+;****************************************************
+; SOUND AUDIBLE TONE
+;****************************************************
+;
+$ALARM:	MVI	A,BELL
+	JMP	$OUTCH	;SEND BELL CODE AND RETURN
+
+
+
+
+;****************************************************
+; INPUT CHARACTER FROM TERMINAL
+;****************************************************
+;
+$INCRT:	JMP	$INKEY		;GET KEY AND RETURN
+
+;****************************************************
+; OUTPUT CHARACTER TO TERMINAL
+;****************************************************
+;
+$OUCRT:	JMP	$OUTCH		;PUT CHARACTER AND RETURN
+
+	END

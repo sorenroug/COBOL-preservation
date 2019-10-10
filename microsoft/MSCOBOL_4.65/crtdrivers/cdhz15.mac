@@ -1,0 +1,152 @@
+	TITLE	CDHZ15 - CRT DRIVER FOR HAZELTINE 1500 TERMINALS
+;**********************************************************************
+;***                                                                ***
+;***	COPYRIGHT (C) 1980, MICROSOFT                               ***
+;***                                                                ***
+;**********************************************************************
+
+	ENTRY	$CRWID,$CRLEN,$CURON,$CUROF,$CURBK
+	ENTRY	$SETCR,$ERASE,$ALARM
+	ENTRY	$EOL,$HILIT,$LOLIT
+	ENTRY	$CLIST,$TLIST,$FLIST
+	ENTRY	$INCRT,$OUCRT
+
+	EXT	$OUTCH,$INKEY
+
+;****************************************************
+; KEYBOARD CODE DEFINITIONS
+;****************************************************
+;
+
+$CLIST:				;EDITING KEY DEFINITIONS
+	DB	X'15'		;LINE DELETE (CTRL-U)
+	DB	X'7F'		;CHAR DELETE (DEL)
+	DB	X'5D'		;FORWARD SPACE (])
+	DB	X'08'		;BACK SPACE (BACK SPACE)
+	DB	X'2B'		;PLUS SIGN
+	DB	X'2D'		;MINUS SIGN
+	DB	0		;END OF LIST
+
+$TLIST:				;TERMINATOR KEY DEFINITIONS
+	DB	X'5C'		;BACKTAB (\)
+	DB	X'1B'		;ESCAPE KEY (ESC)
+	DB	X'09'		;FORWARD TAB (TAB)
+	DB	X'0D'		;CARRIAGE RETURN
+	DB	X'0A'		;LINE FEED
+	DB	0		;END OF LIST
+
+$FLIST:				;FUNCTION KEY DEFINITIONS
+	DB	X'01'		;CTRL-A
+	DB	X'03'		;CTRL-C
+	DB	X'18'		;CTRL-X
+	DB	0		;END OF LIST
+
+;****************************************************
+; TERMINAL SCREEN DIMENSIONS
+;****************************************************
+;
+$CRLEN:	DB	24D		;24 LINES
+$CRWID:	DB	80D		;80 COLUMNS
+
+;****************************************************
+; TERMINAL OUTPUT CODES
+;****************************************************
+;
+LEADIN	EQU	X'7E'
+DC1	EQU	X'11'
+CAN	EQU	X'18'
+US	EQU	X'1F'
+EM	EQU	X'19'
+SI	EQU	X'0F'
+BSPACE	EQU	X'08'
+BELL	EQU	X'07'
+
+;****************************************************
+;	O U T P U T   F U N C T I O N S
+;****************************************************
+; SET CURSOR POSITION
+;	[H] = ROW NUMBER
+;	[L] = COLUMN NUMBER
+;****************************************************
+;
+$SETCR:
+	MVI	A,LEADIN
+	CALL	$OUTCH		;SEND LEADIN
+	MVI	A,DC1
+	CALL	$OUTCH		;SEND DC1
+	MOV	A,L
+	DCR	A		;ADJUST COLUMN
+	CPI	32		;LESS THAN 32?
+	JNC	SETC1		;NO
+	ADI	96		;YES, USE ALTERNATE
+SETC1:	CALL	$OUTCH		;SEND COLUMN
+	MOV	A,H
+	ADI	31D		;ADJUST ROW NUMBER
+	JMP	$OUTCH		;SEND ROW AND RETURN
+
+;****************************************************
+; BACKSPACE CURSOR
+;****************************************************
+;
+$CURBK:	MVI	A,BSPACE
+	JMP	$OUTCH		;SEND BACKSPACE CODE
+
+;****************************************************
+; CURSOR ON/OFF - NOT AVAILABLE ON HAZELTINE 1500
+;****************************************************
+;
+$CURON:			;NOT AVAILABLE ON HAZELTINE 1500
+$CUROF:	RET		;NOT AVAILABLE ON HAZELTINE 1500
+
+;****************************************************
+; ERASE TO END OF SCREEN
+;	[HL] = SEQUENTIAL CURSOR POSITION
+;****************************************************
+;
+$ERASE:	MVI	A,CAN		;EOS CODE
+	JMP	SEND		;SEND LEADIN CAN
+
+;****************************************************
+; SOUND AUDIBLE TONE
+;****************************************************
+;
+$ALARM:	MVI	A,BELL
+	JMP	$OUTCH		;SEND BELL CODE AND RETURN
+
+;****************************************************
+; ERASE TO END OF LINE
+;	[H] = CURRENT ROW NUMBER
+;	[L] = CURRENT COLUMN NUMBER
+;****************************************************
+;
+$EOL:	MVI	A,SI		;EOL CODE
+	JMP	SEND		;SEND LEADIN SI
+
+;****************************************************
+; SET/RESET HIGH INTENSITY MODE
+;****************************************************
+;
+$HILIT:	MVI	A,US		;HIGH INTENSITY CODE
+	JMP	SEND
+$LOLIT:	MVI	A,EM		;NORMAL INTENSITY CODE
+
+
+SEND:	PUSH	PSW		;SAVE CONTROL CODE
+	MVI	A,LEADIN
+	CALL	$OUTCH		;SEND LEADIN
+	POP	PSW
+	JMP	$OUTCH		;SEND CODE AND RETURN
+
+;****************************************************
+; INPUT CHARACTER FROM TERMINAL
+;****************************************************
+;
+$INCRT:	JMP	$INKEY		;GET KEY AND RETURN
+
+;****************************************************
+; OUTPUT CHARACTER TO TERMINAL
+;****************************************************
+;
+$OUCRT:	JMP	$OUTCH		;PUT CHARACTER AND RETURN
+
+	END

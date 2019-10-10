@@ -1,0 +1,148 @@
+	TITLE	CDWH19 - CRT DRIVER FOR HEATH WH19 TERMINAL
+;**********************************************************************
+;***                                                                ***
+;***	COPYRIGHT (C) 1980, MICROSOFT                               ***
+;***                                                                ***
+;**********************************************************************
+
+	ENTRY	$CRWID,$CRLEN,$CURON,$CUROF,$CURBK
+	ENTRY	$SETCR,$ERASE,$ALARM
+	ENTRY	$EOL,$HILIT,$LOLIT
+	ENTRY	$CLIST,$TLIST,$FLIST
+	ENTRY	$INCRT,$OUCRT
+
+	EXT	$OUTCH,$INKEY
+
+;****************************************************
+; KEYBOARD CODE DEFINITIONS
+;****************************************************
+;
+
+$CLIST:				;EDITING KEY DEFINITIONS
+	DB	X'15'		;LINE DELETE (CTL-U)
+	DB	X'7F'		;CHAR DELETE (DEL)
+	DB	X'06'		;FORWARD SPACE (CTL-F)
+	DB	X'08'		;BACK SPACE (CTL-H)
+	DB	X'2B'		;PLUS SIGN
+	DB	X'2D'		;MINUS SIGN
+	DB	0		;END OF LIST
+
+$TLIST:				;TERMINATOR KEY DEFINITIONS
+	DB	X'02'		;BACKTAB (CTL-B)
+	DB	X'1B'		;ESCAPE KEY
+	DB	X'09'		;FORWARD TAB (CTL-I)
+	DB	X'0D'		;CARRIAGE RETURN
+	DB	X'0A'		;LINE FEED
+	DB	0		;END OF LIST
+
+$FLIST:				;FUNCTION KEY DEFINITIONS
+	DB	X'01'		;CTL-A
+	DB	X'03'		;CTL-C
+	DB	X'18'		;CTL-X
+	DB	0		;END OF LIST
+
+;****************************************************
+; TERMINAL SCREEN DIMENSIONS
+;****************************************************
+;
+$CRLEN:	DB	24D		;24 LINES
+$CRWID:	DB	80D		;80 COLUMNS
+
+;****************************************************
+; TERMINAL OUTPUT CODES
+;****************************************************
+;
+ESCAPE	EQU	X'1B'
+BSPACE	EQU	X'08'
+BELL	EQU	X'07'
+
+;****************************************************
+;	O U T P U T   F U N C T I O N S
+;****************************************************
+; SET CURSOR POSITION
+;	[H] = ROW NUMBER
+;	[L] = COLUMN NUMBER
+;****************************************************
+;
+$SETCR:
+	MVI	A,ESCAPE
+	CALL	$OUTCH		;SEND ESCAPE
+	MVI	A,"Y"
+	CALL	$OUTCH		;SEND "Y"
+	MOV	A,H
+	ADI	31D		;ADJUST ROW NUMBER
+	CALL	$OUTCH		;SEND ROW
+	MOV	A,L
+	ADI	31D		;ADJUST COLUMN NUMBER
+	JMP	$OUTCH		;SEND COLUMN AND RETURN
+
+;****************************************************
+; BACKSPACE CURSOR
+;****************************************************
+;
+$CURBK:	MVI	A,BSPACE
+	JMP	$OUTCH		;SEND BACKSPACE CODE
+
+;****************************************************
+; CURSOR ON/OFF
+;****************************************************
+;
+$CURON:	MVI	A,"y"		;RESET MODE
+	JMP	CURSW
+$CUROF:	MVI	A,"x"		;SET MODE
+CURSW:	CALL	SEND		;SEND ESC SET/RESET
+	MVI	A,"5"
+	JMP	$OUTCH
+
+;****************************************************
+; ERASE TO END OF SCREEN
+;	[HL] = SEQUENTIAL CURSOR POSITION
+;****************************************************
+;
+$ERASE:	MVI	A,"J"		;ERASE EOS CODE
+	JMP	SEND
+
+;****************************************************
+; ERASE TO END OF LINE
+;	[H] = CURRENT ROW NUMBER
+;	[L] = CURRENT COLUMN NUMBER
+;****************************************************
+;
+$EOL:	MVI	A,"K"		;ERASE EOL CODE
+	JMP	SEND
+
+;****************************************************
+; SOUND AUDIBLE TONE
+;****************************************************
+;
+$ALARM:	MVI	A,BELL
+	JMP	$OUTCH		;SEND BELL CODE AND RETURN
+
+;****************************************************
+; SET/RESET REVERSE VIDEO MODE
+;****************************************************
+;
+$HILIT:	MVI	A,"p"		;START REVERSE CODE
+	JMP	SEND
+
+$LOLIT:	MVI	A,"q"		;STOP REVERSE CODE
+
+SEND:	PUSH	PSW		;SAVE CODE
+	MVI	A,ESCAPE
+	CALL	$OUTCH		;SEND ESCAPE
+	POP	PSW
+	JMP	$OUTCH		;SEND CODE AND RETURN
+
+;****************************************************
+; INPUT CHARACTER FROM TERMINAL
+;****************************************************
+;
+$INCRT:	JMP	$INKEY		;GET KEY AND RETURN
+
+;****************************************************
+; OUTPUT CHARACTER TO TERMINAL
+;****************************************************
+;
+$OUCRT:	JMP	$OUTCH		;PUT CHARACTER AND RETURN
+
+	END

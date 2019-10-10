@@ -1,0 +1,146 @@
+	TITLE	CDISB - CRT DRIVER FOR INTERTEC SUPERBRAIN TERMINAL
+;**********************************************************************
+;***                                                                ***
+;***	COPYRIGHT (C) 1980, MICROSOFT                               ***
+;***                                                                ***
+;**********************************************************************
+
+	ENTRY	$CRLEN,$CRWID,$SETCR,$CURON,$CUROF
+	ENTRY	$CURBK,$ERASE,$ALARM
+	ENTRY	$EOL,$HILIT,$LOLIT
+	ENTRY	$CLIST,$TLIST,$FLIST
+	ENTRY	$INCRT,$OUCRT
+
+	EXT	$OUTCH,$INKEY
+
+
+;****************************************************
+; KEYBOARD CODE DEFINITIONS
+;****************************************************
+;
+
+$CLIST:				;EDITING KEY DEFINITIONS
+	DB	X'18'		;LINE DELETE (CTRL-X)
+	DB	X'7F'		;CHAR DELETE (DEL)
+	DB	X'06'		;FORWARD SPACE (CTRL-F)
+	DB	X'08'		;BACK SPACE (CTRL-H)
+	DB	X'2B'		;PLUS SIGN
+	DB	X'2D'		;MINUS SIGN
+	DB	0		;END OF LIST
+
+$TLIST:				;TERMINATOR KEY DEFINITIONS
+	DB	X'02'		;BACKTAB (CTRL-B)
+	DB	X'1B'		;ESCAPE KEY (ESC)
+	DB	X'09'		;FORWARD TAB (TAB)
+	DB	X'0D'		;CARRIAGE RETURN
+	DB	X'0A'		;LINE FEED
+	DB	0		;END OF LIST
+
+$FLIST:				;FUNCTION KEY DEFINITIONS
+	DB	X'01'		;CTRL-A
+	DB	X'03'		;CTRL-C
+	DB	X'04'		;CTRL-D
+	DB	0		;END OF LIST
+
+
+;****************************************************
+; TERMINAL SCREEN DIMENSIONS
+;****************************************************
+;
+$CRLEN:	DB	24D	;24 LINES
+$CRWID:	DB	80D	;80 COLUMNS
+
+;****************************************************
+; TERMINAL OUTPUT CODES
+;****************************************************
+;
+ESCAPE	EQU	X'1B'
+BSPACE	EQU	X'08'
+BELL	EQU	X'07'
+TILDE	EQU	X'7E'
+
+;****************************************************
+;	O U T P U T   F U N C T I O N S
+;****************************************************
+; SET CURSOR POSITION
+;	[H] = ROW NUMBER
+;	[L] = COLUMN NUMBER
+;****************************************************
+;
+$SETCR:
+	MVI	A,ESCAPE
+	CALL	$OUTCH	;SEND ESC
+	MVI	A,"Y"
+	CALL	$OUTCH	;SEND Y
+	MOV	A,H
+	ADI	X'1F'	;ADJUST ROW NUMBER
+	CALL	$OUTCH	;SEND ROW
+	MOV	A,L
+	ADI	X'1F'	;ADJUST COLUMN NUMBER
+	JMP	$OUTCH	;SEND COLUMN
+
+;****************************************************
+; CURSOR ON/OFF - NOT AVAILABLE ON SUPERBRAIN
+; HIGHLIGHT VIDEO - NOT AVAILABLE ON SUPERBRAIN
+;****************************************************
+;
+$CURON:
+$CUROF:
+$HILIT:
+$LOLIT:
+	RET		;NOT AVAILABLE ON SUPERBRAIN
+
+;****************************************************
+; BACKSPACE CURSOR
+;****************************************************
+;
+$CURBK:	MVI	A,BSPACE
+	JMP	$OUTCH
+
+;****************************************************
+; ERASE TO END OF SCREEN
+;	[HL] = SEQUENTIAL CURSOR POSITION
+;****************************************************
+;
+$ERASE:	MVI	A,"k"	;EOS CODE
+	JMP	SEND2
+
+;****************************************************
+; ERASE TO END OF LINE
+;	[H] = CURRENT ROW NUMBER
+;	[L] = CURRENT COLUMN NUMBER
+;****************************************************
+;
+$EOL:	MVI	A,"K"	;EOL CODE
+
+SEND2:	PUSH	PSW	;SAVE CODE
+	MVI	A,ESCAPE
+	CALL	$OUTCH	;SEND ESC
+	MVI	A,TILDE
+	CALL	$OUTCH	;SEND DECIMAL 126
+	POP	PSW
+	JMP	$OUTCH	;SEND CONTROL CODE AND RETURN
+
+;****************************************************
+; SOUND AUDIBLE TONE
+;****************************************************
+;
+$ALARM:	MVI	A,BELL
+	JMP	$OUTCH	;SEND BELL CODE AND RETURN
+
+
+
+
+;****************************************************
+; INPUT CHARACTER FROM TERMINAL
+;****************************************************
+;
+$INCRT:	JMP	$INKEY		;GET KEY AND RETURN
+
+;****************************************************
+; OUTPUT CHARACTER TO TERMINAL
+;****************************************************
+;
+$OUCRT:	JMP	$OUTCH		;PUT CHARACTER AND RETURN
+
+	END

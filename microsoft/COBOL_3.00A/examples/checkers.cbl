@@ -128,8 +128,13 @@
            MOVE -99 TO R0.
 000090*    DATA 1,0,1,0,0,0,-1,0,0,1,0,0,0,-1,0,-1,15
            MOVE 1 TO I.
-000120     PERFORM LOAD-CELL VARYING X FROM 1 BY 1 UNTIL X > 8
-               AFTER Y FROM 1 BY 1 UNTIL Y > 8.
+000120     PERFORM VARYING X FROM 1 BY 1 UNTIL X > 8
+               PERFORM VARYING Y FROM 1 BY 1 UNTIL Y > 8
+                   MOVE VAL(I) TO S(X,Y)
+                   ADD 1 TO I
+                   IF I > 16 THEN MOVE 1 TO I END-IF
+000200         END-PERFORM
+           END-PERFORM.
 
       * Computer calculates next move
 000230 LINE0230.
@@ -141,20 +146,20 @@
        CHECK-JUMPS.
            IF S (X, Y) > -1 GO TO CHECK-EXIT.
 000310     IF S (X, Y) = X-MAN 
-               PERFORM CHECK-FOR-MAN
-                   VARYING A FROM -1 BY 2 UNTIL A > 1.
-000330     IF S (X, Y) = X-KING 
-               PERFORM CHECK-FOR-KING
-                   VARYING A FROM -1 BY 2 UNTIL A > 1.
+               PERFORM VARYING A FROM -1 BY 2 UNTIL A > 1
+                   MOVE G TO B
+                   PERFORM LINE0650 THRU EXIT0650
+               END-PERFORM
+           END-IF
+000330     IF S (X, Y) = X-KING
+               PERFORM VARYING A FROM -1 BY 2 UNTIL A > 1
+                   PERFORM VARYING B FROM -1 BY 2 UNTIL B > 1
+                       PERFORM LINE0650 THRU EXIT0650
+                   END-PERFORM
+               END-PERFORM
+           END-IF.
        CHECK-EXIT.
            EXIT.
-
-       CHECK-FOR-MAN.
-           MOVE G TO B
-           PERFORM LINE0650 THRU EXIT0650.
-       CHECK-FOR-KING.
-           PERFORM LINE0650 THRU EXIT0650
-               VARYING B FROM -1 BY 2 UNTIL B > 1.
 
 000650 LINE0650.
            ADD X, A GIVING U
@@ -262,8 +267,16 @@
            PERFORM DISP-ROW VARYING Y FROM 8 BY -1 UNTIL Y < 1.
            DISPLAY X-LEGEND AT 2119 WITH REVERSE-VIDEO.
       * Check if one player has no pieces left
-001552     PERFORM TEST-CELL VARYING L FROM 1 BY 1 UNTIL L > 8
-001554         AFTER M FROM 1 BY 1 UNTIL M > 8.
+001552     PERFORM VARYING L FROM 1 BY 1 UNTIL L > 8
+001554         PERFORM VARYING M FROM 1 BY 1 UNTIL M > 8
+001556             IF S(L,M) = O-MAN OR S(L,M) = O-KING THEN
+                       MOVE 1 TO Z
+                   END-IF
+001558             IF S(L,M) = X-MAN OR S(L,M) = X-KING THEN
+                       MOVE 1 TO T
+                   END-IF
+001560         END-PERFORM
+001562     END-PERFORM
 001564     IF Z NOT = 1 GO TO LINE1885.
 001566     IF T NOT = 1 GO TO LINE1880.
 001570     MOVE 0 TO Z
@@ -343,18 +356,30 @@
            DISPLAY MSG-I-WIN
            STOP RUN.
 
-       LOAD-CELL.
-           MOVE VAL(I) TO S (X, Y)
-           ADD 1 TO I
-           IF I > 16 MOVE 1 TO I.
-
        DISP-ROW.
            MULTIPLY Y BY 2 GIVING J
            SUBTRACT J FROM 21 GIVING CRTLIN
            DISPLAY Y AT LINE CRTLIN COLUMN 19
                      WITH REVERSE-VIDEO
-           PERFORM DISP-CELL
-               VARYING X FROM 1 BY 1 UNTIL X > 8.
+           PERFORM VARYING X FROM 1 BY 1 UNTIL X > 8
+                   MULTIPLY X BY 5 GIVING CRTCOL
+                   ADD 18 TO CRTCOL
+001430             IF S (X, Y) = EMPTY DISPLAY ". "
+                         AT LINE CRTLIN COLUMN CRTCOL
+                   END-IF
+001470             IF S (X, Y) = O-MAN DISPLAY "O "
+                         AT LINE CRTLIN COLUMN CRTCOL
+                   END-IF
+001490             IF S (X, Y) = X-MAN DISPLAY "X "
+                         AT LINE CRTLIN COLUMN CRTCOL
+                   END-IF
+001510             IF S (X, Y) = X-KING DISPLAY "X*"
+                         AT LINE CRTLIN COLUMN CRTCOL
+                   END-IF
+001530             IF S (X, Y) = O-KING DISPLAY "O*"
+                         AT LINE CRTLIN COLUMN CRTCOL
+                   END-IF
+001550         END-PERFORM
            ADD 4 TO CRTCOL
            DISPLAY Y AT LINE CRTLIN COLUMN CRTCOL
                      WITH REVERSE-VIDEO
@@ -363,23 +388,3 @@
                      WITH REVERSE-VIDEO
            DISPLAY " " AT LINE CRTLIN COLUMN CRTCOL
                      WITH REVERSE-VIDEO.
-
-       TEST-CELL.
-001556     IF S (L, M) = O-MAN OR S (L, M) = O-KING 
-               MOVE 1 TO Z.
-001558     IF S (L, M) = X-MAN OR S (L, M) = X-KING 
-               MOVE 1 TO T.
-
-       DISP-CELL.
-           MULTIPLY X BY 5 GIVING CRTCOL
-           ADD 18 TO CRTCOL
-001430     IF S (X, Y) = EMPTY DISPLAY ". "
-                 AT LINE CRTLIN COLUMN CRTCOL.
-001470     IF S (X, Y) = O-MAN DISPLAY "O "
-                 AT LINE CRTLIN COLUMN CRTCOL.
-001490     IF S (X, Y) = X-MAN DISPLAY "X "
-                 AT LINE CRTLIN COLUMN CRTCOL.
-001510     IF S (X, Y) = X-KING DISPLAY "X*"
-                 AT LINE CRTLIN COLUMN CRTCOL.
-001530     IF S (X, Y) = O-KING DISPLAY "O*"
-                 AT LINE CRTLIN COLUMN CRTCOL.
