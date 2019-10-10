@@ -1,0 +1,1096 @@
+
+==============================<README.DOC File>===============================
+
+          Release Notes for the Microsoft (R) COBOL Optimizing Compiler
+                                  Version 3.00A
+
+                          COBOL software by Micro Focus.
+       Copyright (C) Microsoft Corporation 1984,1988.  All rights Reserved.
+       Copyright (C) Micro Focus Ltd. 1984,1988.  All rights Reserved.
+
+This document contains the release notes for Version 3.00A of the Microsoft(R)
+COBOL Optimizing Compiler. The information in this document is more up to date
+than that in the printed manuals. Where information in the manuals conflicts
+with this file, you should assume that this file contains the correct
+information.
+
+Microsoft improves its languages documentation at the time of reprinting, so
+some of the information in this on-line file may already be included in your
+manuals.
+
+
+========================< Other On-Line Files >===============================
+
+The following documentation appears as .DOC files on the release disks. They
+contain additional information about this product.
+
+   File            Disk    Information
+   ----            ----    -----------
+
+   README.DOC       1      These Release Notes, which give information
+                           specific to this version of the software.
+
+   MS2-2.DOC        1      Compatability issues with Microsoft COBOL 2.2
+
+   OS2API.DOC       7      Calling OS/2 API function calls from COBOL
+
+   KEYBCF.DOC       8      Keyboard Configuration Utility
+
+   MC-LINK.DOC      9(5)   Linking COBOL programs with those created in other
+   LC-LINK.DOC      9(5)   languages
+
+   REBUILD.DOC      9(5)   File Management utility, REBUILD
+
+   EXT.DOC         12(7)   Microsoft Editor extension modules
+
+Note: Disk numbers in parentheses reflect the location of files on 3.5-inch 
+disk sets.
+
+
+================================< Contents >==================================
+
+This file has three parts, containing additional notes for manuals included 
+in this release.
+
+               Part   Notes
+               ----   -----
+               1      Operating Guide
+
+               2      Language Reference Manual
+
+               3      Error Messages Manual
+
+
+=========================< Part 1: Operating Guide >==========================
+
+    The following information regarding software installation applies to
+    both the DOS and OS/2 environments.
+
+    It is recommended that you make back-up copies of your diskettes by using
+    the operating system commands DISKCOPY or FORMAT and COPY. Refer to your
+    DOS or OS/2 manual for information about how to use these utilities.
+
+    After you have made copies of your diskettes, set the originals aside
+    and use the copies as your working software.
+
+The SETUP Installation Utility
+------------------------------
+
+    To help install your COBOL system, you have been provided with the
+    SETUP installation utility. This utility allows you to select which
+    components you wish to load and to create your own default configuration
+    for the compiler. It does the following :
+
+       o  Copies all the files you need onto your fixed disk into a directory
+          of your choice
+
+       o  Creates a COBOL.DIR file containing your default configuration
+          directives
+
+       o  Modifies the operating system start-up files--CONFIG.SYS and
+          AUTOEXEC.BAT and/or OS2INIT.CMD as required--to establish the
+          COBOL operating environment every time the operating system
+          is initialized
+
+       o  Selects the correct ACCEPT/DISPLAY configuration in ADISCTRL
+
+
+Steps in Setting Up Your Software
+---------------------------------
+
+    Following these steps to set up the software on your fixed disk:
+
+    1. Please refer to your Release Notes for any special information
+       regarding software installation.
+
+    2. Place the diskette containing SETUP.EXE and SETUP.INI (usually disk
+       1) in a floppy drive.
+
+    3. Make that drive current. For example, if you have inserted the
+       diskette in drive A, then type
+
+               A:    <-'
+
+    4. Enter the SETUP utility by typing
+
+              SETUP <-'
+
+    5. SETUP takes you through the installation step by step. It asks you
+       to select various options or simply to accept the defaults. Once you
+       have selected the configuration you require, you can choose to do any
+       of the following:
+
+       o  Continue with the installation
+       o  See the actions that SETUP takes during installation, without
+            it actually doing anything
+       o  Start again from the beginning
+       o  Terminate the procedure
+
+    6. Continuing the installation, SETUP asks you to load particular
+       diskettes to copy the files required onto your fixed disk. It ends
+       by modifying the operating system start-up files.
+
+    7. When set up is completed, you should reboot your operating system to
+       ensure that the COBOL operating environment is correctly
+       established.
+
+    Note: the symbol <-' indicates the enter key
+
+
+Additional Notes
+----------------
+
+     1. For DOS systems only, the CONFIG.SYS file is modified to open
+        sufficient files to enable the software to operate correctly. The
+        line,
+
+                    FILES=100
+
+        is inserted into CONFIG.SYS if it does not already exist. If
+        a FILES statement exists but has less than 100 files, it is
+        replaced.
+
+        If you intend to animate COBOL applications that need to have a
+        large number of files open at one time, you may need to modify
+        this parameter.
+
+        For OS/2 systems only, the CONFIG.SYS file is modified to include 
+        the COBOL directory to the end of the LIBPATH.
+
+                    LIBPATH=...;C:\directory-name;
+
+        where directory name is the name of your COBOL system directory.
+
+     2. The AUTOEXEC.BAT and OS2INIT.CMD files are modified to add the
+        name of your COBOL directory to the end of the PATH and the LIB
+        environment variable used by LINK.EXE. The environment variable,
+        COBDIR, is also set to your COBOL directory. This is required
+        for your COBOL system to operate.
+
+                     PATH...;C:\directory-name;
+                     SET COBDIR=c:\directory-name
+                     SET LIB...;C:\directory-name;
+
+        where directory-name is the name of your COBOL directory.
+
+     3. The command associated with the .EXE files does not cause the
+        correct software to be loaded if .BAT/.CMD, .COM or .EXE files
+        exist in a directory earlier in the PATH than the COBOL system
+        directory. This can be overcome by moving or deleting the
+        offending files, or modifing the PATH statement to place the
+        COBOL directory before the directory containing the offending
+        files.
+
+        This is particularly relevant to LINK.EXE and LIB.EXE on DOS,
+        where earlier versions may have been loaded as part of your
+        operating system software. In this case, you can replace these
+        earlier versions with those provided with the COBOL software.
+
+     4. It is recommended that you use a new directory for your COBOL
+        software; use no other software except add-ons to this system.
+        If you already have a directory containing an earlier version of
+        this software, you can reuse it. However, you should first delete
+        all the files from the old system. The Release Notes for that
+        system will list the files.
+
+     5. If you have created ADIS.EXE, IXSIO.EXE, EXTFH.EXE or
+        EXTERNL.EXE, or the equivalent .DLL files for OS/2 using an
+        older system, you should delete them and create new ones from the
+        files in the new system.
+
+     6. The software can be loaded in whole or in part by manually
+        copying files from the issued diskettes. However, you must make
+        sure to copy all the required files to the correct place, select
+        the correct ACCEPT/DISPLAY configuration, and set up the COBOL
+        environment correctly.
+
+     7. The OS/2 system parameter, IOPL, must be set to YES for the COBOL 
+        system to operate correctly. Ensure that your OS/2 CONFIG.SYS file 
+        contains the statement: IOPL=YES.
+
+
+Demonstration Programs (Chapter 1) (new)
+----------------------------------------
+   There are two demonstration programs provided with this system. The first,
+   TICTAC, can be compiled, linked and run, or animated, using the TTDEMO
+   batch stream. Streams are provided for DOS and OS/2.
+
+   The second, SORTDEMO, can be compiled, linked and run, or animated using
+   the SRTDEM batch stream. Note, however, that this program cannot be
+   animated on DOS since it contains calls to OS/2 API functions. However, the
+   batch stream provided for DOS illustrates how the program can be linked and
+   then bound so that it will run on DOS and OS/2.
+
+
+Command Line Syntax (Chapter 2)
+-------------------------------
+   Since spaces around filenames in the command line are regarded as
+   non-significant, and since some filenames may be legally omitted, it is
+   impossible to determine if the name following a comma is a filename or a
+   directive. To avoid this problem, it is necessary to ensure that, if a
+   directive follows a comma when no filename is specified, the directive
+   is preceded by a slash (/). In all other cases, directives may be preceded
+   by a space or a slash.
+
+   EXAMPLES:
+
+   1.  cobol myprog , , ans85;
+
+       compiles myprog.cbl into myprog.obj and places the source listing in
+       file ans85.lst.
+
+   2.  cobol myprog , , /ans85;
+
+       compiles myprog.cbl into myprog.obj, using the ans85 directive, and
+       places the source listing in file myprog.lst.
+
+
+Redirection of Compiler Output (Chapter 2) (new)
+------------------------------------------------
+   All output from the compiler to the screen can be redirected to a file or
+   other device by use of the standard DOS and OS/2 redirection facilities.
+   For example, to put all the compiler output from two successive compiles
+   into a single file, compile.lst, enter:
+
+           cobol myprog ans85;   > compile.lst
+           cobol subprog ans85; >> compile.lst
+
+
+Directives (Chapter 2)
+----------------------
+   Note that the default directives specified in this chapter are built into
+   the compiler. When the product is installed using SETUP, a COBOL.DIR file
+   may be created. The directives in this file override the equivalent
+   defaults.
+
+   CALLFH
+   ------
+   The callable file handler, EXTFH, provided with this system, is used by all
+   programs compiled with the CALLFH directive to do all file handling.  The
+   interface for this file handler is described in Chapter 13 of your
+   Operating Guide.  You may wish to write your own file handler or use
+   another that conforms to this interface.  The CALLFH directive has been
+   modified to allow you to specify the name of your own file handler.  You
+   can now specify this directive in either of the following formats:
+
+       [NO] CALLFH
+            CALLFH "file-handler-name"
+
+       where file-handler-name is the name of your own file handler. (Note
+       that only the root is needed--maximum 8 characters.)
+
+    Note: to be able to use this file handler during animation, you should
+    provide a version linked with RCOBOL (on DOS) or PRCOBOL (on OS/2), as
+    well as the .OBJ file for linking with your resulting programs.
+
+   CHIP (new)
+   ----------
+   The CHIP directive will assist you in writing large programs on 8086/80286
+   machines and 80386 machines running in 16-bit mode. See also the FLAG-CHIP
+   directive.
+
+       NO CHIP
+          CHIP "16"
+
+       Causes the compiler to generate different code for special situations
+       (e.g., Report Writer, CHARSET "EBCDIC").
+
+       Default:  CHIP"16"
+
+   CURRENT-DATE (new)
+   ------------------
+   The CURRENT-DATE directive allows you to specify at compile time the format
+   of the date stored in the CURRENT-DATE special register.
+
+       CURRENT-DATE {"DDMMYY"}
+                    {"MMDDYY"}
+
+       Specifying the DDMMYY format causes CURRENT-DATE to be stored in
+       European format.  Note that the argument may be specified in either
+       upper- or lowercase characters.
+
+       Default:  CURRENT-DATE "MMDDYY"
+
+   CURRENCY-SIGN (new)
+   -------------------
+   The CURRENCY-SIGN directive allows you to specify at compile time the
+   currency sign to be recognized in the PICTURE clause.
+
+       CURRENCY-SIGN "integer"
+
+       where integer is the character code for the required character.
+
+       Default:  CURRENCY-SIGN"36" (this is the ASCII code for "$")
+
+   FLAG-CHIP (new)
+   ---------------
+   The FLAG-CHIP directive will assist you in writing large programs on
+   8086/80286 machines and 80386 machines running in 16-bit mode. See also
+   the CHIP directive.
+
+       [NO] FLAG-CHIP
+
+       Causes the compiler to generate special flagging errors for potential
+       problem areas for the given chip.  It has no effect if NOCHIP is set.
+
+       Default:  NOFLAG-CHIP
+
+       FLAG-CHIP causes the following messages to be given at compilation
+       time:
+
+       Flag 460
+       Previous item crosses 64K boundary.  Segment checking code produced.
+
+           This is flagged when an item anywhere in the Data Division
+           crosses a 64K boundary. Such items are not wrong, but the code
+           produced to access these 64K boundary-crossing items is very much
+           less efficient than for similar non-64K boundary-crossing items.
+
+           To avoid this situation, all referenced items must be located so
+           they do not cross a 64K boundary.  FILLER fields can be inserted,
+           or existing items can be moved around or removed to accomplish
+           this.  A compiler source listing with the REF directive can be used
+           to help gauge the size and position of existing fields.
+
+       Flag 461
+       Table crosses 64K boundary.  Segment checking code produced.
+
+           This is flagged when a table definition crosses a 64K boundary.
+
+           Every access to an item within a table crossing a 64K boundary
+           assumes that the item itself crosses a 64K boundary. You can avoid
+           this situation by following the steps described for Flag 460.  If
+           the total size of the table is more than 64K, inefficient code is
+           unavoidable.
+
+       Flag 462
+       Parameter crosses 64K boundary.  Use NOSMALLDD when compiling
+       subprogram.
+
+           This is flagged when a CALL parameter (BY REFERENCE) crosses a 64K
+           boundary.
+
+           This is a warning message indicating that you must take action when
+           compiling the subprogram being called.
+
+           If a program has Linkage Section items which cross a 64K boundary,
+           every reference to these items must assume that the access requires
+           inefficient code because it is impossible to know the precise
+           location of the 64K boundary.  The compiler receives this
+           information from the use of the NOSMALLDD directive.  If you are in
+           doubt, you must use NOSMALLDD. Otherwise, unpredictable errors will
+           occur when a Linkage Section item crosses a 64K boundary.
+
+           To avoid this problem:
+
+           1. Use the methods outlined in the description of Flag 460 above to
+              remove all 64K boundary crossing data items in the CALLing
+              program.
+
+           2. Compile the subprogram(s) with the directive NOSMALLDD. The
+              following conditions must be considered when writing large
+              programs. They will be either supported or flagged in the
+              future.  However, it is strongly advised that you to avoid these
+              situations at the present time.
+
+              o  Temporary buffer exceeding 64K
+
+              o  Temporary buffer crossing a 64K boundary
+
+              This temporary buffer is created for cases which require
+              intermediate pre- or post-moves.  Cases which lead to this
+              include the following:
+
+              o  CALL. . . USING BY CONTENT
+
+              o  Certain de-edited moves
+
+
+   LIST
+   ----
+   You can create a standard source-listing file when you compile a program
+   without having to enter the full filename; this is now an additional
+   function of the LIST directive.  You do this by specifying the LIST
+   directive as follows:
+
+       LIST()
+
+       This causes the source-listing from the compilation to be placed in the
+       file prog-name.LST, where prog-name is the root of the name of the
+       program being compiled (i.e., the standard source-listing filename).
+
+       If you want to list the source to a file for every compilation you do,
+       place the LIST() directive in the COBOL.DIR file.  This will override
+       the default NO LIST.
+
+       Alternatively, if you already have a LIST directive in your COBOL.DIR,
+       causing every listing to go to the screen, then using the LIST ()
+       directive on the command line causes the listing to go instead to
+       the standard source-listing file.
+
+       Note: This format of the directive must be LIST(), not LIST"".
+
+   IBMCOMP
+   -------
+   When Animating a program that has been compiled with the IBMCOMP directive,
+   querying, in hex, a data-item in that has a slack byte generated by the
+   presence of this directive, will display the slack byte and allow it to be
+   amended. However, the contents of this slack byte do not affect the decimal
+   display.
+
+   INT
+   ---
+   As an additional function, the INT directive, specified as follows:
+
+       INT()
+
+       causes all intermediate (.INT) code to be placed in the standard file
+       prog-name.INT.
+
+       Note: This format of the directive must be INT(), not INT"".
+
+   PREPROCESS
+   ----------
+   The PREPROCESS directive is for use with add-on products available from
+   Micro Focus.  It can be used on an initial $SET.
+
+   RECMODE
+   -------
+   The RECMODE directive will be overridden for any file where the FD
+   statement contains a RECORDING MODE F or RECORD CONTAINS n CHARACTERS
+   clause, causing fixed format, or RECORDING MODE V (varying format) or
+   RECORD IS VARYING clause, causing variable format. Note, also, that the
+   RECORD clauses will override the RECORDING MODE clauses if both are present
+   but conflict.
+
+   RETRYLOCK
+   ---------
+   Causes the compiler to generate code to continuously retry when attempting
+   to READ a locked record in a file which contains a FILE-STATUS item but no
+   specific DECLARATIVES section for the file.
+
+   RM
+   --
+   The state of the SPZERO directive is no longer affected by the RM
+   directive. Also, the "Note" for this directive should say "Specifying NORM
+   will cause the setting of the following directives."
+
+   RTNCODE-SIZE
+   ------------
+   Note: If a program with a 4-byte RETURN-CODE calls a program with a 2-byte
+         RETURN-CODE, on return the 2-byte RETURN-CODE from the called program
+         is placed in the lower two bytes of the 4-byte RETURN-CODE. The
+         contents of the top two bytes is undefined.
+
+         Conversly, if a program with a 2-byte RETURN-CODE calls a program
+         with a 4-byte RETURN-CODE, on return the lower two bytes of the
+         4-byte RETURN-CODE from the called program is placed in the 2-byte
+         RETURN-CODE. The top-two bytes will be lost.
+
+   XNIM
+   ----
+   The ANIMATOR no longer asks the question
+
+           Save Animation file(IDY)? Y/N
+
+   but saves the files required for subsequent animation whenever an animation
+   invoked by the use of XNIM is terminated.
+
+
+COBOL.DIR (Chapter 2)
+---------------------
+   If a directive in the COBOL.DIR file is rejected by the compiler,
+   compilation continues. If directives from the command line, or from a
+   directives file specified on the command line, are rejected then
+   compilation terminates. Hence, if you create or amend a COBOL.DIR file,
+   you are recommended to do a trial compilation and watch for "Rejected"
+   messages at the beginning when the directives are being processed. If any
+   occur, correct the COBOL.DIR file and retry until no errors are reported.
+
+
+Dialect Controlling Directives (Chapter 2) (new)
+------------------------------------------------
+   The dialect controlling directives--ANS85, DG, MF, MS (IBM-MS/PC1), OSVS,
+   RM and VSC2--generally only affect the available reserved words, enabling
+   or disabling those specific to a dialect. The use of NOdialect-directive
+   when compiling a program does not necessarily switch off all the syntax
+   specific to that dialect. So, to produce a program that is compatible with
+   a specific dialect, in addition to switching off all other dialects, you
+   should specify the directive, FLAG "required-dialect". This will ensure
+   that ALL syntax alien to the chosen dialect is errored or flagged during
+   compilation.
+
+   For example, to get a program compatible with the VSC2 dialect, given
+   the defaults described in this chapter, the following directives will be
+   needed at compile time:
+
+       NOANS85  NOMF  NOOSVS  VSC2  FLAG"VSC2"
+
+   Note: A COBOL.DIR file may be present in your current directory or your
+         COBOL system directory. This will create defaults different to those
+         described here. In this case, the example above may need amending to
+         allow for the changed defaults of dialect directives.
+
+
+Using the Prompts (Chapter 2)
+-----------------------------
+   The following line:
+
+       Data=nnnnnnnn  Code=nnnnnnnn  Dictionary=nnnnnnnn
+
+   is displayed at the end of the full compilation process.  It informs you of
+   the size of the generated data area, the size of the generated code, and
+   the size of the internal dictionary used by the code generator.  A similar
+   line appears at the end of a source listing.  However, this will differ
+   from the line displayed above since it relates to the data and code size of
+   the .INT code, prior to generation.  The dictionary refers to the
+   dictionary created from the source code which contains the names and
+   information pertaining to every data item and procedure name specified in
+   the program.  This dictionary is saved in the .IDY file and used during
+   animation.
+
+Animating Augmented Intermediate Code (Chapter 3)
+Animating a Mix of Intermediate Code Programs and Linked Programs (Chap 3)
+--------------------------------------------------------------------------
+   There are several errors in the documentation pertaining to Animation of
+   augmented intermediate code, used mainly to allow Animation of programs
+   containing calls to other languages. The following notes correct these
+   errors.
+
+   o   When linking your program with PRCOBOL.LIB for Animating under OS/2,
+       you must use a .DEF file to cause the resultant program to be a .DLL
+       file rather than an .EXE file. For example:
+
+           LINK myprog/NOD/NOP,,, PRCOBOL+DOSCALLS, myprog.DEF;
+
+       The .DLL file must be in both the current directory, and a directory
+       named on the LIBPATH statment in your OS/2 CONFIG.SYS. The .INT file
+       must also be present in the current directory.
+
+   o   When Animating augmented intermediate code, both the .INT and the .EXE
+       (or .DLL on OS/2) files must be available in the current directory.
+       Since the Animator will search for .INT before .EXE/.DLL when no
+       extension is given, you must specifically animate the .EXE/.DLL file.
+       To do this:
+
+       1.  When the main program is in augmented intermediate code, use the
+           following command to animate the program:
+
+               ANIMATE   prog.EXE
+           or
+               PANIMATE  prog.DLL
+
+       2.  When a subprogram is in augmented intermediate code, change the
+           source code calling this subprogram to include the .EXE/.DLL
+           extension. For example:
+
+               CALL  "subprog.EXE"  USING . . .
+           or
+               CALL  "subprog.DLL"  USING . . .
+
+           When you have completed the debugging process, you must change the
+           source code back by omitting the .EXE/.DLL extension.
+
+
+Command Line Syntax (Chapter 4)
+-------------------------------
+   Note that the linker provided with this software has an extra prompt
+   following the libraries prompt.  This is used to name a .DEF file when
+   creating .DLL files. It can be ignored under normal circumstances.
+
+
+Dynamic Linking of System Programs (Chapter 4)
+----------------------------------------------
+   The .OBJs supplied with this COBOL system do not have a default link
+   library built into them. When linking these programs to produce a
+   standalone EXE or DLL, it is necessary to specify the link library
+   required. For example, to produce IXSIO.EXE on DOS, enter:
+
+           LINK  IXSIO,,,LCOBOL;
+
+   and on OS/2, for IXSIO.DLL:
+
+           LINK  IXSIO/NOP,,,PCOBOL+DOSCALLS,IXSIO.DEF;
+
+
+Switch Parameters (Chapter 5)
+-----------------------------
+   Switch B enables you to skip locked records when sequentially accessing a
+   shared indexed file. When enabled, the switch, which is OFF by default,
+   causes the record pointer to be updated past any locked record when
+   using the READ NEXT statement on an indexed file open INPUT or I-O. This
+   permits uninterrupted sequential reading of a file even if another process
+   has some records within the file locked.
+
+
+Examine/Set a One- or Two-Byte Address Location (Chapter 8)
+-----------------------------------------------------------
+   The segment and offset parameters for calls 85, 86, 94 and 95 should be
+   defined as PIC 9(5).
+
+
+Enter/Output a Hardware Port (Chapter 8)
+----------------------------------------
+   The port parameter for calls 87, 88, 96 and 97 should be defined as
+   PIC 9(5).
+
+
+Inter-program Function Calls (Chapter 8)
+----------------------------------------
+   The description of X"91" function 15 should state that this call should not
+   be used to check for the existence of data files.
+
+   The description of X"91" functions 7 and 8 are incorrect. The correct
+   decriptions follow:
+
+   Function      Description
+   --------      -----------
+   Function 7    Reads the default directory of the given drive into the
+                 parameter area. Parameter is a group consisting of the
+                 following:
+
+                 o   a PIC 99 COMP-X field that, on return, contains the
+                     length of the pathname.
+
+                 o   a PIC X field of variable length. (Must be long enough to
+                     take the returned pathname +1, or fields following may be
+                     overwritten. Maximum is 64 characters.)
+
+                     On entry, the first character of this field must contain
+                     a drive identifier letter, or a space character, which
+                     indicates the default drive.
+
+                     On return, if the drive identifier is valid, this field
+                     contains the pathname of the default directory on the
+                     specified drive, terminated by a byte containg hex 0, and
+                     with no leading drive letter or drive/directory
+                     delimiters (: or /). Characters after the hex 0
+                     terminator are unaltered.
+
+                     If the drive identifier is invalid, on return this field
+                     is unaltered, and result contains the value 1.
+
+
+   Function 8    Sets the default directory. Parameter is a group consisting
+                 of the following:
+
+                 o   a PIC 99 COMP-X field that contains the length of the
+                     pathname and a trailing space.
+
+                 o   a PIC X field of variable length that contains an ASCII
+                     string consisting of pathname, optionally preceeded by a
+                     drive specification, and terminated by a space character.
+                     The directory specified by pathname must already exist,
+                     otherwise no change occurs, and the value 1 is returned
+                     in result.
+
+
+Screen Control (Chapter 8)
+--------------------------
+   The parameter, function, for call X"A7" is a PIC 99 COMP-X field
+
+
+Move the Cursor to a Defined Position (Chapter 8)
+-------------------------------------------------
+   The parameter, result, for call X"E6" is a PIC 99 COMP-X field, and must be
+   specified, even though it is not used by the call.
+
+
+Calling Non-COBOL Subprograms (Chapter 9)
+-----------------------------------------
+   When the first two characters of the literal are underscores, the compiler
+   removes both underscores, not just one as stated.
+
+
+Your COBOL System Limits (Chapter 9)
+------------------------------------
+   4. Index keys
+
+   Add:
+       Maximum number of records containing        64k
+       the same duplicate key value.
+
+   7. Maximum nesting:
+       IFs (compiled code only)    255
+       PERFORMs                    Variable    ***
+       PERFORM n TIMES             Variable    ***
+       CALLs                       Variable    ***
+
+   9. Maximum Program Size
+
+   If a program has Report Writer syntax or uses the CHARSET "EBCDIC"
+   directive, the total size of the Data Division must be less than 64K.
+
+   There is currently a limit of 64K on the size of external data items.
+
+   The use of non-01 level items in the USING clause of a CALL statement is
+   limited to items within the first 64K of the containing 01 level. Exceeding
+   this limit causes the message:
+
+           LINKNUM LINKAGE PARMS > 64
+
+   to appear during code generation.
+
+   The Data Division of any program is limited to 6400K (6553600 bytes) due to
+   a problem with linking .OBJ files.
+
+   10. Sort Keys
+       Maximum Sort Key size    3000 characters
+
+
+Configuring ADIS (Chapter 11)
+-----------------------------
+   It should be noted that any program using ADIS to handle its screen
+   displays and/or keyboard uses the default options unless an ADICSTRL file
+   is available. If you are using one of the non-default configurations, or
+   have created your own configuration or amended the default configuration,
+   then the ADISCTRL file must be available every time programs using these
+   options are run. Consequently, it will be necessary to package the relevant
+   ADISCTRL file with any such program distributed to a third party.
+
+
+Altering ACCEPT/DISPLAY Options (Chapter 11)
+--------------------------------------------
+   The following option has been added to the ADIS Configuration Utility:
+
+   o   Left Justification of free format edited numerics. This allows you to
+       control whether free format edited numeric fields are left-justified as
+       they are entered.
+
+       1.  The default.  The field is not left-justified.
+       2.  The field is left-justified provided RM-numeric handling is
+           switched off.
+
+
+Altering ADIS Key Control (Chapter 11)
+--------------------------------------
+   In the table of function mappings, function 19 is "Clear to end of field"
+   not ".. end of line" as stated.
+
+
+File Sharing On a Multi-user System (Chapter 12)
+------------------------------------------------
+   Warning: Sharing files between applications running in separate OS/2
+   sessions on the same machine can cause the applications to hang, due to
+   timing problems. The problem is particularly apparent when two programs
+   attempt to synchronize, with one looping around a file access while waiting
+   for the other to change the file. Because of the way OS/2 time slices, the
+   tight loop can lock out the other program indefinitely.  A solution is to
+   program a delay into the loop which is longer than a time slice.
+
+
+Single and Multiple Record Locking (Chapter 12)
+-----------------------------------------------
+   The syntax required for single and multiple record locking, as described in
+   these sections, has been interchanged so the single record locking syntax
+   is specified for multiple record locking, and vice-verca. The relevant
+   paragraphs should read:
+
+   Manual Single Record Locking
+   ----------------------------
+   You can specify manual single record locking in your program by using the
+   LOCK MODE IS MANUAL clause in the File-Control entry.
+
+   Automatic Single Record Locking
+   -------------------------------
+   You can specify automatic single record locking in your program by using
+   the LOCK MODE IS AUTOMATIC clause in the File-Control entry.
+
+   Manual Multiple Record Locking
+   ------------------------------
+   You can specify manual multiple record locking in your program by using the
+   LOCK MODE IS MANUAL WITH LOCK ON MULTIPLE RECORDS clause in the File-
+   Control entry.
+
+   Automatic Multiple Record Locking
+   ---------------------------------
+   You can specify automatic multiple record locking in your program by using
+   the LOCK MODE IS AUTOMATIC WITH LOCK ON MULTIPLE RECORDS clause in the
+   File-Control entry.
+
+
+Callable File Handler
+Introduction (Chapter 13)
+-------------------------
+   The Callable File Handler is currently restricted such that it does not
+   handle devices (as opposed to files on disc) fully.
+
+
+Information Passed in the FCD at Open Time (Chapter 13)
+-------------------------------------------------------
+   All reserved areas should be initialized to LOW-VALUES.
+
+
+Information Passed for Other Operations (Chapter 13)
+----------------------------------------------------
+   The length of the record area pointed to by the record pointer (Offset 56
+   in the FCD) should be at least 4 bytes bigger than the maximum record
+   length for the file. This is to enable the file handler to process system
+   records present in indexed files.
+
+
+Key Definition (Chapter 13)
+---------------------------
+   Correction - bit 6 of key flags - set if duplicates allowed.
+
+
+Key Component Definition (Chapter 13)
+-------------------------------------
+   The component offset is the offset in the record of this key component,
+   starting at 0.
+
+
+COBOL and CodeView(R) (new)
+---------------------------
+   The EANIM directive enables source-level debugging of .EXE files with
+   CodeView. However, there are currently some limitations which are detailed
+   below.
+
+   To use CodeView, proceed as follows:
+
+       COBOL myprog,myprog.LST /ANIM /NOFORM /NOCONFIRM /COPYLIST
+                               /EANIM /SOURCE-EXT(LST)
+       LINK myprog/CO;
+       (On OS/2, LINK myprog/CO/NOP,,,PCOBOL+DOSCALLS;)
+
+       CV myprog
+
+                   The directives are:
+                       /ANIM   - Source level information is needed
+                       /EANIM  - Put source level information in .OBJ file
+                       /NOFORM /NOCONFIRM /COPYLIST
+                               - Make the listing file consistent
+                       /SOURCE-EXT(LST)
+                               - Use the .LST file for debugging source
+                       /CO     - Put the .OBJ debugging information in
+                                   the .EXE for CodeView.
+
+   Having completed these steps, you will see CodeView, with your COBOL source
+   code visible on the screen. You can now proceed to use CodeView in the
+   normal way to debug your COBOL program.
+
+   Limitations
+   -----------
+   1. There is no provision in CodeView for handling COBOL data types.
+
+   2. There are a few functions which are implemented such that great care is
+      needed when debugging with CodeView. It is recommended that you avoid
+      these areas when you wish to use CodeView.
+
+           Subscript Bound Checking (Compile with /NOBOUND)
+           Overlays                 (Compile with /NOSEG)
+           GO TO DEPENDING          (Don't single step this instruction.)
+
+   This CodeView support is in addition to the SYMDEB and CodeSmith(R) support
+   which is available using the /M/LI LINK options to put the line-number
+   information into the .MAP file.
+
+
+=====================<Part 2: Language Reference Manual >=====================
+
+
+The Nucleus (Chapter 3)
+-----------------------
+   The PROGRAM-ID Paragraph
+
+   An additional restriction of program-name exists with this release. The
+   program-name associated with a program must be the same as the name used
+   for the object file created by the compiler when that name is to be used in
+   a CALL statement within another program. If the name is not the same, then
+   whenever the program is called a new copy is loaded.
+
+
+Inter-Program Communication (Chapter 10)
+----------------------------------------
+   The Entry Statement
+
+   A program contained in another program should not include an ENTRY
+   statement. Results at run time are undefined if a nested program includes
+   this statement.
+
+Screen Handling (Chapter 15)
+----------------------------
+   Note that the clauses LEFTLINE, OVERLINE and GRID are for use with
+   add on products supplied by Micro Focus.
+
+
+======================<Part 3: Error Messages Manual >========================
+
+
+List of Messages Encountered During Intermediate Code Production (Chapter 2)
+----------------------------------------------------------------------------
+
+    <Severe Messages>
+
+    No.     Message
+    ---     --------
+    062     Cannot have COPY REPLACING withing REPLACE or vice-verca.
+
+            It is not possible to specify text replacement when text
+            replacement is already active.
+
+    122     Cannot use double-byte characters in alpahabet definition
+
+            When defining an ALPAHBET, you may not use double-byte characters.
+
+    199     LINE clause also specified in containing group
+
+            The LINE clause cannot appear in an elementary item when the
+            containing group contains a LINE clause.
+
+    279     REPORT line too long
+
+            The syntax you have specified is attempting to create a report
+            line that is longer than the maximum allowed.
+
+    284     Not allowed in REPORT SECTION
+
+            The syntax you have specified is not allowed within the REPORT
+            SECTION
+
+    320     Too many operands in one statement
+
+            The variety of reasons which cause this error make it impossible
+            to define the correct number of operands. Consequently, the
+            information is not in the Language Reference Manual, as stated.
+            Reduce the number of operands, or shorten long operands until the
+            error does not recur.
+
+    366     Variable length delimiter not allowed
+
+            You cannot use a reference modified item or a group containing an
+            OCCURS. . . DEPENDING ON clause in this context.
+
+    384     NEXT SENTENCE does not follow IF or ELSE
+
+            The NEXT SENTENCE syntax has been used incorrectly, or an IF or
+            ELSE statement is missing.
+
+    <Error Messages>
+
+    No.     Message
+    ---     -------
+    022     CALL parameter is literal (or LENGTH OF). BY CONTENT assumed.
+
+            This Error message has been downgraded to a warning - 124.
+
+
+    023     WORKING-STORAGE SECTION expected.  Start of WORKING-STORAGE
+            assumed
+
+            Your program begins with an 01-level entry.  It is assumed that
+            this is the first item of Working Storage.
+
+    024     VALUE clause literal does not conform to PICTURE.  Changed to
+            blanks
+
+            A numeric value has been specified for a non-numeric data item.
+            The data item will be filled with spaces.
+
+    025     MOVE edited field to edited field - treated as alphanumeric move
+
+            A move of one edited field to another is treated as an
+            alphanumeric move.
+
+    026     Source literal is non-numeric - substituting zero
+
+            A MOVE statement is trying to MOVE a non-numeric literal to a
+            numeric data item.  This cannot be done.  To avoid undefined
+            results, ZERO will be moved to the data item.
+
+    027     Literal is numeric - treated as non-numeric
+
+            A numeric literal is being used in relation to a non-numeric data
+            item, for example, as the VALUE of an 88 level attached to a non-
+            numeric data item. The literal will be converted to an
+            alphanumeric literal.
+
+
+    <Warning Messages>
+
+    No.     Message
+    ---     -------
+    116     ACCEPT qualifier used with display-only field - qualifier ignored
+
+            The qualifier used with a DISPLAY only field, or in a DISPLAY
+            statement, can only be used with an ACCEPT.  It is ignored.
+
+    117     Zero suppression follows floating insertion - treated as floating
+            insertion
+
+            As an example, PIC ++z.zz is treated as PIC +++.++.
+
+    118     Index-name belongs to different table
+
+            The index used to subscript a table item is not one used in the
+            INDEXED BY clause for this table.  The results will be
+            unpredictable.
+
+    119     Record < minimum size given in FD statement
+
+            The definition of a record following an FD clause is smaller than
+            the minimum size specified in the RECORD CONTAINS phrase of that
+            FD clause.
+
+    120     Record > maximum size given in FD statement
+
+            The definition of a record following an FD clause is larger than
+            the maximum size specified in the RECORD CONTAINS Phrase of that
+            FD clause.
+
+    121     VALUE clause in FILE or LINKAGE SECTION.  Clause processed as
+            comment
+
+            A data item in the File or Linkage Section cannot be given a
+            VALUE.  The VALUE clause specified will be ignored.
+
+    122     Period must be followed by a space
+
+            In all cases a period should be followed by a space.
+
+    123     Neither NAMED nor CHANGED specified.  Will be treated as
+            formatted DISPLAY
+
+            An EXHIBIT statement has been used without the NAMED or CHANGED
+            phrase. The resulting display will be formatted by separating
+            each item with a space.
+
+    124     CALL parameter is literal (or LENGTH OF). BY CONTENT assumed
+
+            This warning used to be an error - 22.
+
+    125     Punctuation character not followed by a space. Assume space
+
+            A punctuation character should be followed by a space.
+
+    126     Punctuation character not preceeded by a space. Assume space
+
+            A punctuation character should be preceeded by a space.
+
+    127     Double-Byte character(s) may be corrupted by use of this move
+
+            Not applicable to this product.
+
+
+    <Information Messages>
+
+    No.     Message
+    ---     -------
+
+    222     COMP-3 unsigned, converted to signed COMP-3
+
+    223     BLANK WHEN ZERO clause overrides the zero suppression PICTURE
+            string
+
+
+List of Run-Time System Error Messages  (Chapter 4)
+---------------------------------------------------
+   In the descriptions of run-time error messages 173 and 179, COBPATH should
+   be COBDIR.
+
+==============================================================================
+
+Microsoft and CodeView are registered trademarks of Microsoft Corporation
+Micro Focus is a registered trademark of Micro Focus Limited
+CodeSmith is a registered trademark of International Arrangements, Inc.
+                                                                                      

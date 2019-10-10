@@ -1,0 +1,27 @@
+#   INSTALLF    -   Make file for COBOLXXX.DLL
+#                   Copyright (c) 1988 Micro Focus Ltd.
+#
+#   Invoke with:
+#       MAKE INSTALLF               to create COBOLAPI.DLL with DOS,VIO,KBD
+#                                   and MOU calls included.
+#
+#       MAKE CALLSET=DOS INSTALLF   to create COBOLDOS.DLL with DOS calls only.
+#
+CALLSET=API                 # Default CALLSET is all function calls
+
+addfn.obj: addfn.asm addfun.mac
+    masm /d$(CALLSET) addfn;
+
+# Create COBOL$(CALLSET).DLL as the DLL containing the functions.
+cobol$(CALLSET).dll: install.obj addfn.obj
+    echo LIBRARY COBOL$(CALLSET)    ; COBOL$(CALLSET) is a DLL   > cobolos2.def
+#   echo DATA NONSHARED                                         >> cobolos2.def
+#   echo CODE LOADONCALL          ; load when needed            >> cobolos2.def
+    echo EXPORTS COBOL$(CALLSET) @1     ; define external name  >> cobolos2.def
+    link $**,$@,,doscalls,cobolos2.def/m;
+    del addfn.obj
+    del cobolos2.def
+    rem ***********************************************************
+    rem * Now copy COBOL$(CALLSET).DLL into your COBOL system directory, *
+    rem * or another directory on the OS/2 LIBPATH                *
+    rem ***********************************************************

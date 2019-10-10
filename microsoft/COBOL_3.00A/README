@@ -1,0 +1,20 @@
+Microsoft COBOL Optimizing Compiler Version 3.0 for MS OS/2 and MS-DOS
+
+Cobol compiler for MS-DOS ca. 1988.  Originally Micro Focus, but licensed to Microsoft.
+
+Same as: Micro Focus COBOL/2 Version 1.0.30 L2.0 revision 041
+
+See also http://www.edm2.com/index.php/Microsoft_COBOL
+
+This package is available from various places:
+
+* http://www.thaiall.com/downloadx/cobol3.zip
+* https://winworldpc.com/product/microsoft-cobol/3x
+* ftp://ftp.oldskool.org/pub/ANORMAL%20executable%20tools/DOSEXE%20Compilers%20Pack/microsoft/
+
+Installation:
+
+The SETUP.EXE assumes you are installing from either 5.25" or 3.5"
+floppy disks. To install on modern equipment, extract all the files to
+the root directory of a memory card or CDROM mounted as A:, B:, C:, D:
+or E:. When SETUP asks for a new floppy disk, just press enter.

@@ -1,0 +1,308 @@
+===============<Microsoft (R) COBOL 2.2 Compatibility Information>============
+
+This document is a supplement to the Microsoft COBOL Language Reference 
+Manual.  It describes how Microsoft COBOL 2.2 programs can be compiled and 
+executed with the current COBOL system.
+
+All known incompatibilities between the two systems are listed below. You may
+not encounter any of these problems, but if you do, following the suggested
+solutions will greatly reduce any work involved in getting your application
+running.
+
+The REBUILD utility is provided to restore corrupted files and to convert
+files from the Microsoft 2.2 format to the current format. For details of 
+this, see "REBUILD.DOC."
+
+Dialect Controlling Directives
+------------------------------
+When recompiling Microsoft 2.2 programs, select the Microsoft 2.2 option from
+the SETUP utility. This option performs the following functions :
+
+   (a) Set the following directives :
+
+           MS(2)       OSEXT(COB)      NO OSVS          NO MF         NO RW
+           NO ANS85    NO BOUND        OLDINDEX         NOTRUNC       AUTOLOCK
+           NO OPTIONAL-FILE            PERFORM-TYPE(RM) SIGN(EBCDIC)
+           RESTRICT(LINE-SEQUENTIAL)   RESTRICT(SEQUENTIAL)
+
+       (For details of the effects of these, see your operating guide.)
+
+   (b) Select the Microsoft 2.2 screen handling configuration. (For details of
+       this, see your operating guide under ADISCF.)
+
+NOMS switches off all specifically Microsoft syntax and semantics and is
+normally the default. This default may be changed with the SETUP facility.
+
+General
+-------
+Problem:  SOURCE CODE APPEARS TO EXTEND BEYOND COLUMN 72 and the compiler
+	  produces an error. This will occur if the standard TAB settings on 
+          the Microsoft 2.2 compiler have been changed (either by patching the 
+          run-time or by using the /O directive).
+Solution: Use the supplementary program TABX on a once-off basis to remove all
+	  tab settings from the source files.
+
+Difference:  ERROR MESSAGES AND NUMBERS returned by the compiler and the
+             runtime are different. This should present no problems, but is
+             something you should be aware of.
+
+There are some other minor cases where the current compiler produces errors
+when encountering missing periods or spelling errors (e.g. SOURCE COMPUTER in
+place of SOURCE-COMPUTER is no longer acceptable).
+
+Environment Division
+--------------------
+Problem:  EJECT IS ... (in SPECIAL-NAMES) is rejected by the compiler.
+Solution: Simply replace the word EJECT by the word FORMFEED.
+
+Problem:  COMPILER GIVES AN ERROR ON SPECIAL-NAMES paragraph header.
+Solution: This is probably because the SPECIAL-NAMES paragraph is not inside
+	  the ENVIRONMENT DIVISION. The current compiler now requires this.
+
+Problem:  SEGMENT-LIMIT IS ... This clause is now treated as documentary.
+Solution: This should cause no problems, but it is worth noting that
+          segmentation is an outdated feature of COBOL (the function it
+          performs is really an operating system function) and has been marked
+          by ANSI as an obsolete feature.
+
+Data Division
+-------------
+Problem:  ITEMS WITH PIC CLAUSES LIKE -.ZZ fail compilation. This is another
+	  area where the specification has been tightened up, and it will now
+	  produce errors for PICture strings containing a "-" (minus) followed
+	  by a "." (period), and or a "." (period) followed by a "Z."
+Solution: This is solved by either altering the "Z" characters to "-" 
+          characters or by adding a BLANK WHEN ZERO clause.
+
+Problem:  CERTAIN USES OF 'REDEFINES' DO NOT COMPILE. This is because the
+          specification of this has been tightened up. The following is an
+          example of this now illegal usage :
+                    03 A.
+                     ...
+                    03 B.
+                     ...
+                    03 C REDEFINES A.
+          (This is now illegal because C is not the next item of the same 
+          level after A).
+Solution: Move the redefinition so it is the next item of the same level after 
+          A.
+
+Procedure Division
+------------------
+Problem:  A CHAIN STATEMENT cannot be used within a program to CHAIN to 
+          itself.
+Solution: The solution to this is fairly simple. Instead of a program CHAINing
+          directly to itself, alter the statement to CHAIN to a small program
+          which just CHAINs back to the original program, passing any 
+          necessary parameters.
+
+Problem:  A CHAIN STATEMENT fails if an identifier in the USING clause is in
+          the LINKAGE SECTION.
+Solution: Create an item in WORKING-STORAGE, add a MOVE statement before
+	  the CHAIN statement, and alter the parameter name to refer to the
+          WORKING-STORAGE item instead of the LINKAGE item.
+
+Problem:  A PROGRAM RUN FROM THE COMMAND-LINE does not behave as if it were
+          CHAINED (i.e. the items in linkage are not set up). This facility is
+          no longer available.
+Solution: This facility can be easily worked around by either obtaining the
+          parameters by using an ACCEPT .. FROM COMMAND-LINE statement, or by
+	  creating an initial program that does this and then CHAINs to what
+          was originally the first program.
+
+Problem:  WHEN ATTEMPTING TO SOUND THE BELL by displaying an item containing
+          hexadecimal 7, a strange character (a diamond) appears on the screen
+	  instead. This is because the functionality of the ACCEPT / DISPLAY
+	  module has been changed (and considerably enhanced) in this system.
+Solution: Change this DISPLAY to the statement CALL X"E5".
+
+Problem:  PROGRAMS NO LONGER CLEAR THE SCREEN AUTOMATICALLY at the start of 
+          the run.
+Solution: If this behavior is still required, insert a statement of the form
+	  CALL X"E4" at the head of the Procedure Division.
+
+Problem:  SUBPROGRAM NOT FOUND DOES NOT ALWAYS PRODUCE FATAL ERROR.
+          When a subprogram is not found, the program no longer stops with an
+          error if there is an ON OVERFLOW clause on the CALL statement.
+	  Now the ON OVERFLOW path will be followed if the subprogram is not
+          found (and also if there is not enough memory, of course).
+Solution: It is very unlikely that any application is relying on a program to
+          stop with a fatal error! However, if this is the case, the logic
+          within the ON OVERFLOW clause should be changed to handle this.
+          Another affect of this is that an error when coding the program name
+          may cause the ON OVERFLOW clause to be followed rather than
+	  stopping: this is something you should be aware of.
+
+Problem:  READY TRACE and RESET TRACE statements do not have any effect.
+Solution: Specify the compiler directive TRACE (since the default situation is
+	  to ignore these statements) and the statements will function
+          correctly.
+
+Problem : A DECLARATIVES statement is being rejected by the compiler.
+Solution: You probably have the DECLARATIVES statement after the paragraph
+          header. The specification of this has been tightened up and now the
+	  compiler insists that the DECLARATIVES statement immediately follows
+          the SECTION header, rather than the paragraph header.
+
+
+File Input And Output
+---------------------
+Problem:  WHEN OPENING A NON-EXISTENT FILE 'EXTEND' the system does not
+          create it.
+Solution: This can be remedied by placing the word OPTIONAL after the
+          word SELECT for ths file.
+
+Problem:  THE 'WAIT' CLAUSE ON A 'READ' BEHAVES DIFFERENTLY. This is actually
+	  ignored by the current compiler: instead the file status item is
+          updated to indicate that a record is locked.
+Solution: The easiest way to handle this is to check for the 'Record locked'
+          status and loop back to re-read the record.
+
+Problem:  LOCKING SYNTAX IS IGNORED in the START statement.
+Solution: This can be solved by altering these statements and moving the
+          appropriate locking semantics to OPEN or READ statements and the
+          SELECT statement for the file in question.
+
+Problem:  RELATIVE RECORDS ARE NOT DELETED if they are rewritten with the
+          first byte containing LOW-VALUES.
+Solution: Using this "feature" of the Microsoft 2.2 system was not recommended
+          (hence the warning against it in the manual), but it should not 
+          prove difficult to replace the relevant program logic with a simple 
+          DELETE statement.
+
+Problem:  The current version of REBUILD does not allow files to be 
+          reorganized such that the keys are in descending order.
+Solution: If any of your programs rely on this ordering of the records, it can
+          be simulated by first positioning on the last record in the file
+          (using a START <= statement with HIGH-VALUES in the key) and then
+          using the READ PREVIOUS syntax.
+
+	  Note that to enable the READ PREVIOUS syntax, you must set the
+	  directive MF(3)--this may enable other reserved words. See your
+          Operating Guide for details of this.
+
+Problem:  Incorrect filenames are being used by programs.
+Solution: This is probably because all filenames must now be terminated by a
+	  space, whereas previously a null byte would have termnated the
+          name.
+
+Screen Handling
+---------------
+Problem:  INTEGER NUMERIC FIELDS ARE ACCEPTed DIFFERENTLY. This is because in
+	  the new system only numeric-edited fields insert digits from right
+          to left.
+Solution: Change the PICTURE string from 9(n) to Z(n) and the insertion
+          behavior will be the same.
+
+Problem:  THE SCREEN IS SOMETIMES SCROLLED WHEN A PROGRAM TERMINATES. This
+	  happens only if the cursor is on the last line of the screen when 
+          the STOP RUN statement is obeyed. The request for the DOS prompt 
+          causes the scroll.
+Solution: Include the following call to alter the position of the DOS
+	  prompt:  CALL X"E6" USING result, parameter. (For details of this
+	  subroutine, see Chapter 8 of the operating guide.)
+
+Problem:  COLUMN PLUS 1 does not give the correct intervening space under some
+          circumstances.
+          For instance, the lines
+                  02 LINE 1 COLUMN 1 ....
+                  02        COLUMN PLUS 1 ....
+          will not put a space in column 2, while
+                  02 LINE 1 COLUMN 1 ....
+                  02 LINE 1 COLUMN PLUS 1 ....
+          will work correctly.
+Solution: Including an explicit LINE clause into the offending line solves 
+          this.
+
+Problem:  ALPHABETIC FIELDS will no longer allow non-alphabetic characters to
+          be accepted into them.
+Solution: This is another tightening up of the COBOL specification. Change the
+	  PIC A(n) of the field in question to PIC X(n).
+
+Extension Subroutines
+=====================
+The following Microsoft V2.2 Extension subroutines have been implemented in a
+slightly different way in the current compiler:
+
+     EXIST  RENAME REMOVE  COMMAND UPCASE  LOCASE  EXCODE  KBDAVAIL CURPOS
+
+To avoid a possible clash with other dialects, the subroutine names have been
+prefaced with _MS (underline MS), and the length of parameters must be passed
+to the routines (this is performed by the LENGTH OF syntax).  Please note that
+the BY REFERENCE and the BY CONTENT syntax requires the ANS85 directive.  If
+the ANS85 directive is not enabled it will be necessary to remove all the BY
+REFERENCE and BY CONTENT clauses to achieve a successful compile.  If the 
+WARNING"3" directive is enabled, warning messages will be generated at compile
+time, but the code generated will be fully operational.  
+
+The following list summarizes the recommended changes:
+
+ Old : CALL "EXIST" USING file-name, status.
+ New : CALL "_MSEXIST"    USING BY REFERENCE         file-name,
+                                BY CONTENT LENGTH OF file-name, 
+                                BY REFERENCE         status.
+
+ Old : CALL "RENAME"  USING old-file-name, new-file-name, status.
+ New : CALL "_MSRENAME"   USING BY REFERENCE         old-file-name, 
+                                BY CONTENT LENGTH OF old-file-name,
+                                BY REFERENCE         new-file-name, 
+                                BY CONTENT LENGTH OF new-file-name, 
+                                BY REFERENCE         status.
+
+ Old : CALL "REMOVE"  USING file-name, status.
+ New : CALL "_MSREMOVE"   USING BY REFERENCE         file-name, 
+                                BY CONTENT LENGTH OF file-name, 
+                                BY REFERENCE         status.
+
+ Old : CALL "COMMAND"  USING comm-line.
+ New : CALL "_MSCOMMAND"  USING BY REFERENCE         comm-line, 
+                                BY CONTENT LENGTH OF comm-line.
+
+ Old : CALL "UPCASE"  USING data-name, length, status.
+ New : CALL "_MSUPCASE"   USING BY REFERENCE         data-name,
+                                BY CONTENT LENGTH OF data-name, 
+                                                     length,
+                                           LENGTH OF length, 
+                                BY REFERENCE         status.
+
+ Old : CALL "LOCASE"  USING data-name, length, status.
+ New : CALL "_MSLOCASE"   USING BY REFERENCE         data-name, 
+                                BY CONTENT LENGTH OF data-name, 
+                                                     length,
+                                           LENGTH OF length, 
+                                BY REFERENCE         status.
+
+ Old : CALL "EXCODE"  USING exit-code.
+ New : CALL "_MSEXCODE"   USING BY REFERENCE         exit-code,
+                                BY CONTENT LENGTH OF exit-code.
+
+ Old : CALL "KBDAVAIL" USING status.
+ New : CALL "_MSKBDAVAIL" USING BY REFERENCE         status.
+
+ Old : CALL "CURPOS" USING line-number, column-number.
+ New : CALL "_MSCURPOS"   USING BY REFERENCE         line-number, 
+                                                     column-number.
+
+Documentation
+-------------
+  In the current manuals, reference is sometimes made to COMP fields. Such
+  references are intended to be to BINARY fields rather than the Microsoft
+  2.2 USAGE IS COMP, since the latter are treated in the same way as DISPLAY
+  items.
+
+Add-on Products From Micro Focus (R)
+------------------------------------
+  You should be aware that the range of Micro Focus add-on products
+  available for use with this compiler are designed to work with the default
+  system configuration. Because of this, there may be a few unexpected results
+  when using them with programs compiled under a different configuration.
+
+Microsoft is a registered trademark of Microsoft Corporation.
+Micro Focus is a registered trademark of Micro Focus Limited.
+
+
+
+
+
+
+

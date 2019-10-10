@@ -1,0 +1,7 @@
+; module definition file for EXTFH under OS/2
+LIBRARY INITINSTANCE    ; EXTFH is a DLL
+PROTMODE                ; needs to run in protected mode
+DATA NONSHARED          ; expects OS/2 to duplicate data areas for each task
+CODE LOADONCALL         ; load when needed
+EXPORTS EXTFH @1        ; assumes that the PROGRAM-ID is EXTFH
+EXPORTS _MFSTOP @2      ; enable DOSFREEMODULE call to work

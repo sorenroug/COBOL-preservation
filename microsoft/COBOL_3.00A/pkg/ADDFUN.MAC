@@ -1,0 +1,128 @@
+;************************************************************************
+;*									*
+;*  ADDFUN.MAC		;Macro to create a table entry for Installable	*
+;*			;functions to the RTE				*
+;*									*
+;*  Copyright (C) 1988 Micro Focus Ltd. 				*
+;*									*
+;************************************************************************
+;*									*
+;* The static interface works by installing named subprogram entry-	*
+;* points into the Cobol run-time, using the RTE exported function	*
+;* GFNAEP, which accepts entry-point nodes of the following format:	*
+;*									*
+;*		even			; word-align entry-point node	*
+;*		dq	all ffh		; allow 8 bytes for system use	*
+;*		dd	entry-pt	; dword = entry-pt of function	*
+;*		db	0		; byte = flags (zero)		*
+;*		db	9		; byte = entry-point name size	*
+;*		db	'ENTRYNAME'	; bytes = entry-point name	*
+;*									*
+;* The macro ADDFUN is an abbreviated way of declaring such nodes.	*
+;* The ENTRY-PT you specify in the node can either be the actual	*
+;* entry point into your external package, or it may be the address	*
+;* of some intermediate set-up code if necessary to do housekeeping	*
+;* on the way into/out of the external function.			*
+;*									*
+;************************************************************************
+
+;************************************************************************
+;*									*
+;*	Macro ADDFUN - add installable functional entry point node	*
+;*									*
+;*	    To install function 'MYFUNCTION' at address FNADDRESS	*
+;*	    type:							*
+;*		    addfun FNADDRESS,'MYFUNCTION',PREFN,PARMCOUNT	*
+;*				(the last 2 parameters are optional)	*
+;*									*
+;*	    The optional parameter PREFN is a function to be executed	*
+;*		before FNADDRESS gets control.	An example of this is	*
+;*		in VIO.INC from the COBOLAPI.DLL routines.		*
+;*	    The optional parameter PARMCOUNT forces the target routine	*
+;*		to be CALLed rather than JMPed to.			*
+;*		Normally FNADDRESS is reached with a JMP instruction	*
+;*		but if FNADDRESS is a CALL GATE of different priviledge *
+;*		this JMP instruction is invalid, and a CALL is required *
+;*		Specifying this parameter will force ADDFUN to create	*
+;*		a JMP-to-able target which will CALL FNADDRESS. 	*
+;*									*
+;************************************************************************
+
+addfun	macro	fentry, fntext, fnpre, parmcount
+	local	fnsize, fnname
+	;;  fentry	- Real external routine
+	;;  fntext	- Name this is known by in COBOL
+	;;  fnpre	- (optional) routine to call before external routine
+	;;  parmcount	- (optional) # parameters to pass to a different
+	;;			priviledge level CALL GATE
+	;;			parmcount is measured in WORDS
+	;;			parmcount = 0 can be used to force a CALL
+	;;			    but where SI,DI are used to save the
+	;;			    return address.  This means that the
+	;;			    CALL preserved SI,DI.
+	;;			if parmcount is omitted, the routine will
+	;;			    JMP'd to.
+
+	;;  fnsize	- length of fntext
+	;;  fnname	- place to store fntext
+
+ifndef	fentry
+	extrn	fentry:far		;; Declare the external routine
+endif
+
+ifnb	<fnpre parmcount>		;; Stepping-stone is required
+_TEXT	segment 			;; class CODE segment
+x&fentry:				;; Stepping-stone entry point
+					;;  'x' prefix is assumed valid.
+
+ifnb	<fnpre> 			;; pre-routine is required
+	call	fnpre			;; so CALL it
+endif	;nf <fnpre>
+ifnb	<parmcount>			;; Call gates with different priveledge
+					;; cannot receive a JMP instruction.
+if	parmcount   ne	0		;; If # parameters is non-zero
+	push	bp			;; Save BP
+	REPT	parmcount		;; transfer parmcount parameter words
+	mov	bp,sp			;; Next parameter is at
+	push	[bp+parmcount*2+4]	;; [BP+parmcount*2+4]
+	ENDM
+else	;parmcount = 0 implies that SI,DI will be saved by the CALL
+	;Hence we can POP the return address into them, and make the
+	;CALL followed by PUSH PUSH RET.
+
+	pop	si			; Get return address offset
+	pop	di			; Get return address segment
+
+endif	;parmcount  ne	0
+endif	;parmcount
+ifnb	<parmcount>			;; Cannot JMP
+	call	fentry			;; so CALL the target routine
+if	parmcount   ne	0
+	pop	bp			;; Restore BP
+else	;parmcount  eq	0
+	push	di			; Set return address segment
+	push	si			; Set return address offset
+endif	;parmcount  ne	0
+	retf				;; And return to caller.
+else	;b <parmcount>			;; Can JMP...
+	jmp	fentry			;; JMP to the target routine.
+endif	;nb <parmcount>
+_TEXT	ends				;; Finish the class CODE segment
+endif	;nb <fnpre parmcount>
+
+IXFUN	segment 			;; Add node to a class DATA segment
+	even				;; must begin on EVEN boundary
+	dq	0ffffffffffffffffh	;; RTS work area for chain information
+					;; (Names are stored in a binary tree
+					;; for fast access.)
+ifnb	<fnpre parmcount>		;; If Stepping-stone is present,
+	dd	x&fentry		;; use the Stepping-stone entry point
+else
+	dd	fentry			;; use the actual routine entry point
+endif
+	db	0			;; RTS flag byte
+	db	fnsize			;; size of fntext
+fnname	db	fntext			;; COBOL name associated with this node
+fnsize	equ $ - fnname			;; Calculate the size of fntext
+IXFUN	ends				;; End this bit of class DATA segment
+	endm				;  End the ADDFUN macro

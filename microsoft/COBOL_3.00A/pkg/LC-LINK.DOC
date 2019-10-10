@@ -1,0 +1,60 @@
+Calling non COBOL objects from COBOL objects.
+---------------------------------------------
+
+This text file describes how to create, link and run programs containing COBOL
+objects which call non COBOL objects.
+
+To call a non COBOL routine from COBOL, in the CALL statement prefix the
+name of the routine with "x_", where x should be a letter as follows :-
+
+       L - for a routine in Lattice C
+
+The compiler will remove the "x_" from the name, and set up necessary registers
+and parameter ordering for the relevant non COBOL environment. On return from
+the routine, returned values will be handled correctly.
+
+So, for example, the following COBOL statement should be used to call the
+Lattice C routine "fun1".
+
+           CALL "C_fun1" USING p1, p2, p3.
+
+
+Compile your COBOL program as follows
+
+   COBOL <filename> VSC2 RTNCODE-SIZE(4) LITLINK
+
+
+Compiling of the non COBOL objects, and the subsequent linking with the
+COBOL objects, is different for each type. In every case it is necessary to
+link in an additional object which will be used to establish the environment for
+the non COBOL object prior to entering that object.
+
+
+Lattice C
+=========
+Your Lattice C objects must be compiled with the option -mL (large model) as
+linking to large module Lattice C routines only is supported at present.
+
+Prior to linking, create the file LINITC.OBJ in your working directory by
+copying either LINITC31.OBJ or LINITC32.OBJ to it, depending on whether you are
+using Lattice C v3.1x or v3.2x. Also, copy the file LINITIO.OBJ into your
+working directory. Link your COBOL and C objects/libraries as follows
+
+   LINK COBOL_objects+LINITC+LINITIO+C_objects,,,LCOBOL+LC+C_libraries/m;
+
+Note: the library LC.LIB is supplied with your copy of Lattice C.
+
+Before running your program, you may wish to allocate a memory pool for the C
+routines. If no pool is specified 64k will be allocated, but if you wish to
+specify a smaller/larger pool size set up the environment variable "POOL"
+containing the size of the pool you wish allocated (in 1024 byte blocks).
+
+
+Running the program
+
+To run your program, just type the name of the first COBOL object linked
+and your program will start to execute.
+
+
+
+Lattice is a registered trademark of Lattice Inc.

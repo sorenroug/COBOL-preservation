@@ -1,0 +1,86 @@
+Calling non COBOL objects from COBOL objects.
+---------------------------------------------
+
+This text file describes how to create, link and run programs containing COBOL
+objects which call non COBOL objects.
+
+To call a non COBOL routine from COBOL, in the CALL statement prefix the
+name of the routine with "x_", where x should be a letter as follows :-
+
+       C - for a routine in Microsoft(R) C
+       F - for a routine in Microsoft FORTRAN
+       P - for a routine in Microsoft Pascal
+
+The compiler will remove the "x_" from the name, and set up necessary registers
+and parameter ordering for the relevant non COBOL environment. On return from
+the routine, returned values will be handled correctly.
+
+So, for example, the following COBOL statement should be used to call the
+Microsoft C routine "fun1".
+
+           CALL "C_fun1" USING p1, p2, p3.
+
+
+Compile your COBOL program as follows
+
+   COBOL <filename> VSC2 RTNCODE-SIZE(4) LITLINK
+
+
+Compiling of the non COBOL objects, and the subsequent linking with the
+COBOL objects, is different for each type. In every case it is necessary to
+link in an additional object which will be used to establish the environment for
+the non COBOL object prior to entering that object. Currently, only one of the
+initialisation objects can be included in each program. Hence, it is not
+possible to call, for example, Microsoft C and Microsoft FORTRAN routines from
+the same COBOL program, or any pair of programs to be linked together.
+
+Microsoft C v4.x and 5.x
+========================
+Your Microsoft C objects must be compiled with the option /Awlf (large model
+with ss not = ds) since linking to large module Microsoft C routines only is
+supported at present.
+
+Copy the file MINITC.OBJ into your working directory before linking. Link your
+COBOL and C objects/libraries as follows
+
+   LINK COBOL_objects+MINITC+C_objects,,,LCOBOL+C_libraries/m;
+
+For Microsoft C v5.0, it is necessary to add the /noe option when linking, to
+endure the libraries are searched correctly.
+
+   LINK COBOL_objects+MINITC+C_objects,,,LCOBOL+C_libraries/m/noe;
+
+
+Microsoft FORTRAN
+=================
+Your FORTRAN objects must be compiled as large model, which is the default mode.
+
+Copy the file MINITF.OBJ into your working directory before linking. Link your
+COBOL and C objects/libraries as follows
+
+Note: when using MINITF, the stack size is limited to 8k and cannot be increased
+during linking.
+
+   LINK COBOL_objects+FORTRAN_objects+MINITF,,,LCOBOL+FORTRAN_libraries/m;
+
+
+Microsoft Pascal
+================
+Copy the file MINITP.OBJ into your working directory before linking. Link your
+COBOL and C objects/libraries as follows
+
+Note: when using MINITP, the stack size is limited to 8k and cannot be increased
+during linking.
+
+   LINK COBOL_objects+MINITP+pascal_objects,,,LCOBOL+pascal_libraries/m;
+
+
+
+Running the program
+
+To run your program, just type the name of the first COBOL object linked
+and your program will start to execute.
+
+
+
+Microsoft is a registered trademark of Microsoft Corporation.

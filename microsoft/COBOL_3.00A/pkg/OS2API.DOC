@@ -1,0 +1,264 @@
+
+OS2API.DOC                                                  v1.1.2    5 Sep 88
+
+                  Calling OS/2 API Functions from COBOL
+                  =====================================
+
+Introduction
+------------
+   This document describes how OS/2 API functions can be accessed from COBOL,
+   both during Animation and in linked programs. It also describes the Install
+   Function feature that allows access to these functions during Animation.
+
+
+Calling OS/2 API Functions from COBOL
+-------------------------------------
+   One of the benefits of OS/2 is the ability to call the API functions
+   (operating system routines) directly from a high level language. COBOL
+   supports this ability using the following techniques.
+
+   The OS/2 API functions use the Pascal convention for passing parameters,
+   i.e. parameters are passed in reverse order to the normal COBOL convention.
+   In order to achieve this, parameters should be listed in reverse order
+   following the call.
+
+   API function names must be defined in the OBJ in such a way that they have
+   to be satisfied at link time (i.e. statically linked). This is achieved by
+   prefixing the names with double-underscore ("__"). The method for animating
+   these calls will only work with API calls prefixed in this way.
+
+   For example, to sound the bell from a COBOL program running under OS/2,
+   using the API function, DosBeep:
+
+           call "__DosBeep" using
+               by value ws-duration
+               by value ws-frequency
+       where
+           03 ws-duration  pic 9(4) comp-5.
+           03 ws-frequency pic 9(4) comp-5.
+
+   Using this convention, the API function returns a status in the COBOL
+   register RETURN-CODE (See Notes below). Hence, after the above CALL, you
+   could check the status by :
+
+           if return-code not = 0
+               display "DosBeep error - " return-code
+               stop run
+           end-if
+
+
+   When calling OS/2 API functions, the parameters passed will be either single
+   word, double word or pointers. Single word parameters should be defined as
+   pic 9(4) comp-5, double word as pic 9(9) comp-5. Both are passed using the
+   "by value" clause of the call ... using statement. Pointers can be passed by
+   specifying the data-item being referenced by the pointer in the "by
+   reference" clause of a call ... using statement.
+
+   e.g. the DosBeep function, above, uses single word parameters. The following
+   example uses a double word and a pointer parameter :
+
+       To change directory using the OS/2 API function, DosChDir, which has two
+       parameters, the first being a pointer to the directory name (ASCII
+       string terminated by a null), and the second being a double word
+       containing zero :
+
+           call "__DosChDir" using
+               by value dw-zero
+               by reference dir-name
+       where
+           03 dir-name.
+               05 filler   pic x(6) value "\dir-a".
+               05 filler   pic 9(2) comp-x value 0.
+           03 dw-zero      pic 9(8) comp-5 value 0.
+
+
+   On OS/2, animation of programs containing OS/2 API calls is easy. The
+   only additional requirement over normal animation is to install the names
+   of the functions in the Animator run-time system before trying to execute
+   a call. See below for full details.
+
+   Many of the API functions can be used in programs that run on DOS, provided
+   the application is created as an OS/2 application and then bound. However,
+   it is not possible to animate such programs on DOS. See your COBOL Operating
+   Guide, Chapter 4, for more details of binding.
+
+   See your OS/2 documentation for further details of the OS/2 API function
+   calls.
+
+   Notes.
+       o   In order to use RETURN-CODE you must use the VSC2 directive when
+           compiling your program. If you specify a RETURN-CODE size other than
+           two (using the RTNCODE-SIZE directive) then the status will be in
+           the least significant 2 bytes of RETURN-CODE. The contents of the
+           other bytes is not determined. See Chapter 2 in the COBOL Operating
+           Guide for more information.
+
+       o   Other documentation provided with this or earlier releases of the
+           software may indicate that the prefix "P_" can be used to obtain
+           the Pascal convention for parameter passing, without the need to
+           express the parameters in reverse order. This is correct for linked
+           programs. However, Animator does not recognise the prefix, and,
+           therefore, programs using this convention cannot be animated.
+
+
+
+Animating OS/2 API Function Calls
+---------------------------------
+   The InstallF (install function) feature allows programs containing calls
+   to the OS/2 API functions to be animated under OS/2, by adding the named
+   functions to the Animator run-time system.
+
+   When you wish to animate a program containing calls to the OS/2 API
+   functions, compile the program for animation, and commence animation in the
+   normal way.
+
+           PCOBOL  myprog,NUL ANIM ;
+           PANIMATE myprog
+
+   or
+
+           PCOBOL myprog,NUL XNIM ;
+
+   When the Animator has started, you must install the relevant functions
+   before the program calls them. To do this, you can use the Animator "Do"
+   facility to call the install-function subprogram, COBOLAPI.DLL. Enter:
+
+           D
+
+   to invoke the Do facility, then:
+
+           call "cobolapi.dll"
+
+   The program, including any API calls can now be animated normally.
+   Alternatively, you CAN code the relevant calls into your program to remove
+   the need to use the Animator "Do" facility every time you animate the
+   program. However, you must remember to remove the calls before creating an
+   object file for linking.
+
+   For example insert the line:
+
+           call "cobolapi.dll"
+
+   as the first executed statement in your program.
+
+   Notes.
+
+       o   It is not possible to animate programs containing OS/2 API function
+           calls under DOS.
+
+       o   It is expected that you will load the install-function sub-programs
+           in the COBOL system directory, which should be included on the OS/2
+           LIBPATH. If you have loaded the product using SETUP this should have
+           been done for you. You may wish to place these programs in another
+           directory, which is also on the OS/2 LIBPATH. If you do this, you
+           must specify the full path name when using the Animator "Do"
+           facility to call one of these sub-programs, unless they are in the
+           current directory, when no path name is required.
+
+       o   In some instances, you may wish to save a little memory. If your
+           program only uses API calls prefixed by DOS, you can call the
+           sub-program COBOLDOS.DLL instead. The same can be done for calls
+           prefixed by MOU, KBD and VIO, and any combination of these
+           sub-programs can be called by successive use of "Do". COBOLAPI.DLL
+           is simply a combination of the four groups. (All these five
+           sub-programs are provided with this software.)
+
+       o   The install-function sub-program can be invoked at any time. It is
+           possible, for example, to Zoom you program until it gets to an API
+           call, when the Animator will return an error 173. At this point, the
+           relevant sub-program can be called, and the zoom continued. The call
+           will now be successfully executed.
+
+       o   Most of the VIO calls, and some of the other calls, are installed in
+           such a way that the user screen is displayed before entering one of
+           these functions, and the Animator screen displayed when the function
+           is complete. This is to ensure that the operation acts on the user
+           screen, not the Animator screen. (When Zooming, the user screen is
+           displayed all the time.)
+
+
+Creating your own Install-function subprograms
+----------------------------------------------
+   You can create your own install-function sub-program to add new OS/2 API
+   function calls, when the OS/2 API is expanded. To do this, you will need a
+   copy of Microsoft MASM v5.0 or later, a link library to resolve the API
+   calls used (e.g. DOSCALLS.LIB for existing OS/2 1.0 API functions), and the
+   Microsoft linker and MAKE utilities.
+
+   Create an include file containing one ADDFUN line for each function you
+   wish to install, and give it a suitable 3-character filename with extension
+   .INC. Each ADDFUN line consists of the macro name, ADDFUN, in column 1,
+   followed by up to four parameters:
+
+   1 - External name
+   2 - COBOL name (must be upper case, and include prefix)
+   3 - Preparsing function name (optional)
+           See VioWrtTTY for an example. The function $$USERSCREEN is used to
+           cause the user screen to be displayed before calling the function,
+           and the Animator screen to be redisplayed on return.
+   4 - Number of words of parameters. Only needed if CALL GATE is not the same
+       privilege (optional)
+           See DosBeep for an example. Installed functions are accessed with a
+           JMP instruction which cannot be targeted on a CALL gate unless it is
+           at the same privilege level. A JMP to a different level will cause
+           an exception. If you get this, simply add the fourth parameter and
+           the ADDFUN macro will CALL rather than JMP to the routine.
+
+   Note: If parameter 3 is not required but parameter 4 is, you should specify
+         a null (or blank) parameter 3. (See DosBeep for an example of this.)
+
+   For example:
+
+         addfun DosBeep,           "__DOSBEEP",          ,             2
+         addfun DosChdir,          "__DOSCHDIR"
+         addfun VioWrtCharStrAtt,  "__VIOWRTCHARSTRATT", $$USERSCREEN
+
+   Look at the .INC files supplied, and ADDFN.ASM for further details of the
+   contents of an include file.
+
+   Edit the file ADDFN.ASM to change the FUNCTIONLIST parameter to include the
+   new 3-character name. For example:
+
+           FUNCTIONLIST    equ     <DOS,VIO,KBD,MOU,WIN>
+
+   Ensure you have
+
+       -   the files INSTALL.OBJ, INSTALLF, ADDFN.ASM, ADDFUN.MAC, and the .INC
+           file you have created, in the current directory;
+
+       -   DOS.INC, KBD.INC, MOU.INC and VIO.INC in current directory, if you
+           wish to rebuild COBOLAPI.DLL to include all the functions;
+
+       -   DOSCALLS.LIB on the path defined by the LIB environment, or in the
+           current directory;
+
+       -   MAKE, MASM and LINK available on the system PATH, or in the current
+           directory.
+
+   Delete any existing ADDFN.OBJ file. Build the required sub-program by
+   entering
+
+           MAKE CALLSET=xxx INSTALLF
+
+   where xxx is the 3-character name you chose for your .INC file.
+
+   This procedure will produce a .DLL file called COBOLxxx.DLL, which you must
+   copy into a directory included on the OS/2 LIBPATH, e.g. the COBOL system
+   directory. The new sub-program can now be used in the same way as the
+   supplied sub-programs. If you omit the CALLSET=xxx parameter, the
+   sub-program COBOLAPI.DLL will be created using the .INC files DOS, KBD, MOU,
+   and VIO, and the new one you have created.
+
+   For example, if you wish to add Presentation Manager Functions to the
+   InstallF functionality, you will need to create WIN.INC with the necessary
+   information, and add WIN to the FUNCTIONLIST line in file ADDFN.ASM. Then
+   you can remake COBOLAPI.DLL or create COBOLWIN.DLL using the above MAKE
+   commands.
+
+   Note: if the name of the link library file is other than DOSCALLS.LIB, you
+         will need to change the LINK statement in the MAKE file, INSTALLF, to
+         reference this library instead of DOSCALLS.LIB.
+
+Microsoft is registered trademark of Microsoft Corporation
+Micro Focus is a registered trademark of Micro Focus Limited
+

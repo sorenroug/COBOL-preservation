@@ -1,0 +1,916 @@
+REBUILD.DOC                                                   v1.1.3   5 Sep 88
+
+File Management Utility - REBUILD
+
+
+Introduction
+
+The File Management Utility provides a number of facilities to improve the
+management of data files. The principle facilities offered are:
+
+       o  Indexed file reorganization
+       o  Recovery of corrupt indexed files
+       o  Conversion from Microsoft v1 and v2 file formats
+
+
+Indexed file reorganization.
+
+   As indexed files are updated by adding, deleting and altering records,
+   the index and data structures become disjointed, making processing less
+   efficient. In addition, space left by deleted records is not always reused,
+   thus making the file bigger than it need be. After a large number of changes
+   have been made, it is worth reorganizing an indexed file to rebuild the data
+   and indexes in an ordered sequential fashion and reclaim any free space,
+   thus providing optimum performance and integrity.
+
+
+Recovery of corrupt indexed files
+
+   Indexed files that have a corrupt index can be recovered using this utility.
+   Indexes can become corrupt if, for example, a power loss occurs when a
+   program has opened and changed an index file, but has not yet closed it. A
+   flag in the file, indicating that this has occurred, will be detected and
+   reported by subsequent accesses to that file. No further operations can be
+   done on the file until it has been recovered.
+
+   The utility will rebuild just the indexes, which is all that is required for
+   the recovery. If the index (.IDX) is already in existence, then the utility
+   will attempt to recover the index using the information in that file. If the
+   file is missing, then the utility will re-create an index using the
+   information provided by the user.
+
+
+Conversion from Microsoft(R) COBOL v1 and v2 file formats
+
+   The data file formats used by this COBOL system are "Micro Focus(R) File
+   Formats" for sequential, relative and indexed data files. These formats are
+   incompatible with the formats used in Microsoft COBOL versions 1 and 2. The
+   File Management Utility has a facility to convert files in Microsoft v1 and
+   v2 formats for use with this COBOL.
+
+
+Operation
+
+The utility is a batch utility, which accepts all its parameters from the
+command line, or from parameter files named on the command line.
+
+The format of the command line is
+
+for conversions
+
+       REBUILD in-file,out-file /s.. [/o..] [/r..] [/k..] [/i] [/v]
+
+for rebuild index
+
+       REBUILD in-file [/k..] [/i] [/v]
+
+for reorganization
+
+       REBUILD in-file,out-file [/x..] [/i] [/v]
+
+where  in-file  is the name of the file to be converted/rebuilt/reorganized
+
+       out-file is the name of the file to contain the result. This MUST be
+                different from in-file. For a reorganization, the root of the
+                name must be different from that of in-file.
+
+       /s       defines the format of the input file
+       /o       defines the organization of the input file
+       /r       defines the record structure of the input file
+       /k       defines the key structure of the output file
+       /i       causes REBUILD to display information
+       /v       causes REBUILD to display a running record count
+       /x       indicates the key-of-reference
+
+                Some of the options are followed by parameters providing the
+                information. The option letter can be separated from its
+                parameters by an optional colon (:). Options may be placed
+                anywhere within the command, and are free-format with spaces
+                allowed between any fields.
+
+The utility will assume that an indexed file reorganization is required if no
+/s option is specified, and that an index rebuild is required if no /s option
+is specified and no output file is specified.
+
+A rebuild with no options can only be achieved if the key information in the
+index file is not corrupt. If the index (.IDX) part of the indexed file does
+not exist, then it is possible to completely rebuild it by additionally
+specifying a key structure option. This process also makes it possible to
+replace the key structure of an existing indexed file with an alternative,
+simply by running REBUILD in this mode with a new key specification.
+
+
+The /s option - source (input file) format
+
+   The /s option is used for the conversion process to define the format of the
+   input file. If the /s option is missing, then it will be assumed that a
+   rebuild or reorganization is required.
+
+   Allowed parameters are ms1 and ms2, where
+
+       /s:ms1  indicates the input file is a Microsoft COBOL v1 file
+       /s:ms2  indicates the input file is a Microsoft COBOL v2 file
+
+   Notes: The Output file will always be in "Micro Focus File Format", for use
+          with this system.
+
+
+The /o option
+
+   The /o option defines the organization of the file to be converted. If the
+   option is omitted, indexed is assumed. Therefore, the option is not needed
+   for index rebuild and reorganization, since these only work with indexed
+   files. The organization is identified by a single letter parameter,
+   where
+
+       /o:s  indicates the input file is  sequential
+       /o:r  indicates the input file is  relative
+       /o:i  indicates the input file is  indexed
+
+   Note: The output file will always be the same organization as the input
+         file.
+
+
+The /r option
+
+   The /r option defines the record format of the file. It is required only for
+   conversions. The parameter is principally required for defining the record
+   structure of the output file.
+
+   The r is followed by a letter, f for fixed length format, v for variable
+   length format. This is used to determine the recording mode of the output
+   file. To access files created using the v parameter, the RECORDING MODE V
+   clause will be required in the FD of the accessing program. RECORDING MODE F
+   is the default.
+
+   The f is followed by the length of the fixed records, in characters; the v
+   is followed by the minimum and maximum lengths of the variable length
+   records, separated by a hyphen (-). In the latter case, if the two sizes are
+   the same, then a variable format file will be created with fixed length
+   records.
+
+   The lengths may be omitted altogether for converting Microsoft files with
+   fixed length records and Microsoft v1 relative files, but not Microsoft v2
+   relative files. If so omitted, the record size will be taken as the length
+   of the first record in the file.
+
+   For relative files, the lengths given must be exact. If not, the records
+   will not be correctly transferred, but no warning may be given. For
+   sequential and indexed files, if a fixed length is given which is smaller
+   that the maximum record size of the input file, an error will occur. If the
+   fixed length given is larger than the maximum record size, or the input file
+   has variable records, and the fixed size is the same as the maximum, all the
+   records will be written at the length specified, padded with ASCII spaces.
+
+   If the /r option is omitted, /r:f is assumed.
+
+   For example, the following indicate an output file with:
+
+    /r:f       - fixed format, all records the same length as the first record
+                 in the input file
+    /r:f235    - fixed format file, records of 235 characters
+    /r:v       - variable format file, all records the same length as the first
+                 record in the input file
+    /r:v76-76  - variable format file, records of 76 characters
+    /r:v23-678 - variable format file, records between 23 and 678 characters
+
+    (See Notes 4 and 5.)
+
+
+The /k option
+
+   The /k option defines the key structure for an indexed file. This is used
+   for converting Microsoft v1 files whose key information file (.KEY) is
+   missing, and for rebuilding the index of an indexed file where the index
+   part is missing or corrupt. Microsoft v2 indexed files contain the key
+   information within the data part of the file. Hence, this option is not
+   needed even if the key file (.KEY) is missing.
+
+   The parameters for this option define the keys. The definition of a key is
+   separated from the definition of the next key by a colon(:). Each key can
+   be defined as a number of parts (split key), each part being separated by a
+   comma (,). The key part is defined by start character position and length
+   in characters, separated by a plus (+) or (L). Alternate keys (those other
+   than the first defined) can be terminated by an additional parameter, the
+   character d, if they are defined as "WITH DUPLICATES".
+
+   For example:
+
+    /k:1+20 defines a single key, starting at character position 1, length 20
+           characters
+
+    /k:5+5:20+1d:40+2,43+10
+           defines three keys, the third being split, and the second allowing
+           duplicates. The first key, the record key, starts at character
+           position 5, length 5; the second key, an alternate key allowing
+           duplicates, starts at 20, length 1; and the third key, a split
+           alternate key, has two parts, the first starting at 40, length 2,
+           the second at 43, length 10.
+
+   Note: The first character position in a record is position 1.
+
+
+The /x option
+
+   The /x option defines the key-of-reference, which is used to define the
+   order in which the data will be written when reorganizing an indexed file.
+   The parameter for this option is the number of the key to be used. The
+   record key is 0, the alternate keys are numbered, starting at zero, in the
+   order they are specified in the SELECT clause of the creating program.
+
+   If no /x option is specified then the record key (key 0) is assumed.
+
+   For example:
+
+    /x:2 - will cause the data to be organized in the order specified by the
+           third key in the SELECT clause of the creating program.
+
+
+The /i option
+
+   When the /i option is present, REBUILD will display information about the
+   input and output files, including record lengths, file type and, for indexed
+   files, key structure.
+
+   Note that it is not possible to obtain information about a file without
+   actually invoking one of the operations.
+
+
+   e.g., the information for the conversion of a fixed length file
+
+       REBUILD oldfile,new/s:ms2/i
+
+   is
+
+       Conversion successful - records read = 0055
+
+       Input file : OLDFILE
+         Record length  - 0000000041
+
+       Output file : NEW
+         Organization - Indexed
+         Recording mode - Fixed
+         Record length - 00041
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000006
+
+   e.g., the information for the conversion of a variable length file
+
+       REBUILD oldfile,new/s:ms2/r:v40-100/i
+
+   is
+
+       Conversion successful - records read = 0055
+
+       Input file : OLDFILE
+         Largest record length  - 0000000100
+         Smallest record length - 0000000045
+         Average record length  - 0000000075
+
+       Output file : NEW
+         Organization - Indexed
+         Recording mode - Variable
+         Maximum record length - 00040
+         Minimum record length - 00100
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000006
+         Key - 00001 with duplicates
+           0000000010+0000000005
+           0000000020+0000000003
+
+   The information for the index rebuild
+
+       REBUILD mast/i
+
+       Rebuild successful - records read = 0049
+
+       File : MAST
+         Largest record length  - 0000000353
+         Smallest record length - 0000000353
+         Average record length  - 0000000353
+         Organization - Indexed
+         Recording mode - Fixed
+         Maximum record length - 00353
+         Minimum record length - 00353
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000009
+
+
+The /v option
+
+   When the /v option is present, REBUILD will display a record count which it
+   increments as it processes the file. This is useful if you wish to keep
+   track of how REBUILD is progressing.
+
+   Note: Do not use the /v option if you are redirecting the output. This
+   option is only intended for interactive use.
+
+
+Examples.
+
+       REBUILD oldms001.dat,ms001.dat /s:ms1 /o:i /r:f120 /k:1+20
+       REBUILD oldms001.dat,ms001.dat /s:ms1 /k:1+20
+
+   These will convert a Microsoft v1 indexed file, with fixed length records of
+   120 characters, and a single key of 20 characters starting at position 1,
+   where the key file (.KEY) is missing. If the key file was present, then the
+   /k option would not be needed.
+
+
+       REBUILD oldms001.dat,ms001.dat/s:ms2/o:i/r:f120
+       REBUILD oldms001.dat,ms001.dat /s:ms2
+
+   These will convert a Microsoft v2 indexed file, with fixed length records of
+   120 characters. The key information is extracted from the start of the data
+   file. Hence, this conversion can take place even if the index file (.KEY) is
+   missing or corrupt.
+
+
+       REBUILD oldrt549.seq,rt549.seq /s:ms2 /o:s /r:v5-1000 /i
+
+   This will convert a Microsoft v2 sequential file, with variable length
+   records of between 5 and 1000 characters.
+
+
+       REBUILD badms001.dat,ms001.dat/i
+
+   This will reorganize the given file, assuming it is an indexed file in
+   "Micro Focus File Format". The data will be written in the order of the
+   record key.
+
+
+       REBUILD badms001.dat,ms001.dat/x:3
+
+   This will reorganize the given file, assuming it is an indexed file in
+   "Micro Focus File Format". The data will be written in the order of the
+   third alternate key.
+
+
+       REBUILD ms001.dat
+
+   This will rebuild the index of the given file, assuming it is an indexed
+   file in "Micro Focus File Format", and that the index (.IDX) file is still
+   present, and the key information held therein is not corrupt.
+
+
+       REBUILD ms001.dat/k:1+20/i
+
+   This will rebuild the index of the given file, assuming it is an indexed
+   file in "Micro Focus File Format". The index (.IDX) file does not need to
+   exist, and will be ignored if it does. It will be completely re-created using
+   the key definition specified on the command, which need not correspond to
+   the key definition used when the file was created.
+
+
+Parameter files
+
+At any point on the command line, an @ character followed by a filename will
+indicate that parameters should be taken from the named file. The contents of
+the file will be treated as if they were part of the command line, replacing
+the @filename.
+
+The parameter file is an ASCII text file. The parameters can be specified in
+free format, with spaces being non-significant. (Line ends are treated as
+spaces.) The file must not be bigger than 1024 bytes. Comments may be included
+in the file by preceding them with an asterisk (*). Anything following the
+asterisk will be treated as comment, up to the end of the line.
+
+For example
+
+       REBUILD badms001.dat,ms001.dat @ms001.par
+
+where ms001.par is an ASCII text file containing the following line
+
+ /s:ms1 /o:i /r:v100-200 /k:1+20,25+5:40+12:60+3,85+10d
+
+or the following lines (which are equivalent to the line above)
+
+     *         Works master file -  conversion parameters
+
+       /s:ms1             * Microsoft v1 indexed file
+       /o:i
+       /r:v   100 - 200   * Variable length records
+       /k:
+            1 +  20   ,   * prime key - first part
+           25 +   5   :   *           - 2nd part
+
+           40 +  12   :   * 1st alternate key
+
+           60 +   3   ,   * 2nd alternate key (with duplicates) - first part
+           85 +  10 d     *                                     - second part
+
+
+If a parameter in a parameter file is in error, then a suitable message will be
+displayed, but the parameter file line will not, only the command line.
+
+
+Information
+
+All information displayed by the utility can be redirected to a text file using
+standard redirection, > for creating a new file and >> for extending an
+existing file. Hence, the results of a number of conversions in a batch stream
+can be collected as the stream is processed, and viewed on completion.
+
+For example
+
+       REBUILD oldms001.dat,ms001.dat /s:ms1 /k:1+20 /i           > rebuild.prt
+       REBUILD oldrt549.seq,rt549.seq /s:ms2 /o:s /r:v5-1000 /i  >> rebuild.prt
+       REBUILD badms001.dat,ms001.dat @ms001.par                 >> rebuild.prt
+
+   will cause the information for all three conversions to be placed in the
+   text file, rebuild.prt, one after the other. This can be viewed later using
+   a text editor or the "type" command.
+
+   Note: Do not use the /v option when you are redirecting the output.
+
+
+Notes.
+
+1. You are recommended to take a backup copy of the file being rebuilt,
+   converted or reorganized prior to using REBUILD. REBUILD takes every
+   precaution to prevent the source files being corrupted, but it can happen if
+   the command line is incorrectly specified. Additionally, when doing an index
+   rebuild, the original index IS overwritten, so it would be wise to preserve
+   it in case there are any subsequent problems. For indexed files in the
+   format for use with this COBOL, both the data and the index (.IDX) file
+   should be saved.
+
+
+2. Microsoft COBOL 2.2 allows the specification of keys in the SELECT clause of
+   a program to differ from the keys actually contained in the file, provided
+   the keys at variance are not referenced. This COBOL will check, when the
+   file is opened, that the keys in the file match the description in the
+   SELECT clause, and return an appropriate error status if not.
+
+   If this occurs, use the /i option when converting the file to get a display
+   of the key structure in the file, compare this with the key structure
+   defined in the program, and either change the program to match the file, or
+   use REBUILD again on the converted file to rebuild the index, specifying the
+   full key description required for the file using the /k option.
+
+
+3. The facility to rebuild the index of an indexed file does not retain the
+   information held in the original about free space in the data file.
+   Consequently, this free space cannot be reused, and your file may grow
+   bigger than necessary. To overcome this problem you are recommended to
+   reorganize the file after you have rebuilt the index, thus removing all of
+   the free space.
+
+   (Free space consists of the spaces in the data file occupied by deleted
+   records. Information about these areas is normally retained, and the areas
+   reused for new records as appropriate.)
+
+   When the rebuild process is complete, the data file will be amended by
+   adding a blank free space pointer record to the end of the file. Each time
+   you rebuild the index a new record will be added. Consequently, several
+   rebuilds, without intervening reorganizations, will cause the data file to
+   grow. Again, this problem can be relieved by reorganizing the file, causing
+   all the free space pointer records will be removed, and a single new blank
+   one added.
+
+
+4. When converting a file, if the /r option is used with the v parameter then
+   the file will be created in variable format. Programs expect files to be in
+   fixed format by default. For each file created in variable format it is
+   necessary to specify a RECORDING MODE IS V(ARIABLE) phrase in every FD
+   referencing that file. Alternatively, if every file is converted with a /r:v
+   parameter, then programs can be compiled with the RECMODE(V) directive which
+   will make the default recording mode variable for every FD.
+
+   If the recording mode of a file does not match that specified (or defaulted
+   to) in the FD, then an error status will be given when the file is opened.
+
+   If you are converting a system from Microsoft COBOL 2.2 you may prefer to
+   specify the /r:v option on EVERY conversion, and to use the RECMODE(V)
+   directive when compiling your programs.
+
+
+5. When converting a Microsoft v2.2 file, if you do not know the maximum record
+   length, and the longest record is longer than the first record in the file,
+   then running rebuild without a /r option will cause an error. However, if
+   the /i option is used, the length of the longest record read so far is
+   given. Using this in the /r option and rerunning the conversion will cause
+   more records to be converted. The error may occur again, in which case
+   repeat the above procedure until the file is fully converted.
+
+   Example. The first pass
+
+       rebuild oldfile,new/s:ms2/i
+
+   gives
+
+       ***Error on input file - record size > specified - records read = 0001
+
+       Input file : OLDFILE
+         Largest record length  - 0000000293
+         Smallest record length - 0000000253
+         Average record length  - 0000000546
+
+       Output file : NEW
+         Organization - Indexed
+         Recording mode - Fixed
+         Maximum record length - 00253
+         Minimum record length - 00253
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000009
+
+   The second record was bigger than the first, so rebuild failed after reading
+   it. Rerun rebuild adding a /r option using this largest record length.
+
+       rebuild oldfile,new/s:ms2/r:f293/i
+
+   This gives:
+
+       ***Error on input file - record size > specified - records read = 0005
+
+       Input file : OLDFILE
+         Largest record length  - 0000000353
+         Smallest record length - 0000000253
+         Average record length  - 0000000339
+
+       Output file : NEW
+         Organization - Indexed
+         Recording mode - Fixed
+         Maximum record length - 00293
+         Minimum record length - 00293
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000009
+
+    The sixth record is bigger than the maximum given. So we need to repeat the
+    procedure with the new largest record length.
+
+       rebuild oldfile,new/s:ms2/r:f353/i
+
+    This gives a succesful conversion:
+
+       Conversion successful - records read = 0049
+
+       Input file : OLDFILE
+         Largest record length  - 0000000353
+         Smallest record length - 0000000119
+         Average record length  - 0000000261
+
+       Output file : NEW
+         Organization - Indexed
+         Recording mode - Fixed
+         Maximum record length - 00353
+         Minimum record length - 00353
+         Keys description :
+           Start char   Length
+         Key - 00000
+           0000000001+0000000009
+
+   Note that we could have used /r:v253-353 on the first retry, and /r:v119-353
+   on the second. This would have created a variable format file. To read
+   records in this file, all programs would have to have a RECORDING MODE IS V
+   phrase added to the relevant FD.
+
+
+
+Warnings
+
+Depending on the operation selected, some command line options are unnecessary.
+In these cases, the incorrect usage will be indicated, but the option will be
+ignored and processing will continue.
+
+PLEASE NOTE that the option may be correct, but omission of other information
+has caused REBUILD to select the wrong process. If this is the case, correct
+the command line and rerun.
+
+
+    **WARNING** - Option ignored - /k option not needed for a reorganization
+
+       A key definition option has been used when an indexed file
+       reorganization operation has been requested. The option is ignored.
+       (Alternatively, a conversion is required but the /s option has been
+       omitted.)
+
+
+    **WARNING** - Option ignored - /r option not needed for a reorganization
+    **WARNING** - Option ignored - /r option not needed for index rebuild
+
+       A record definition option has been used when an indexed file
+       reorganization or index rebuild operation has been requested. The option
+       is ignored. (Alternatively, a conversion is required but the /s option
+       has been omitted.)
+
+
+    **WARNING** - Option ignored - /k option not needed for ms2 conversion
+
+       A key definition option has been used when an Microsoft v2 conversion
+       has been requested. This is not required since the key information is
+       held in the data file of a Microsoft v2 indexed file.
+
+
+    **WARNING** - Option ignored - /x option not needed for index rebuild
+    **WARNING**   Option ignored - /x option not needed for ms2 conversion
+
+       A key of reference option has been used when an action other than
+       indexed file reorganization has been selected. The option is ignored.
+       (Alternatively, a reorganization is required, but either the output file
+       name has been omitted, or a /s option incorrectly specified.)
+
+
+Errors
+
+When an error is encountered, the command line is displayed, followed by an
+error message. For command line errors, a carat (^) is displayed under the
+point in the command line that the error was detected. The program sets the
+return code to a value other than zero to indicate the type of error that has
+occurred. The code can be tested in a batch stream using the IF ERRORLEVEL
+command.
+
+The most likely cause of errors is specifying parameters to rebuild that do not
+correctly represent the input file. In most cases it is difficult for the
+utility to determine that such a mistake has been made, since most data files
+carry insufficient information to make them easy to identify. Consequently, the
+error presented by the utility may not obviously identify the cause.
+
+
+
+Command line errors
+
+If a command line error occurs, the return code will be set to 9.
+
+    Input file same as output file
+
+       The output file name must be different from the input file name.
+
+
+    Invalid command - must specify output file for conversion
+
+       An output file name must be present when converting.
+
+
+    Invalid option
+
+       An invalid option has been specified. The allowed options are defined
+       above.
+
+
+    Invalid source format
+
+       The format parameter of the /s option is incorrect. It must be one of
+       the formats defined above.
+
+
+    Invalid organization
+
+       The organization parameter of the /o option is incorrect. It must be one
+       of the organizations defined above.
+
+
+    Invalid record type - 'F' or 'V' expected
+
+       The record type parameter of the /r option is incorrect. It must be
+       either f for fixed length records, or v for variable length records.
+
+
+    Invalid record parameter -  '-' expected
+
+       The record length parameter of the /r option, v type, is incorrect. It
+       must be minimum record length and maximum record length separated by a
+       hyphen (-).
+
+
+    Invalid record length - cannot be zero
+
+       Fixed length records of length zero have been defined. This is illegal.
+       (This may be due to incorrect use of separator characters.)
+
+
+    Invalid record lengths - maximum must not be less than maximum
+
+       Variable length records with a maximum length that is smaller than the
+       maximum length have been defined. This is illegal. (This may be due to
+       incorrect use of separator characters.)
+
+
+    Invalid key structure - '+' expected
+
+       A key part parameter of the /k option is incorrect. It must be start
+       character position and length separated by a plus (+), or an L.
+
+
+    Invalid key start - cannot be zero
+
+       One of the keys defined has a start character position of zero, which is
+       illegal. (This may be due to incorrect use of separator characters.)
+
+
+    Invalid key length - cannot be zero
+
+       One of the keys defined has a zero length, which is illegal. (This may
+       be due to incorrect use of separator characters.)
+
+
+    Invalid key spec - key not contained in record
+
+       One of the keys, as defined, is not wholly contained in the record. This
+       is illegal. For variable length records, the key must be wholly
+       contained in the minimum length record. Note that this error will only
+       occur if the record length is specified on an /r option.
+
+
+    Invalid organization - must be indexed for index rebuild
+
+       An organization option has been used, and it specifies a file type other
+       than indexed, when an index rebuild operation has been requested. Remove
+       the /o option. (Alternatively, a conversion is required but the /s
+       option and the output filename has been omitted.)
+
+
+    Invalid organization - must be indexed for reorganization
+
+       An organization option has been used, and it specifies a file type other
+       than indexed, when an indexed file reorganization operation has been
+       requested. Remove the /o option. (Alternatively, a conversion is
+       required but the /s option has been omitted.)
+
+
+    Parameter file not found
+
+       The parameter file specified on the command line cannot be found. Check
+       the file exists, and the specification used on the command line is
+       correct.
+
+
+    Invalid command line
+
+       The command line contains an error other than those described above.
+
+
+Conversion/rebuild errors
+
+    ***Error on input file - file not found
+
+       The input file cannot be found. Check that the filename you entered is
+       correct, and the file does actually exist. For reorganization or index
+       rebuild ensure that the index file (.IDX) exists for the given indexed
+       data file.
+
+       Return code set to 1.
+
+    ***Error on input file - file must be indexed for reorganisation
+
+       The input file is not a Micro Focus format indexed file. Check that you
+       have the correct file, and that you mean to do a reorganisation. Have
+       you missed a /s option?
+
+       Return code set to 1.
+
+
+    ***Error on input file - file is not an MS2 indexed file
+
+       The input file is not a Microsoft 2.2 indexed file. Check that you have
+       the correct file.
+
+       Return code set to 1.
+
+
+    ***Error on input file - file must be indexed for rebuild
+
+       You have chosen to rebuild the index of a Micro Focus format indexed
+       file. However, the file specified is of the correct format (Micro Focus
+       format) but is not an indexed file. Check that you have the correct
+       file, and have selected the correct action
+
+       Return code set to 1.
+
+
+    ***Error on input file - not MF indexed or variable format"
+
+       The input file is not a Micro Focus format indexed file, or a Micro
+       Focus format variable format file. Unless using REBUILD in conversion
+       mode (/s option present) the input file must be of this format.
+
+       It is possible that you intended to do a conversion, but omitted the /s
+       option.
+
+       Return code set to 1.
+
+
+    ***Error on input file - attempt to read past eof
+
+       When reading the next record, the end-of-file was encountered
+       prematurely. Ensure that you have selected the correct format for the /s
+       option, and that the input file is not corrupt.
+
+       Note : This error is likely to occur if you attempt to convert a
+              Microsoft v1 sequential or relative file with a /s:ms2 option.
+
+       The output file is closed, and should be useable, if not complete.
+
+       Return code set to 1.
+
+
+    ***Error on input file - bad file structure
+
+       The structure of the input file is not consistent with the format
+       selected by the /s and /o options. Ensure that these parameters are
+       correct, and that the file is not corrupt.
+
+       Return code set to 1.
+
+
+    ***Error on input file - invalid /x:key-of-reference
+
+       The number specified in a key-of-reference option (/x) exceeds the
+       number of keys for the given file. Check the key required, and try
+       again.
+
+       Return code set to 1.
+
+
+    ***Error on input file - record size > specified
+
+       An attempt has been made to read a record from the input file which is
+       larger than the maximum record size specified on the /r option. Either
+       the specified size is incorrect, or the file is not of the format or
+       organization specified, or is corrupt.
+
+       Return code set to 1.
+
+
+    ***Error on input file - status xx
+    ***Error on input file - status 9/yyy
+
+       An error, other than one of the above input file errors, has occurred
+       whilst processing the input file. Possible causes are:
+
+           - the file does not exist
+           - a hardware error has occurred whilst opening or reading the file
+           - the file is corrupt.
+
+       The status xx is an ANS85 file status. If the first byte is a 9, then
+       the status yyy is a COBOL run time error number. See the Error Messages
+       Manual for more details of run time errors.
+
+       Check that you have correct /s and /o options, and that the file is
+       valid.
+
+       The output file is closed, and should be useable, if not complete.
+
+       Return code set to 1.
+
+
+    ***Error on input file - record length < min or > max
+
+       An attempt has been made to write a record to the output file which is
+       larger than the maximum or smaller than the minimum. This error should
+       only occur for conversions in which a /r option with a v parameter has
+       been specified. In this case, repeat the conversion with the /i option,
+       and use the input file statistics displayed to adjust the
+       maximum/minimum sizes given on the /r option.
+
+       Return code set to 1.
+
+
+    ***Error on output file - status xx
+    ***Error on output file - status 9/yyy
+
+       An error has occurred processing the output file. Either the file cannot
+       be created, or a hardware error has been encountered on opening or
+       writing the file, or the parameters specified are incorrect. This error
+       will also occur if the out-file name is missing for a conversion.
+
+       The status xx is an ANS85 file status. If the first byte is a 9, then
+       the status yyy is a COBOL run time error number. See the Error Messages
+       Manual for more details of run time errors.
+
+       Return code set to 2.
+
+
+    ***Invalid parameter combination
+
+       The parameters specified on the command line are not compatible with
+       each other.
+
+       Return code set to 9.
+
+
+
+System parameters
+
+A set of special parameters can be specified immediately following REBUILD on
+the command line. These parameters are present for use during development,
+testing and support of REBUILD. Each parameter consists of two slashes
+followed by a letter followed by a space.
+
+       //q - prevent banners from being displayed.
+       //v - display version number of REBUILD program itself.
+
+
+
+Micro Focus is a registered trademark of Micro Focus Ltd.
+Microsoft is a registered trademark of Microsoft Corporation.

@@ -1,0 +1,25 @@
+addfun MouClose,		"__MOUCLOSE"		 ,		,0
+addfun MouDeRegister,		"__MOUDEREGISTER"	 ,		,0
+addfun MouDrawPtr,		"__MOUDRAWPTR"		 ,$$USERSCREEN	,0
+addfun MouFlushQue,		"__MOUFLUSHQUE" 	 ,		,0
+addfun MouGetDevStatus, 	"__MOUGETDEVSTATUS"	 ,		,0
+addfun MouGetEventMask, 	"__MOUGETEVENTMASK"	 ,		,0
+addfun MouGetHotKey,		"__MOUGETHOTKEY"	 ,		,0
+addfun MouGetNumButtons,	"__MOUGETNUMBUTTONS"	 ,		,0
+addfun MouGetNumMickeys,	"__MOUGETNUMMICKEYS"	 ,		,0
+addfun MouGetNumQueEl,		"__MOUGETNUMQUEEL"	 ,		,0
+addfun MouGetPtrPos,		"__MOUGETPTRPOS"	 ,		,0
+addfun MouGetPtrShape,		"__MOUGETPTRSHAPE"	 ,		,0
+addfun MouGetScaleFact, 	"__MOUGETSCALEFACT"	 ,		,0
+addfun MouInitReal,		"__MOUINITREAL" 	 ,		,0
+addfun MouOpen, 		"__MOUOPEN"		 ,		,0
+addfun MouReadEventQue, 	"__MOUREADEVENTQUE"	 ,		,0
+addfun MouRegister,		"__MOUREGISTER" 	 ,		,0
+addfun MouRemovePtr,		"__MOUREMOVEPTR"	 ,$$USERSCREEN	,0
+addfun MouSetDevStatus, 	"__MOUSETDEVSTATUS"	 ,$$USERSCREEN	,0
+addfun MouSetEventMask, 	"__MOUSETEVENTMASK"	 ,		,0
+addfun MouSetHotKey,		"__MOUSETHOTKEY"	 ,		,0
+addfun MouSetPtrPos,		"__MOUSETPTRPOS"	 ,$$USERSCREEN	,0
+addfun MouSetPtrShape,		"__MOUSETPTRSHAPE"	 ,$$USERSCREEN	,0
+addfun MouSetScaleFact, 	"__MOUSETSCALEFACT"	 ,		,0
+;addfun MouSynch,		 "__MOUSYNCH"	      ;Function not yet supported

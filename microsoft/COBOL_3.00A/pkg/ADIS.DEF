@@ -1,0 +1,6 @@
+; module definition file for ADIS under OS/2
+LIBRARY INITINSTANCE    ; ADIS is a DLL
+PROTMODE                ; needs to run in protected mode
+DATA NONSHARED          ; expects OS/2 to duplicate data areas for each task
+CODE LOADONCALL         ; load when needed
+EXPORTS ADIS @1         ; assumes that the PROGRAM-ID is ADIS

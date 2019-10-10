@@ -1,0 +1,338 @@
+The following documentation pieces are provided with the COBOL software
+package.
+
+  Microsoft(R) COBOL Operating Guide
+    Conversion Series 3 Operating Guide
+    Conversion Series 5 Operating Guide
+    Error Messages Manual
+  Microsoft COBOL Language Reference Manual
+  Microsoft Utilities User's Guide
+  Microsoft Editor User's Guide
+  Pocket Guide
+
+
+
+Your COBOL software package includes a set of either 5 1/4" diskettes or 3
+1/2" diskettes.
+
+Contents of the 5 1/4" Diskettes
+   Disk 1 - SETUP Disk
+       SETUP.EXE       SETUP.INI       README.DOC      MS2-2.DOC       
+       PACKING.LST     TTDEMO.BAT      TTDEMO.CMD*     TICTAC.CBL      
+       SRTDEM.BAT      SRTDEM.CMD*     SORTDEMO.CBL
+
+   Disk 2 - DOS compiler
+       COBOL.EXE       ANIMATE.EXE     LCOBOL.LIB
+
+   Disk 3 - Library #1
+       CHECK.LBR
+
+   Disk 4 - Library #2
+       ANIMATOR.LBR    UTILS.LBR       HELP.LBR        ADISCTRL
+       COBCLI.LBR
+
+   Disk 5 - Library #3
+       GENERATE.LBR    ADIS.OBJ        ADISINIT.OBJ    ADISKEY.OBJ
+       ADIS.LNK        IXSIO.OBJ       EXTFH.OBJ       EXTERNL.OBJ
+
+   Disk 6 - OS/2 compiler
+       PCOBOL.EXE*     PANIMATE.EXE*   PCOBOL.LIB*     CBLBIND.LIB
+       CBLBIND.NOT     _SORT.DLL*      ADIS.DEF*       IXSIO.DEF*
+       EXTFH.DEF*      EXTERNL.DEF*
+
+   Disk 7 - Communications
+       V-ISAM.DLL*     RCOBOL.LIB      PRCOBOL.LIB*    RTSCALL.OBJ
+       RTSBIN.ASM      MCS.OBJ         MCSETUP.EXE     COBOLAPI.DLL*
+       COBOLDOS.DLL*   COBOLKBD.DLL*   COBOLMOU.DLL*   COBOLVIO.DLL*
+       ADDFUN.MAC*     ADDFN.ASM*      INSTALLF*       INSTALL.OBJ*
+       MOU.INC*        VIO.INC*        KBD.INC*        DOS.INC*
+       OS2API.DOC*
+
+   Disk 8 - Screen/Keyboard Configuration
+       ADISCF.EXE      KEYBCF.EXE      KEYBCF.DOC
+
+   Disk 9 - REBUILD and Utilities
+       REBUILD.EXE     REBUILD.DOC     MC-LINK.DOC     MINITC.ASM
+       MINITC.OBJ      MINITP.ASM      MINITP.OBJ      MINITF.ASM
+       MINITF.OBJ      LC-LINK.DOC     LINITC31.ASM    LINITC31.OBJ
+       LINITC32.ASM    LINITC32.OBJ    LINITIO.C       LINITIO.OBJ
+       HELPADCF.LBR
+
+   Disk 10 - Conversion Series 3. Conversion Utilities for Ryan McFarland
+       CONVERT3.EXE    TABX.EXE        CNVCOMP6.OBJ
+
+   Disk 11 - Conversion Series 5. Conversion Utilities for Data General
+       CONVERT5.EXE    REFORM5.EXE
+
+   Disk 12 - Microsoft Utilities #1
+       EXEHDR.EXE      EXEMOD.EXE      EXEPACK.EXE     LIB.EXE
+       LINK.EXE        MAKE.EXE        SETENV.EXE
+       \ME\            CALLTREE.EXE
+       \ME\EXT\        EXT.DOC         EXT.H           EXTHDR.OBJ
+                       EXTHDRP.OBJ     SKEL.C          SKEL.DEF
+
+   Disk 13 - Microsoft Utilities #2
+       API.LIB*        APILMR.OBJ*     BIND.EXE*       DOSCALLS.LIB*
+       EXEC.EXE*       ILINK.EXE*      IMPLIB.EXE*     MEGREP.EXE
+
+   Disk 14 - Microsoft Editor
+       ECH.EXE         EXP.EXE         FIXSHIFT.COM    M.EXE
+       MEP.EXE*        MESETUP.EXE     RM.EXE          SETUP.SUS
+       UNDEL.EXE
+       \INI\           BRIEF.INI       EPSILON.INI     QUICK.INI
+                       WS.DLL          WS.ZXT
+
+
+Contents of the 3 1/2" Diskettes
+   Disk 1 - SETUP and DOS Compiler
+       SETUP.EXE       SETUP.INI       MFCOMPAT.DOC    MS2-2.DOC
+       PACKING.LST     README.DOC      SETUP.DOC       TTDEMO.BAT
+       TTDEMO.CMD*     TICTAC.CBL      SRTDEM.BAT      SRTDEM.CMD*
+       SORTDEMO.CBL    COBOL.EXE       ANIMATE.EXE     LCOBOL.LIB
+
+   Disk 2 - Library #1
+       CHECK.LBR       COBCLI.LBR      ANIMATOR.LBR    ADISCTRL
+       UTILS.LBR       HELP.LBR
+
+   Disk 3 - Library #2
+       GENERATE.LBR    ADIS.OBJ        ADISINIT.OBJ    ADISKEY.OBJ
+       ADIS.LNK        IXSIO.OBJ       EXTFH.OBJ       EXTERNL.OBJ
+       RCOBOL.LIB      PRCOBOL.LIB*    RTSCALL.OBJ     RTSBIN.ASM
+       MCS.OBJ         MCSETUP.EXE
+
+   Disk 4 - OS/2 Compiler
+       PCOBOL.EXE*     PANIMATE.EXE*   PCOBOL.LIB*     CBLBIND.LIB
+       CBLBIND.NOT     _SORT.DLL*      ADIS.DEF*       IXSIO.DEF*
+       EXTFH.DEF*      EXTERNL.DEF*    V-ISAM.DLL*     COBOLAPI.DLL*
+       COBOLDOS.DLL*   COBOLKBD.DLL*   COBOLMOU.DLL*   COBOLVIO.DLL*
+       ADDFUN.MAC*     ADDFN.ASM*      INSTALLF*       INSTALL.OBJ*
+       MOU.INC*        VIO.INC*        KBD.INC*        DOS.INC*
+       OS2API.DOC*
+
+   Disk 5 - REBUILD, Screen/Keyboard Config., and Utilities
+       ADSICF.EXE      KEYBCF.EXE      KEYBCF.DOC      REBUILD.EXE
+       REBUILD.DOC     MC-LINK.DOC     MINITC.ASM      MINITC.OBJ
+       MINITF.ASM      MINITF.OBJ      MINITP.ASM      MINITP.OBJ
+       LC-LINK.DOC     LINITC31.ASM    LINITC31.OBJ    LINITC32.ASM
+       LINITC32.OBJ    LINITIO.C       LINITIO.OBJ     HELPADCF.LBR
+
+   Disk 6 - Conversion Series 3 and 5
+       CONVERT3.EXE    TABX.EXE        CNVCOMP6.OBJ    CONVERT5.EXE
+       REFORM5.EXE
+
+   Disk 7 - Microsoft Utilities
+       EXEHDR.EXE      EXEMOD.EXE      EXEPACK.EXE     LIB.EXE
+       LINK.EXE        MAKE.EXE        SETENV.EXE
+       API.LIB*        APILMR.OBJ*     BIND.EXE*       DOSCALLS.LIB*
+       EXEC.EXE*       ILINK.EXE*      IMPLIB.EXE*     MEGREP.EXE
+       \ME\            CALLTREE.EXE
+       \ME\EXT\        EXT.DOC         EXT.H           EXTHDR.OBJ
+                       EXTHDRP.OBJ     SKEL.C          SKEL.DEF
+
+   Disk 8 - Microsoft Editor
+       ECH.EXE         EXP.EXE         FIXSHIFT.COM    M.EXE
+       MEP.EXE*        MESETUP.EXE     RM.EXE          SETUP.SUS
+       UNDEL.EXE
+       \INI\           BRIEF.INI       EPSILON.INI     QUICK.INI
+                       WS.DLL          WS.ZXT
+
+   * - These files are only required for OS/2 operation.
+
+
+Description of Files
+--------------------
+The files included on the release disks are briefly described below.  Unless
+otherwise stated, files marked DOS are only required for running the software
+on DOS, and those marked OS/2 are only required for running the software on
+OS/2.
+
+Executable files on the disks are one of the following types:
+
+(DOS)             Runs in real mode under DOS 3.0 or above
+(OS/2)            Runs in protected mode of OS/2 1.0
+(Bound)           Runs in either real or protected mode
+
+
+Disk   File           Description
+----   ----           -----------
+
+   COBOL Optimizing Compiler:
+   -------------------------
+
+ 2     COBOL.EXE      DOS Compiler (DOS)
+ 6     PCOBOL.EXE     OS/2 Compiler (OS/2)
+ 3     COBCLI.LBR     Compiler Command Line Interpreter
+ 3     CHECK.LBR      Compiler/ANIMATOR modules
+ 4     UTILS.LBR      Compiler/ANIMATOR run-time support
+ 5     GENERATE.LBR   Compiler - code generation
+
+
+   ANIMATOR debugging utility:
+   --------------------------
+ 2     ANIMATE.EXE    DOS Animator (DOS)
+ 6     PANIMATE.EXE   OS/2 Animator (OS/2)
+ 3     CHECK.LBR      Compiler/ANIMATOR modules
+ 4     ANIMATOR.LBR   ANIMATOR - additional programs
+ 4     UTILS.LBR      Compiler/ANIMATOR run-time support
+ 4     HELP.LBR       ANIMATOR HELP screens (delete if help is not needed)
+ 6     _SORT.DLL      ANIMATOR support        OS/2
+ 6     V-ISAM.DLL     ANIMATOR support        OS/2
+
+
+   Files required for Linking:
+   --------------------------
+12     LINK.EXE       Segmented executable linker (Bound)
+12     LIB.EXE        Library Manager (Bound)
+ 2     LCOBOL.LIB     COBOL link support routines     DOS
+ 6     PCOBOL.LIB     COBOL link support routines     OS/2
+ 6     CBLBIND.LIB    Required for BINDing
+ 6     CBLBIND.NOT    Required for BINDing
+
+ 5     ADIS.OBJ       ADIS-ACCEPT/DISPLAY support
+ 5     ADISINIT.OBJ   ADIS-ACCEPT/DISPLAY support
+ 5     ADISKEY.OBJ    ADIS-ACCEPT/DISPLAY support
+ 5     ADIS.LNK       LINK prompt file to create ADIS.EXE or ADIS.DLL
+ 6     ADIS.DEF       LINK definition file to create ADIS.DLL         OS/2
+ 5     IXSIO.OBJ      Indexed file handler
+ 6     IXSIO.DEF      LINK definition file to create IXSIO.DLL        OS/2
+ 5     EXTFH.OBJ      External file handler
+ 6     EXTFH.DEF      LINK definition file to create EXTFH.DLL        OS/2
+ 5     EXTERNL.OBJ    External data handler
+ 6     EXTERNL.DEF    LINK definition file to create EXTERNL.DLL      OS/2
+ 7     MCS.OBJ        Communications module
+
+   Note: The .OBJ files for ADIS, IXSIO, EXTFH and EXTERNL can be linked with
+         individual programs or suites as required. Alternatively, you may
+         create .EXE (.DLL for OS/2) files for each of these items using
+         the .LNK and .DEF files provided. Once done, the relevant .OBJ, .DEF
+         and .LNK files can be discarded.
+
+ 7     RCOBOL.LIB     COBOL link routines for running .OBJs under ANIMATOR DOS
+ 7     PRCOBOL.LIB    COBOL link routines for running .OBJs under ANIMATOR OS/2
+
+
+   Conversion Series Files:
+   -----------------------
+ 9     CNVCOMP6.OBJ   Subroutine for use with RM data file conversion programs
+ 9     CONVERT3.EXE   Generates programs to convert Ryan McFarland data files
+                                                                        (Bound)
+10     CONVERT5.EXE   Generates programs to convert Data General data files
+                                                                        (Bound)
+10     REFORM5.EXE    Reformatter for DG Interactive COBOL source programs
+                                                                        (Bound)
+ 9     TABX.EXE       Utility to expand tabs in a source file (Bound)
+
+
+   Microsoft Utilities files:
+   -------------------------
+13     API.LIB        Emulates OS/2 family API functions on DOS
+13     APILMR.OBJ     Companion utility to API.LIB
+13     BIND.EXE       Changes OS/2 programs so they can be run on DOS and OS/2
+13     DOSCALLS.LIB   Calls OS/2 API features
+13     EXEC.EXE       Companion utility to API.LIB
+12     EXEHDR.EXE     Provides development information about compiled programs
+12     EXEMOD.EXE     Allows modification to standard parameters of programs
+12     EXEPACK.EXE    Compresses compiled programs
+13     ILINK.EXE      Incremental linker for OS/2
+13     IMPLIB.EXE     Used in creating dynamically linked libraries
+12     LINK.EXE       Links compiled code with library routines.
+12     LIB.EXE        Creates custom libraries of run-time routines.
+12     MAKE.EXE       Automates development steps (Bound)
+12     SETENV.EXE     Allows modification of standard MS-DOS environment size
+
+
+   Microsoft Editor files:
+   ----------------------
+14     BRIEF.INI      Initialization file to emulate Brief editor
+12     CALLTREE.EXE   Editor utility to help developing C programs (Bound)
+14     EPSILON.INI    Initialization file to emulate Epsilon editor
+14     ECH.EXE        Editor utility to echo command line characters (Bound)
+14     EXP.EXE        Editor utility to expunge deleted files (See RM) (Bound)
+12     EXT.DOC        Documentation describing how to use C extensions
+12     EXT.H          Header file with examples of C extensions
+12     EXTHDR.OBJ     Object file for using real-mode C extensions
+12     EXTHDRP.OBJ    Object file for using protect-mode C extensions
+14     FIXSHIFT.COM   Patches error in BIOS for certain keyboards
+14     M.EXE          Microsoft Editor for DOS (DOS)
+13     MEGREP.EXE     Pattern searching utility (Bound)
+14     MEP.EXE        Microsoft Editor for OS/2 (OS/2)
+14     MESETUP.EXE    Editor Installation script file interpreter (bound)
+14     QUICK.INI      Initialization file to emulate the Quick editors
+14     RM.EXE         Editor utility to delete files (Bound)
+14     SETUP.SUS      Editor installation script
+12     SKEL.C         Sample C extension source code
+12     SKEL.DEF       Module-definition file for use with SKEL.C
+14     UNDEL.EXE      Editor utility to undelete files (used with RM) (Bound)
+14     WS.DLL         WordStar OS/2 extension
+14     WS.ZXT         WordStar DOS extension
+
+
+   Animation of OS/2 API function calls
+   ------------------------------------
+ 1     SRTDEM.BAT     Demonstration program batch stream (DOS)
+ 1     SRTDEM.CMD     Demonstration program batch stream (OS/2)
+ 1     SORTDEMO.CBL   Demonstration program using OS/2 API calls
+
+ 7     COBOLAPI.DLL   Install-function sub-program for DOS, KBD, MOU and VIO
+                      functions
+ 7     COBOLDOS.DLL   Install-function sub-program for DOS... functions
+ 7     COBOLKBD.DLL   Install-function sub-program for KBD... functions
+ 7     COBOLMOU.DLL   Install-function sub-program for MOU... functions
+ 7     COBOLVIO.DLL   Install-function sub-program for VIO... functions
+
+ 7     ADDFN.ASM      Basic MASM routine for creating Install-function
+ 7     ADDFUN.MAC     MASM macro to process include files
+ 7     INSTALLF       MAKE file to create install-function sub-programs
+ 7     INSTALL.OBJ    Additional OBJ for
+ 7     DOS.INC        Include file to create install-function sub-program
+ 7     KBD.INC        Include file to create install-function sub-program
+ 7     MOU.INC        Include file to create install-function sub-program
+ 7     VIO.INC        Include file to create install-function sub-program
+
+ 7     OS2API.DOC     Documentation for using OS/2 API routines
+
+   Miscellaneous files:
+   -------------------
+ 4     ADISCTRL       ADIS configuration file
+ 8     ADISCF.EXE     ADIS configuration utility (Bound)
+ 9     HELPADCF.LBR   ADIS configuration utility - help screens
+ 8     KEYBCF.EXE     Keyboard configuration utility (Bound)
+ 1     KEYBCF.DOC     Documentation for KEYBCF
+
+ 9     MC-LINK.DOC    Documentation for non-COBOL linking
+                      Initialization files for linking to:
+ 9     MINITC.ASM     Microsoft C
+ 9     MINITC.OBJ
+ 9     MINITF.ASM     Microsoft FORTRAN
+ 9     MINITF.OBJ
+ 9     MINITP.ASM     Microsoft Pascal
+ 9     MINITP.OBJ
+
+ 9     LC-LINK.DOC    Documentation for non-COBOL linking
+                      Initialization files for linking to:
+ 9     LINITC31.ASM   Lattice C v3.1
+ 9     LINITC31.OBJ
+ 9     LINITC32.ASM   Lattice C v3.2
+ 9     LINITC32.OBJ
+ 9     LINITIO.C      I/O module required for linking to Lattice C
+ 9     LINITIO.OBJ
+
+ 7     MCSETUP.EXE    Communication setup (DOS)
+ 1     MS2-2.DOC      Document of compatibility with Microsoft COBOL v.2.2
+ 1     PACKING.LST    List of documents and files included in this package
+ 1     README.DOC     Release Notes
+ 9     REBUILD.EXE    File Management Utility - recovery and conversion (Bound)
+ 9     REBUILD.DOC    Documentation for File Management Utility
+ 7     RTSCALL.OBJ    Emulation of .BIN file handling
+ 7     RTSBIN.ASM     Emulation of .BIN file handling
+ 1     SETUP.EXE      Installation utility (Bound)
+ 1     SETUP.INI      Script for installation
+ 2     TTDEMO.BAT     Demonstration batch stream      DOS
+ 6     TTDEMO.CMD     Demonstration batch stream      OS/2
+ 1     TICTAC.CBL     Demonstration batch stream
+
+Microsoft is registered trademark of Microsoft Corporation
+Micro Focus is a registered trademark of Micro Focus Limited
+Lattice is a registered trademark of Lattice Incorporated
+Ryan McFarland is a registered trademark of Ryan-McFarland Corporation
+WordStar is a registered trademark of MicroPro International Corporation

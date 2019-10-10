@@ -1,0 +1,252 @@
+The KEYBCF Utility                                   Doc V1.2    18 Aug 88
+==================
+
+KEYBCF allows you to change the functions assigned to the keys on your keyboard.
+You can change the action performed by keys during execution of an Accept
+statement, the keys used by ANIMATOR and the function keys used by your own
+programs.
+
+The default set of keys used by COBOL is built into the system. KEYBCF creates
+a file called COBKEYMP which contains the set of keys you require. At run time,
+the COBOL system, or any COBOL program using the ACCEPT/DISPLAY module ADIS,
+looks for the presence of COBKEYMP in the current directory . If the file is not
+found then the environment variable COBDIR is examined and the directory
+corresponding to its value is searched for the existence of the COBKEYMP file.
+If the file is found the set of keys defined in it are used. If not, the default
+set of keys are used.
+
+The Key Lists
+-------------
+Note : The term 'Function Key' used in this document refers to any of the
+       programmable keys on the keyboard.
+
+The following lists of keys can be reviewed and altered by KEYBCF
+
+- ADIS function key list
+
+This list defines the keys which will carry out specified functions when you are
+executing an ACCEPT statement in a COBOL program.
+
+- ANIMATOR function key list
+
+This list is used by ANIMATOR and some other system programs.
+
+- User function key list
+
+The user function key list defines the keys that are normally returned to your
+program when a function key is pressed.
+
+- Compatibility function key list
+
+This list defines an alternative user key list that can be used if you wish to
+set up keys to be compatible with a different dialect of COBOL. If the
+values returned by such keys differ from the user key list used in this COBOL
+system, you are advised to alter the compatibility function key list rather than
+the user function key list. By default, the compatibility function key list is
+configured for compatibility with Ryan McFarland COBOL Version 2.0 on UNIX.
+
+One of the Accept/Display options in the ADISCF program allows you to choose
+between using the User or Compatibility key lists.
+
+
+Note that during an ACCEPT operation, the user (or compatability) function key
+table is searched prior to the ADIS function key table. Therefore, if a key is
+defined in both lists, it will be found first in the user key list and acted on
+accordingly.
+
+By default, the user function keys are initially disabled. In order to use these
+function keys during the execution of a program, you must first enable them by
+CALLing the X"AF" sub-program (see the sub-programs section in the COBOL
+Operating Guide) or by altering the configuration using ADISCF (see the COBOL
+Operating Guide for details about ADISCF).
+
+The CRT STATUS clause allows you to ascertain which function key was used to
+terminate an ACCEPT operation. Full details on the use of this clause can be
+found in the COBOL Language Reference Manual.
+
+
+Invoking KEYBCF
+---------------
+To set up your own COBKEYMP file using KEYBCF, type the command line:
+
+      KEYBCF  <cr>
+
+KEYBCF searches for a file called COBKEYMP in the current directory. If it does
+not exist then the environment variable COBDIR is examined and the directory
+corresponding to its value is searched for the existence of the COBKEYMP file.
+If the file already exists you are asked if you want to edit it. Answer 'Y' if
+you want to edit the file or 'N' if you want to create a new file based on the
+default set of keys.
+
+
+Using KEYBCF
+------------
+KEYBCF is menu driven.  Once it is invoked, it displays its initial menu :-
+
+
+    -----------------------------------------------------------------
+
+        ADIS Keyboard Configuration Program V1.3
+
+        The following options are available:
+
+           1.  Review existing function key definitions.
+           2.  Alter function key definitions.
+           3.  Save function key definitions.
+           4.  Exit.
+
+        Enter number of option required.
+
+   -----------------------------------------------------------------
+
+To select the option of your choice, press its associated number. The sub-menu
+for that function is then displayed.
+
+
+1. Review Existing Function Key Definitions
+
+Entering 1 on the main KEYBCF menu displays a sub-menu in which you are prompted
+to choose which set of function keys you wish to review. To select the option of
+your choice, press its associated number. Once you have entered the number of
+the list you want to review, the hexadecimal values of all the currently defined
+function keys in that list are displayed. To cycle from one screen to the next
+press any key. Once the end of the list is reached press any key to return to
+the review sub-menu.
+
+Press 5 to return to the main KEYBCF menu.
+
+
+2. Alter Function Key Definitions
+
+Entering 2 on the main KEYBCF menu displays a sub-menu in which you are prompted
+to choose the set of function keys you wish to alter. As with the review
+sub-menu you can select the ADIS, ANIMATOR, user or compatibility key lists.
+When you have made your selection, a screen in the following format is
+displayed:
+
+   -----------------------------------------------------------------
+
+    ADIS/ANIMATOR/User/Compatibility Function Key List
+
+    Function                                 nn
+
+    Enter required key sequence:
+
+
+
+
+
+
+    I=Inserts, D=Delete, X=Hexadecimal Input, Space=Skip, Q=Quit
+
+    -----------------------------------------------------------------
+
+Note that, nn is the hexadecimal value of the key assigned to that function.
+
+Each function in the function key list you selected is displayed individually,
+as illustrated above. To cycle from one function to the next, without altering
+the key defined for each function, press the space key. If you wish to replace
+any keys currently defined in one of the lists press the new key which will
+perform that function. Once you have entered the new key the program
+automatically cycles to the next function after a slight pause.
+
+If you want to retain a currently defined function key, but wish to add another
+key to perform the same function, press I before you enter the required key. The
+word 'Insert' will be displayed at the bottom right of the screen. If you want
+to delete a defined function key from a list press D; KEYBCF automatically
+cycles to the next function.
+
+To enter a new function key either press the actual key you want to perform a
+certain function, or enter the hexadecimal sequence for the key. If you want to
+enter the hexadecimal sequence press X - you will note the word 'Hex' appears at
+the bottom right of your screen indicating that the program is expecting
+hexadecimal input. If you enter an invalid hexadecimal sequence you will receive
+an error when you attempt to cycle to the next function and you will be prompted
+to enter a valid sequence. This function allows you to define keys which may not
+actually appear on the keyboard you are using, but will be available on the one
+on which your program will run.
+
+You can return to the Alter sub-menu at any time by pressing Q.
+
+Entering 5 on this sub-menu returns you to the main KEYBCF menu.
+
+
+3. Save Function Key Definitions
+
+If you wish to save any alterations you have made to any of the function lists
+press 3 on the main KEYBCF menu.  This saves the amended function lists to a
+file called COBKEYMP.
+
+
+4. Exiting from KEYBCF
+
+Press 4 on the main KEYBCF menu to return to the operating system.
+
+
+
+Example.
+---------
+
+An example follows of how to use KEYBCF to alter the ANIMATOR key list .
+It describes the steps required to Insert , Delete and Change key definitions.
+The example assumes that the file COBKEYMP has not been previously created
+and hence the values shown by KEYBCF are the defaults it sets up.
+
+Enter KEYBCF by typing KEYBCF <cr>
+
+Press 2 on the KEYBCF main menu to display the sub-menu for altering key lists.
+
+Press 2 again to alter the ANIMATOR key list.
+
+The screen for ANIMATOR function key 1 appears. Press D to delete the definition
+of this key.
+
+The screen for function key 2 now shows. Press the SPACE BAR to skip over the
+key definition and continue to do so until the screen for Cursor Up appears.
+Press Ctrl and U .The hexadecimal value corresponding to Ctrl-U appears as
+the definition of Cursor Up . This has now replaced the old value of Cursor Up.
+
+The screen for Cursor Down should now appear . Press I to insert a definition
+and then press Ctrl and D. The hexadecimal value for Ctrl-D appears.
+The next screen is then displayed showing the value for Cursor Down which
+already exists ie there are now two definitions available for Cursor Down.
+
+Press Q to quit and return to the sub-menu.
+
+Press 5 to return to the main menu.
+
+Press 3 to save the new function key definitions . This creates the COBKEYMP
+file.
+
+You may now wish to press 1 to enter the sub-menu to review the keys followed
+by 2 to review the ANIMATOR key list definitions. This will show the values of
+all keys in the ANIMATOR key list and will contain the new values entered.
+If the keys were reviewed press 5 to return to the main menu.
+
+Press 4 to Exit.
+
+
+After exiting from KEYBCF:
+
+In order to demonstrate the changes made it is necessary to use the ANIMATOR.
+If necessary, consult the COBOL Operating Guide for details of how to use
+the ANIMATOR.
+
+After entering the ANIMATOR the ANIMATOR screen will appear.
+
+Press F1=Help .    Nothing should happen since the definition of ANIMATOR
+                   function key 1 was deleted by KEYBCF.
+
+Press Cursor-Up.   Nothing should happen. Now press Ctrl-U. This now acts as
+                   Cursor-Up since the definition of Cursor Up was changed.
+                   This shows that the definition of Cursor-Up has been changed
+                   by KEYBCF.
+
+Press Cursor-Down. This still moves the cursor down one line.
+Press Ctrl-D.      This also moves the cursor down one line since Ctrl-D was
+                   inserted as a new definition , and the old definition was
+                   retained.
+
+
+The defaults may be recovered by either using KEYBCF and returning the key
+definitions to their old values , or by simply deleting the COBKEYMP file.

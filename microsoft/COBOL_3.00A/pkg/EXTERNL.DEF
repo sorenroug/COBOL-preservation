@@ -1,0 +1,4 @@
+; module definition file for EXTERNL under OS/2
+LIBRARY INITINSTANCE    ; EXTERNL is a dynamic link library
+PROTMODE                ; it needs to run in protected mode
+EXPORTS EXTERNL @1      ; assumes that the PROGRAM-ID of externl is EXTERNL

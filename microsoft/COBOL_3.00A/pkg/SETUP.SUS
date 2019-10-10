@@ -1,0 +1,115 @@
+cls :a 30 "Microsoft Editor 1.00 Setup"
+
+echo "Select Operation configuration"
+echo
+echo "  dos -  is for all version of MS DOS 2.x & 3.x"
+echo "  os2 -  is for Protect Mode only support for OS/2"
+echo "  both - is for Protect Mode & Real Mode for OS/2"
+echo
+
+set os="dos"
+if (dosVersion >= 1000) then set os="os2"
+
+:selectOS
+dialog simple,os,"Enter dos,os2 or both: "
+if (os == "dos") then goto oka
+if (os == "os2") then goto oka
+if (os != "both") then goto selectOS
+:oka
+
+cls
+echo "   Next enter the directory where the editor files should be placed."
+echo  
+echo "   When prompted for path, enter the drive and directory."
+echo 
+echo "   For example: C:\, c:\bin"
+echo 
+echo "   To accept proposed response, just press enter"
+echo
+set exeDir="c:\bin"
+
+if (os != "os2")
+    dialog simplePath,exeDir,"Enter path for DOS executable programs: "
+    set exeDirb=exeDir
+endif
+
+if (os != "dos")
+    set exeDirb=exeDir:d
+    set exeDirb=exeDirb&"\binb"
+    dialog simplePath,exeDirb,"Enter path for dual mode executable programs: "
+
+    set exepDir=exeDirb:d
+    set exepDir=exepDir&"\binp"
+    dialog simplePath,exepDir,"Enter path for OS/2 only executable programs: "
+    if (os == "os2") then set exeDir=exepDir
+endif
+
+set iniDir=exeDir
+dialog simplePath,iniDir,"Enter path for tools.ini file: "
+if (not exist iniDir) then md iniDir
+
+if (os != "os2") then copy "m.exe" exeDir
+
+set volId="MS Editor"
+copy "undel.exe rm.exe exp.exe ech.exe" exeDirb
+
+set volId="Utilities #2"
+copy "megrep.exe" exeDirb
+
+
+cls
+echo "If you would like to write C/assembler extensions to the editor,"
+echo "enter the name of the directory where the extension files are to be"
+echo "placed.  If you do not intend to write extension files, enter none."
+echo
+
+set extDir="c:\ext"
+dialog simplePath, extDir, "Enter path for extension files: "
+
+if (extDir == "none") then goto noext
+
+set volId="Utilities #1"
+copy "me\calltree.exe" exeDirb
+copy "me\ext\*.*" extDir
+
+:noext
+set volId="MS Editor"
+cls
+echo "On startup, the Microsoft Editor keys will behave like:"
+echo
+echo "       QUICK - languages / Wordstar"
+echo "       BRIEF"
+echo "       EPSILON"
+echo
+
+set keys="Quick"
+:selectKeys
+dialog simple,keys,"Type Quick, Brief or Epsilon: "
+
+if (keys == "Quick") then goto okb
+if (keys == "Brief") then goto okb
+if (keys != "Epsilon") then goto selectKeys
+
+
+:okb
+set toKeys="a:ini\"&keys
+set keys=toKeys&".ini"
+set toKeys=iniDir&"\tools.ini"
+
+copy "fixshift.com" exeDirb
+
+if (exist toKeys)
+  exec COMSPEC "/c copy " toKeys " + " keys " " toKeys 
+else
+  copyto keys toKeys
+endif
+
+
+if (os != "dos")
+  set volId="OS2 Program"
+  copy "mep.exe" exepDir
+endif
+
+
+cls
+echo "Installation Complete"
