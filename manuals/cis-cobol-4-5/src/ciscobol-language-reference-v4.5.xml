@@ -77,6 +77,8 @@ by any contributor, or by the committee, in connection herewith.
     <para>
   The authors and copyright holders of the copyrighted material used herein:
 </para>
+<itemizedlist mark="none">
+<listitem>
     <para>
 FLOW-MATIC (Trademark for Sperry Rand Corporation) Programming for the
 <trademark class="registered">Univac</trademark> I and II,
@@ -85,6 +87,8 @@ Sperry Rand Corporation; IBM Commercial Translator Form No. F28-8013,
 copyrighted 1959 by IBM; FACT, DSI27A5260-2760, copyrighted 1960 by
 Minneapolis-Honeywell.
 </para>
+</listitem>
+</itemizedlist>
     <para>
 have specifically authorized the use of this material in whole or in part,
 in the COBOL specifications. Such authorization extends to the reproduction
