@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook">
+  <title>INITIALISATION PHASE</title>
+  <para>
+    The Initialisation Phase of the FORMS-2 Utility program immediately follows
+program load, and is only carried out once in any one run of FORMS-2. It
+consists of replying to questions asked on the two Initialisation screens
+I01 and I02.
+</para>
+  <section>
+    <title>INITIALISATION SCREEN I01</title>
+    <indexterm>
+      <primary>General Description</primary>
+    </indexterm>
+    <para>
+      This screen is displayed immediately FORMS-2 is loaded.
+    </para>
+    <para>
+      Five items of information are requested. Note that the effect of pressing
+the RETURN key during this screen display immediately enters all responses
+so far made and any remaining defaults. Do not therefore press RETURN until
+all the required entries have been made, for the following:
+</para>
+    <itemizedlist>
+      <listitem>
+        <para>
+Data-name and the File-name Base
+</para>
+      </listitem>
+      <listitem>
+        <para>
+Lines per CRT Screen
+</para>
+      </listitem>
+      <listitem>
+        <para>
+CIS COBOL Compiler
+</para>
+      </listitem>
+      <listitem>
+        <para>
+Currency Sign
+</para>
+      </listitem>
+      <listitem>
+        <para>
+Decimal-Point Representation
+</para>
+      </listitem>
+    </itemizedlist>
+    <section>
+      <title>DATA-NAME AND FILE-NAME BASE</title>
+      <indexterm>
+        <primary>Outputs</primary>
+      </indexterm>
+      <para>
+The record/filename base keyed in at this point is used in the following
+ways by FORMS-2:- 
+</para>
+      <orderedlist>
+        <listitem>
+          <para>
+It is taken as the first part of all the data-names and record-names
+generated in this run. Uniqueness is achieved by adding a two-digit
+sequence number for new records and adding the sequential number of the
+field within the form for, datanames within records. Optionally by
+means of a Work Phase command, uniqueness may be achieved by adding the
+screen coordinates.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+It is taken as the main filename for files generated. These can consist of:-
+</para>
+      <variablelist>
+        <varlistentry>
+          <term>filename .DDS</term>
+          <listitem>
+            <para>
+for CIS COBOL Data Description Statements (See Chapter 4)
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>filename .CHK</term>
+          <listitem>
+            <para>
+for Checkout program (See Chapter 5)
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>filename .Snn</term>
+          <listitem>
+            <para>
+for Screen images
+(nn=00, 01, 02,...,99) (See Chapter 6)
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>filename .GEN</term>
+          <listitem>
+            <para>
+for Index program (See Chapter 8)
+              </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+        </listitem>
+      </orderedlist>
+      <para>
+Note that only one DDS file is output per FORMS-2 run, whereas a separate
+screen image file is output for each screen built.
+</para>
+    </section>
+    <section>
+      <title>LINES PER CRT SCREEN</title>
+      <indexterm>
+        <primary>LINES PER CRT SCREEN</primary>
+      </indexterm>
+      <para>
+FORMS-2 can be used with screens of 22, 23 or 24 lines. FORMS-2 defaults to
+24 for this entry. If your CRT has fewer than 24 lines, FORMS-2 will not
+function correctly if this default is taken. With certain CRT's it may be
+necessary to specify one fewer than the lines on the screen to avoid a
+problem whereby the screen is "rolled-up" a line unnecessarily
+</para>
+    </section>
+    <section>
+      <title>CIS COBOL COMPILER</title>
+      <indexterm>
+        <primary>CIS COBOL COMPILER</primary>
+      </indexterm>
+      <para>
+The version of the compiler for which FORMS-2 is to generate CIS COBOL
+statements is specified by the response. Either the Standard or the Compact
+versions of the CIS COBOL compiler can be selected. The default option is
+for the Standard compiler.
+</para>
+      <note>
+        <para>
+If the compact CIS COBOL version of the compiler is selected, defaults
+for the last two entries must be accepted.
+</para>
+      </note>
+    </section>
+    <section>
+      <title>CURRENCY SIGN</title>
+      <indexterm>
+        <primary>Work Phase</primary>
+      </indexterm>
+      <para>
+This entry allows the default currency sign ($) to be overridden. It will
+cause generation of an appropriate Special-Names entry in either the
+Checkout and Index program. The specified currency sign should be used when
+specifying numeric edited fields in the Work Phase, and will be used in the
+generated data description statements.
+</para>
+      <note>
+        <para>
+The specified character is not validated. Users should refer to the
+<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle> for a list of valid characters.
+</para>
+      </note>
+    </section>
+    <section>
+      <title>DECIMAL-POINT</title>
+      <indexterm>
+        <primary>DECIMAL-POINT</primary>
+      </indexterm>
+      <para>
+This option allows the roles of the period or full-stop sign (.) and the
+comma sign (,) to be exchanged. If is specified then a DECIMAL-POINT IS
+COMMA clause will be generated in the Checkout or Index Programs. The
+default is ".". The specified decimal point sign should be used when
+specifying numeric edited fields in the Work Phase, and will be used in the
+generated data description statements.
+</para>
+    </section>
+  </section>
+  <section>
+    <title>INITIALISATION SCREEN I02</title>
+    <para>
+Screen I02 is displayed immediately after screen I01 entries are terminated
+by pressing the RETURN key.
+</para>
+    <para>
+At this point the user specifies the following:
+</para>
+    <itemizedlist>
+      <listitem>
+        <para>
+Types of files to be created
+</para>
+      </listitem>
+      <listitem>
+        <para>
+Disk drive to which files are to be written.
+</para>
+      </listitem>
+    </itemizedlist>
+    <para>
+        Once screen I02 is released by pressing RETURN the Work Phase is entered and
+it is no longer possible to amend information specified during the
+Initialisation Phase.
+</para>
+    <section>
+      <title>FILE COMBINATIONS</title>
+      <indexterm>
+        <primary>FILE COMBINATIONS</primary>
+      </indexterm>
+      <para>
+FORMS-2 offers options for all valid combinations of these files, each
+identified by a unique file name extension as follows:
+</para>
+      <orderedlist>
+        <listitem>
+          <para>
+DDS &#x2014; The user may generate CIS COBOL source Data Description
+( Statements (DDS) corresponding to the screens he has created. These
+are output to a standard ASCII text file and may be subsequently
+compiled into any program using the standard COBOL COPY facility. In
+Particular they are used by the Check-Out and Index programs, (see
+below).
+</para>
+          <para>
+The reader who is unfamiliar with screen handling in a CIS COBOL
+program should consult the
+<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+(especially the sections on ACCEPT/DISPLAY, FILLER, REDEFINES).
+</para>
+        </listitem>
+        <listitem>
+          <para>
+CMK &#x2014; in addition to generating DDS, FORMS-2 can also generate a
+Checkout' program. This consists of simply the Procedure Division
+statements (ACCEPT and DISPLAY) which correspond to the screens that
+have been created. These statements are contained in filename.CHK (see
+record/filename prefix) and they are combined with the following COPY
+files:-
+</para>
+          <para>
+  filename.DDS , FORMS2.CH1, FORMS2.CH2
+</para>
+          <para>
+  The Checkout program allows the user to demonstrate on the screen
+exactly how the system will operate, by displaying successively the
+screens he has just created, and by allowing data to be entered just as
+it would be under actual operating conditions.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+       Snn &#x2014; The user may also output the text of the screen just designed to
+a file on disk in the form of a screen image. This file can be
+retrieved later in this run or in subsequent FORMS-2 runs, for further
+amendment if required.
+</para>
+          <para>
+Alternatively they may be printed, and the hard copy simply used as a
+means of communicating between different individuals at different times
+(e.g. the end user and the programmer).
+</para>
+        </listitem>
+        <listitem>
+          <para>
+GEN &#x2014; FORMS-2 can generate an Index program. This includes all code
+necessary to set up and maintain an indexed sequential file with
+records corresponding to the structure of the user's form. The code is
+output to filename.GEN and is combined with the following copy files:-
+</para>
+          <para>
+  filename.DDS, FORMS2.GN1, FORMS2.GN2
+</para>
+          <para>
+Index program generation places constraints upon the user during the
+FORMS-2 run. The creation and operation of the Index program is
+discussed in detail in Chapter 8.
+</para>
+        </listitem>
+      </orderedlist>
+      <note>
+        <para>
+    If the Q command (see Chapter 3) is entered at this point, FORMS-2 will
+quit back to screen I01, allowing amendment of information given
+there. This can be useful If RETURN is inadvertently pressed before
+all options have been entered.
+</para>
+      </note>
+    </section>
+    <section>
+      <title>OUTPUT DISK DRIVE</title>
+      <indexterm>
+        <primary>OUTPUT DISK DRIVE</primary>
+      </indexterm>
+      <para>
+All the files output by FORMS-2 are on the same drive. If the space
+character is entered for the drive number, the files will be created on the
+lagged in drive.
+</para>
+    </section>
+  </section>
+</chapter>

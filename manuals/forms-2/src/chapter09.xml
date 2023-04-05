@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook">
+  <title>USER INDEX - PROGRAM EXAMPLE</title>
+  <para>
+It is required to generate an indexed sequential file that contains records
+of names, addresses and telephone numbers with name as key field, and
+process these records using the form as used in Chapter 7:
+</para>
+  <screen width="80"><![CDATA[
+
+NAME      [                   ]
+ADDRESS   [                   ]
+          [                   ]
+          [                   ]
+TEL       [         ]
+
+
+
+]]></screen>
+  <para>
+NAME and ADDRESS are alphanumeric fields and TEL is a numeric field.
+</para>
+<para>
+At data entry time after insertion of the name, address and telephone
+number P. Smith, 8 George Street, Plymouth, Devon, 88326, the fora is
+required to appear as:
+</para>
+  <screen width="80"><![CDATA[
+NAME      [SMITH. P           ]
+ADDRESS   [8 George Street,   ]
+          [Plymouth           ]
+          [Devon              ]
+TEL       [88326    ]
+
+
+
+]]></screen>
+  <para>
+It is assumed the system is booted, the issued files have been copied to the
+CIS COBOL O/S system disk so that the e Index program can be compiled (Step
+13), and that FORMS-2 has been configured from your CRT.
+</para>
+  <para>
+The following steps must then be carried out:
+</para>
+  <orderedlist>
+    <listitem>
+      <para>The operator loads FORMS-2 by entering the load command for your O/S.</para>
+      <para>See Appendix D for specific Operating System format for this command.</para>
+    </listitem>
+    <listitem>
+      <para>FORMS-2 displays Screen I01 requesting a six-character base for
+file-names and data-names followed by four other questions. If the CRT
+is standard (24 lines) and the Standard CIS COBOL compiler is in use no
+further questions need be answered for this screen. Key DEMO2 followed
+by the RETURN key if the default screen size (24) is correct and the
+standard compiler is in use.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+FORMS-2 displays Screen I02 to request the output file option type and
+drive number. Key G then RETURN to select the option for the Index program.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+    FORMS-2 displays Screen W01 to request the Screen Type option. Note
+the default "A" and press the RETURN key.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 displays a blank screen with the end of window one line up from
+the bottom of the screen and delimiters in the bottom line. Use the
+cursor control keys and the normal character keys to set up the
+following text on the screen:
+</para>
+      <screen width="80"><![CDATA[
+NAME      [                   ]
+ADDRESS   [                   ]
+          [                   ]
+          [                   ]
+TEL       [         ]
+
+
+
+]]></screen>
+      <para>
+Press the RETURN key.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 puts "__" in the top left of the screen. Press the SPACE and
+RETURN keys.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 processes the screen to create a fixed text form. This takes a
+short period and involves the following displays on the CRT:
+</para>
+      <screen width="80"><![CDATA[
+  DDS source code as generated, followed by a redisplay of the fixed
+  text as it is written to the Screen Image file.
+]]></screen>
+      <para>
+A message is then displayed giving the name of the fixed text Screen
+Image file created. Press RETURN as requested.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 displays Screen W01 to request the Screen Type option. Note
+the default is "C" and press the RETURN key.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+FORMS-2 displays the fixed text screen as background data; now use the
+cursor control keys and key in X's to fill the NAME variable data
+field. Move cursor to the first character position in the address
+variable data field and then press RETURN to enter Command Mode. Enter
+* to set the first character position in the ADDRESS variable data
+field as the start of data position and then press RETURN. Continue to
+enter X's and 9's to fill the data fields as shown below.
+</para>
+      <screen width="80"><![CDATA[
+NAME      [XXXXXXXXXXXXXXXXXXX]
+ADDRESS   [XXXXXXXXXXXXXXXXXXX]
+          [XXXXXXXXXXXXXXXXXXX]
+          [XXXXXXXXXXXXXXXXXXX]
+TEL       [999999999]
+
+
+
+]]></screen>
+      <para>
+Note that you have now specified the NAME variable data field as the
+key field.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 displays "__" in the top left hand of the screen; press the
+SPACE and RETURN keys. A message is displayed showing validation in
+progress.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+  FORMS-2 processes the X's and 9's to create a variable data form, with
+the following displays to the CRT as it goes:
+</para>
+      <screen width="80"><![CDATA[
+  DDS source code as generated, followed by a redisplay of the fixed
+  text as it is written to the Screen Image file.
+]]></screen>
+    </listitem>
+    <listitem>
+      <para>
+FORMS-2 terminates automatically after displaying the end of run screen:
+</para>
+<screen width="80"><![CDATA[
+  Files created DEMO2.DDS
+                DEMO2.GEN
+  END OF FORMS2 RUN
+]]></screen>
+    </listitem>
+    <listitem>
+      <para>
+  Compile the Index program by typing the standard CIS COBOL
+compilation command for your Operating System (O/S) using the Index program source
+file name:
+</para>
+<screen>
+  DEMO2.GEN
+</screen>
+<para>
+and the COPYLIST directive of this command.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+When the compilation finishes, the generated Index program DEMO2 can be
+run by use of the standard run command for your O/S to load the program
+intermediate code from file:
+</para>
+<screen>
+  DEMO2.INT
+</screen>
+      <para>
+The compilation and run commands for your O/S are described in
+Appendix D.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+The generated Index DEMO2 program will then run. Your screen as
+designed in step 9 is displayed. The fixed text form is displayed on
+the screen. The variable data fields are used to accept data.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+You are now ready to practice all the file maintenance commands. The
+next steps show all of these in practice but you can vary the sequence
+or add any steps to these once you have gained confidence.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+To insert the first record into the new indexed sequential file, simply
+key names and addresses into the screen format terminating each record
+by RETURN key. (Remember to enter surname first before initials to
+keep the application feasible).
+        </para>
+    </listitem>
+    <listitem>
+      <para>
+Enter two more complete records overkeying all data from the previous
+record, because all displayed data is written to the file.
+</para>
+      <para>
+When three records have been inserted, you can amend the second record
+as follows:
+  </para>
+      <para>
+Enter the name field as for the second record added followed by RETURN.
+The whole record is displayed because the name is the key which finds
+that record. You have now seen the enquiry facility operated. All
+records can be recalled as easily as that.
+  </para>
+    </listitem>
+    <listitem>
+      <para>
+Change the town field and press RETURN. The message <computeroutput>RECORD AMENDED</computeroutput> is
+displayed.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+Press RETURN and the third record is displayed. You could progr ess
+through a whole file in this way.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+To delete the third record entered move the cursor to HOME position
+and press RETURN. The fields clear showing deletion of that record,
+and a message <computeroutput>RECORD DELETED</computeroutput> is displayed.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+Press RETURN. The Index program attempts to show the next record but
+one does not exist so an end-of-file message is shown:
+<computeroutput>END OF FILE REACHED - RETURN WILL TERMINATE.</computeroutput>
+</para>
+    </listitem>
+    <listitem>
+      <para>
+Press RETURN with end-of-file showing and termination occurs.
+</para>
+      <para>
+You have now seen the record handling method demonstrated and can, if
+you wish, generate a more ambitious Index program or reload as at step
+14 and familiarise further with record manipulation.
+</para>
+    </listitem>
+    <listitem>
+      <para>
+Before you do this, however, you can examine the files on the disk.
+</para>
+      <screen>
+DEMO2.DDS - Data Description Statements for form (COBOL source)
+DEMO2.GEN - Source code of Index program DEMO2
+DEMO2.INT - Intermediate code of Index program DEMO2
+DEMO2.LST - List file code of Index program DEMO2
+DEMO2.IDX - Index file            ⎫
+                                  ⎬  Indexed Sequential file
+DEMO2.DAT - Sequential data file  ⎭
+</screen>
+<note>
+  <para>
+The two files DEMO2.IDX and DEMO2.DAT constitute the Indexed Sequential
+file created by the generated Index program, and in any further runs of
+this program these two files will be used.
+</para>
+</note>
+</listitem>
+  </orderedlist>
+</chapter>

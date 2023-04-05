@@ -1,0 +1,515 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook">
+  <title>INDEX PROGRAM</title>
+  <para>
+FORMS-2 provides facilities for automatically generating a COBOL Index
+program to create and maintain an indexed sequential file. The input
+required to generate the Index program and use it to maintain files is
+supplied interactively by the Operator through the CRT.
+</para>
+  <para>
+      The user designs a data entry screen using FORMS-2 by specifying the fields
+that will comprise the indexed sequential file records in the usual fixed
+text and variable text work phases described in Chapter 3.
+    </para>
+  <para>
+      The user interface to the generated Index program is simply the form
+designed by the user that reflects the desired record structure. Users need
+give no thought to setting up specific 'command' areas, but only to consider
+their data requirements.
+    </para>
+  <para>
+      It should be noted that the user must have access to the CIS COBOL software
+to compile the source Index program that FORMS-2 produces.
+    </para>
+  <para>
+The generated Index program Is written to the file <filename>filename.GEN</filename> and provides the following facilities required for the creation and maintenance of an
+indexed sequential file.
+    </para>
+  <itemizedlist>
+    <listitem>
+      <para>Select records by key field for display (Enquiry by key field)</para>
+    </listitem>
+    <listitem>
+      <para>Select records sequentially for display (Sequential Enquiry)</para>
+    </listitem>
+    <listitem>
+      <para>Amend existing records</para>
+    </listitem>
+    <listitem>
+      <para>Delete existing records</para>
+    </listitem>
+    <listitem>
+      <para>Insert new records</para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    The program has been developed so that it is not necessary for the user to
+explicitly state the facility to be invoked at any one time; the program is
+able to follow the logic from the way the actual data and cursor position
+are manipulated.
+  </para>
+  <para>
+It can be seen that only the variable text data is written to the file and
+the fixed text data is merely a template to enable each field to be entered
+separately at data entry time.
+  </para>
+  <para>
+    A record in the indexed sequential file is constructed by concatenating the
+variable fieids of the form. In the order in which they appear. The record
+must include a key area by which it can be uniquely accessed. the Index
+program logic requires that this key area must he at the beginning of the
+record i.e, must be the first integral field/s in the form, and must not exceed 32 characters in length.
+  </para>
+  <para>
+    This key area constitutes part of the record data. For convenience, the
+remaining fields are known as the data fields.
+  </para>
+  <para>
+    Chapter 9 shows the sample application used in Chapter 4 adapted to create
+and maintain a file of names, addresses and telephone numbers.
+  </para>
+  <section>
+    <title>INPEX PROGIAM GENERATION</title>
+    <indexterm>
+      <primary>INPEX PROGIAM GENERATION</primary>
+    </indexterm>
+    <para>
+An Index program is generated using FORMS-2 as described in Chapters 2 and 3.
+</para>
+    <para>
+All existing FORMS-2 facilities are present, but logic is incorporated to
+prevent  the use of inappropriate features if the Index Program option is
+taken. The steps involved are:-
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Initialisation
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              <literallayout>Screen I01
+                Specify name-base etc. as normal.
+              </literallayout>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <literallayout>Screen I02
+                Specify option G for Index program generation.
+              </literallayout>
+            </para>
+          </listitem>
+        </orderedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Work Phase One
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              Screen W01
+            </para>
+            <para>
+              Work Screen Selection - The program forces the default option 'A'
+for fixed text entry by refusing to accept anything else. (except
+! to abandon the run or ? to display Help screens).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Fixed Text Work Screen
+            </para>
+            <para>
+              A blank work screen Is then displayed for input of the fixed text form.
+            </para>
+            <para>
+              FORMS-2 commands as described in Chapter are available <emphasis>except</emphasis>:-
+            </para>
+            <variablelist>
+              <varlistentry>
+                <term>G</term>
+                <listitem>
+                  <para>The generated program relies on the default dataname structure. This command is rejected.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>S</term>
+                <listitem>
+                  <para>It would be inappropriate to switch off DDS generation, and this command is rejected.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>W</term>
+                <listitem>
+                  <para>This feature is not available to the user, and the
+command is rejected. However the program reserves the
+bottom line for potential use in the generated program
+for system messages ("RECORD NOT FOUND" etc.), and a
+delimiting line of hyphens marks this fact.
+                  </para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+            <para>
+              The screen is released for processing by the sequence
+              'RETURN SPACE RETURN', when the fixed text screen has been completely entered.
+            </para>
+            <para>
+              The Work Screen Selection screen is again displayed.
+            </para>
+          </listitem>
+        </orderedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Work Phase Two
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>Screen W01
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              This time the program forces the default option 'C'.
+            </para>
+            <para>
+              Variable fields are specified as described in Chapter 3 i.e.,
+X/Y/8/9 and editing characters. At some time before releasing
+this screen it is necessary to define the end-of-key/start-of-data
+bound within the record. This is done by positioning the cursor
+on the first data field, entering Command Mode and keying the '*'
+command (i.e. the sequence 'RETURN * RETURN').
+            </para>
+            <note>
+              <para>
+                A key field cannot exceed 32 characters.
+              </para>
+            </note>
+            <para>
+              The screen is released by the usual 'RETURN-SPACE-RETURN'
+sequence. If the program is not satisfied with the specification
+of the key/data boundary it will return to Edit Mode.
+            </para>
+            <para>
+              Upon completion of the variable text screen FORMS-2 completes its
+processing and terminates automatically without any need for the
+termination (!) command. In fact the ! command is only used to
+abandon the run when generating the Index Program.
+</para>
+          </listitem>
+        </orderedlist>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section>
+    <title>FILES GENERATED</title>
+    <indexterm>
+      <primary>FILES GENERATED</primary>
+    </indexterm>
+    <para>
+The following files are written to disk by FORMS-2.
+</para>
+<screen>
+basename.S00  -   Screen image file
+basename.DDS  -   COBOL data description statement file
+basename.GEN  -   Source file for the generated Index program.
+</screen>
+  </section>
+  <section>
+    <title>INDEX PROGRAM COMPILATION</title>
+    <indexterm>
+      <primary>INDEX PROGRAM COMPILATION</primary>
+    </indexterm>
+    <para>
+The Index program can now be compiled from the .GEN file in the usual way
+The following files must be present during compilation:
+</para>
+            <variablelist>
+              <varlistentry>
+                <term>basename.DDS</term>
+                <listitem>
+                  <para>the DDS file produced in the run. This must be on the
+drive selected at screen I02, or the logged drive if none was specified.
+                  </para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term><literallayout>FORMS2.GN1
+FORMS2.GN2</literallayout></term>
+                <listitem>
+                  <para>the skeleton for the generated program on the logged drive.
+                  </para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+            <para>
+              The Index program is then compiled in the usual way by entering the standard
+CIS COBOL compilation command for your Operating System (O/S) to load the
+Index program from file:
+</para>
+<screen>
+  basename.GEN
+</screen>
+<para>
+  See Appendix D
+</para>
+<para>
+  Details of compilation using the CIS COBOL compiler are given in the
+  <citetitle pubwork="book">CIS COBOL Operating Guide</citetitle>.
+</para>
+<para>
+  After compilation, the user can run the generated program.
+</para>
+  </section>
+  <section>
+    <title>INDEX PROGRAM RUNNING</title>
+    <indexterm>
+      <primary>INDEX PROGRAM RUNNING</primary>
+    </indexterm>
+    <section>
+      <title>LOADING</title>
+      <para>
+The program can be loaded immediately after compilation by using the
+standard run command for your Operating System to load the program from
+file:   
+</para>
+      <screen>
+  basename.INT
+</screen>
+      <para>
+However, to be able to load directly in subsequent use the = directive of
+the command must be used, and the SAVE file renamed to basename.COM. See
+Appendix D for the commands for your 0/S and the CIS COBOL Operating Guide
+for fuller details of load directives. Thereafter the direct load command
+can be used.
+</para>
+    </section>
+    <section>
+      <title>DATA PROCESSING FACILITIES</title>
+      <para>
+Immediately the program is loaded, the user designed form is displayed.
+</para>
+      <para>
+The form remains on the screen throughout a run, processing being controlled
+by manipulation of the data in the variable fields.
+</para>
+      <para>
+  A screen display reflects the structure of a single record. The required
+processing function is instigated by entering data and positioning the
+cursor as described below, and then pressing the RETURN key. Index program
+messages are displayed in an unused area of the screen as necessary.
+</para>
+      <para>
+  The basic operator functions and Index program messages are described below,
+and will suffice in general use. Details of the Index program
+Interpretation of data manipulation and cursor position follow this
+description.
+</para>
+      <section>
+        <title>Enquiry by Key Field</title>
+        <para>
+    Amend key fields only to required key, and press RETURN. The required
+record is displayed. If the record Is not found (i.e. key cannot be found)
+the message RECORD NOT FOUND is displayed.
+</para>
+      </section>
+      <section>
+        <title>Sequential Enquiry</title>
+        <para>
+    Simply press RETURN to show next record. If the end of the file is reached,
+A. the message END OF FILE REACHED - RETURN- WILL TERMINATE- is displayed.
+</para>
+      </section>
+      <section>
+        <title>Amend Displayed Record</title>
+        <para>
+    Amend data fields only and press RETURN. The message RECORD AMENDED is
+displayed.
+</para>
+      </section>
+      <section>
+        <title>Delete Displayed Record</title>
+        <para>
+    Press the HOM or &#x2196; key then press RETURN. The message RECORD DELETED is
+displayed and the data fields are blanked out.
+</para>
+      </section>
+      <section>
+        <title>Insert New Record</title>
+        <para>
+    Amend key and data fields as required and press RETURN-. . If- the data fields
+currently displayed do not need changing (i.e. it is required to enter the
+existing data fields under a new key) prior to pressing RETURN
+<emphasis>either</emphasis> press HOM (&#x2196;) <emphasis>or</emphasis> press &#x2191; repeatedly until end of the list data field
+is reached.
+</para>
+        <para>
+  The message NEW RECORD WRITTEN is displayed if insertion takes place.
+</para>
+        <para>
+  If a record already exists with the specified key the current display is
+retained and the warning message RECORD ALREADY EXISTS WITH THIS KEY Is
+to three as follows:
+</para>
+        <orderedlist>
+          <listitem>
+            <para>
+      Force replacement of existing record:
+    </para>
+            <para>
+      Either press HOM <emphasis>or</emphasis> press &#x2191; repeatedly until the cursor reaches the end
+of the last data field, then press RETURN.
+    </para>
+            <para>
+      The record is replaced and, the message RECORD REPLACED is displayed.
+    </para>
+          </listitem>
+          <listitem>
+            <para>
+      Amend key field and re-attempt the insertion:
+    </para>
+            <para>
+      Amend key fields and press RETURN (cursor position is immaterial).
+    </para>
+          </listitem>
+          <listitem>
+            <para>
+      Abandon insertion attempt and display existing record:
+    </para>
+            <para>
+      Press RETURN only.
+    </para>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Terminate Run</title>
+        <para>
+   Enquire up to the end-of-file by means of continual sequential enquiry or a
+combination of enquiry by key to a specific record, then sequential enquiry.
+</para>
+        <para>
+When end-of-file is reached the message
+END OF FILE REACHED -RETURN WILL TERMINATE is displayed. Press RETURN to terminate the run.
+</para>
+      </section>
+    </section>
+    <section>
+      <title>USER REQUIREMENT INTERPRETATION SUMMARY</title>
+      <para>
+    The Index program interprets the user's requirements depending on the change
+status of key and data fields and the cursor position as follows:
+</para>
+      <section>
+        <title>Key and Data Fields Unchanged</title>
+        <para>
+    The function performed depends upon cursor position as follows:
+</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+      If an end-of-file condition has just been reported, a request to
+terminate the run is assumed irrespective of cursor position.
+</para>
+          </listitem>
+          <listitem>
+            <para>
+      Otherwise if the cursor has been moved to the HOM position and a
+record is currently displayed, a delete request is assumed.
+</para>
+          </listitem>
+          <listitem>
+            <para>
+      If neither of these conditions exists, a request to display the
+next record relative to the 'current' position in the file is assumed.
+</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Key Changed and Data Unchanged</title>
+        <para>
+    The function performed depends on cursor position as follows:
+</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+      If cursor is moved to either the HOM position or the last data
+character position, an attempt to Insert a record is assumed, and
+processing is as described under Key and Data Changed
+</para>
+          </listitem>
+          <listitem>
+            <para>
+      Otherwise an enquiry with respect to this key is assumed, and
+either the record is displayed or its absence is reported.
+</para>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Key Unchanged and Data Changed</title>
+        <para>
+   This is a request to update the file, and either a new record is written or
+the existing record amended as appropriate.
+</para>
+      </section>
+      <section>
+        <title>Key and Data Changed</title>
+        <para>
+  This is a request to insert a new record. However, it is assumed that the
+user should not overwrite a record without at least being informed of its
+presence. Therefore if a record exists with the specified key, a warning
+message is displayed, and the subsequent three functions can be performed
+depending on the change status of key and data fields and the cursor
+position:
+</para>
+        <orderedlist>
+          <listitem>
+            <para>Key and Data Unchanged</para>
+            <para>The function required depends on cursor position as follows:</para>
+            <itemizedlist>
+              <listitem>
+                <para>
+      If the cursor has been moved to either the HOM position of the
+last data character position, insertion of the new record is
+forced, and the existing record is overwritten.
+</para>
+              </listitem>
+              <listitem>
+                <para>
+      If the cursor is at any other position a request to abandon the
+insertion attempt and display the existing record is assumed,
+</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>
+Data Unchanged and Key Changed
+      </para>
+            <para>
+An attempt is made to insert the data under the new key irrespective of
+cursor position. If necessary the warning message will be repeated.
+      </para>
+          </listitem>
+          <listitem>
+            <para>
+Key and Data Changed
+      </para>
+            <para>
+A normal insert request as described above is assumed.
+      </para>
+          </listitem>
+        </orderedlist>
+      </section>
+    </section>
+  </section>
+</chapter>

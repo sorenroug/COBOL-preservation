@@ -1,0 +1,746 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook">
+  <title>WORK PHASE</title>
+  <para>
+   The user defines the screen layouts (forms) to be used in a CIS COBOL
+application by entering text at the keyboard to produce model forms on the
+screen. The user may define as many forms as he wishes in a single FORMS-2
+To define one form requires at least two distinct Work Phases: one to
+define the fixed text of the form, and another to define the variable data
+entry fields.
+</para>
+  <para>
+  Most commonly the first Work Phase is used to specify the fixed text form
+and the subsequent Work Phase to specify the variable data fields within the
+form. However this need not always be the case and FORMS-2 needs to known
+w ch type of text is to be input in a particular phase. Therefore the Work
+Phase is introduced by a screen presenting the various options (W01).
+</para>
+  <section>
+    <title>SCREEN W01</title>
+    <section>
+      <title>SCREEN TYPE SELECTION</title>
+      <para>
+      Fixed Text selections offered at this screen are as follows:
+    </para>
+      <variablelist>
+        <varlistentry>
+          <term>A</term>
+          <listitem>
+            <para>
+      The CRT screen is cleared to spaces in preparation for the user to
+enter the fixed text for a new form.
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>B</term>
+          <listitem>
+            <para>
+The previous screen is redisplayed to assist the user in defining
+additional fixed text. Text from the previous screen is used only
+as a background in this case, and is <emphasis>not</emphasis> included in the record
+definition for the fixed text currently being keyed in. The user
+must therefore ensure that if any part of the previous screen is
+inadvertently overkeyed, the original characters must not be
+replaced but cleared to spaces.
+</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>Variable Data selections offered at this screen are as follows:</para>
+      <variablelist>
+        <varlistentry>
+          <term>C</term>
+          <listitem>
+            <para>
+The previous screen is redisplayed to assist the user in the
+redefinition of the form to incorporate variable data field
+specifications. In the application the data is keyed into the
+fixed text form itself.
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>D</term>
+          <listitem>
+            <para>
+The previous screen is redisplayed to assist the user in the
+definition of variable data fields which will be kept separate
+from the fixed text within the applications program. This may
+sometimes be of assistence to the programmer even though it
+results in larger application programs.
+        </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section>
+      <title>TERMINATING THE RUN</title>
+      <indexterm>
+        <primary>TERMINATING THE RUN</primary>
+      </indexterm>
+      <para>
+Screen W01 is redisplayed after completion of each Work Phase, and is the
+screen used to terminate the program. This is done by entering the
+character ! and pressing the RETURN key.
+</para>
+      <warning>
+        <para>
+Use of the ! command at any other time causes immediate abandonment of the run.
+</para>
+      </warning>
+      <para>
+On termination, the DDS file is closed and an identification message is
+displayed. If the Check-out facility was specified during initialisation
+then output of the Check-out program to disk is completed and the CHK file
+is closed with an identification message displayed.
+</para>
+      <para>
+  Termination occurs automatically after the second Work Phase if an Index
+program is being generated (see Chapter 8).
+</para>
+    </section>
+  </section>
+  <section>
+    <title>WORK SCREEN</title>
+    <indexterm>
+      <primary>WORK SCREEN</primary>
+    </indexterm>
+    <para>
+After the screen type has been selected, the user is presented with the
+appropriate Work Screen for that text to be entered, i.e., if option A
+(fixed text on clear screen) is selected, a blank screen is displayed. For
+the other options, the previous screen is redisplayed to allow correct
+alignment of the current input.
+</para>
+    <section>
+      <title>BACKGROUND/FOREGROUND</title>
+      <indexterm>
+        <primary>BACKGROUND/FOREGROUND</primary>
+      </indexterm>
+      <para>
+In order to process only the data entered in this phase, FORMS-2 must keep
+this data separate from previously entered data which is displayed purely
+for alignment purposes. FORMS-2 does this by constructing the displayed Work
+Screen from two separate data areas, termed Background and Foreground. The
+Foreground holds the data entered during the current Work Phase. The
+Background holds previously entered data which has been retained for
+alignment of the data entered in the current Work Phase. At the end of each
+Work Phase FORMS-2 processes the Foreground data only.
+</para>
+      <para>
+When screen W01 is next reached if options B, C D or are chosen, the
+Foreground is overlayed on the current Background contents and then
+Foreground is cleared to spaces. If option A is selected both Background
+and Foreground are cleared to spaces.</para>
+      <para>
+In this way the new Work Screen is prepared automatically.
+</para>
+      <note>
+        <para>
+It is possible to override this automatic Work Screen preparation for
+the next phase by means of a Work Screen command, described later, and
+leave both areas unchanged.
+</para>
+      </note>
+      <para>
+Generally data is entered into the Foreground via the keyboard, and is moved
+into the Background only from the Foreground. The F Work Screen command
+described later provide facilities for further manipulation of these areas.
+In particular it is possible to input a Screen Image file from a previous
+run into the Foreground, thus enabling amendment of existing forms.
+</para>
+      <para>
+During entry of data into the Work Screen (i.e. Foreground) two modes can be
+invoked as follows:
+</para>
+      <variablelist>
+        <varlistentry>
+          <term>Edit Mode</term>
+          <listitem>
+            <para>
+The mode in which the user keys data to create
+the model form. The Initial mode is always
+Edit Mode.
+</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Command Mode</term>
+          <listitem>
+            <para>
+Commands are available to assist in the
+creation of the edited Work Screen and in its processing.
+        </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section>
+      <title>EDIT MODE</title>
+      <indexterm>
+        <primary>EDIT MODE</primary>
+      </indexterm>
+      <para>
+Edit Mode is identified to the user as the mode in which the cursor can be
+freely moved to any part of the screen by use of the cursor control keys.
+Entries may also be made into any part of the screen, in accordance with the
+screen type selected at the start of this Work Phase.
+</para>
+      <section>
+        <title>Fixed Text</title>
+        <para>
+In the design cf the Fixed Text of a form (i.e. the fixed fields analagous
+to the pre printed text on a paper form) any legible characters can be
+entered anywhere on the screen. This text will be displayed as "prompt"
+text during a data entry run of the application.
+</para>
+      </section>
+      <section>
+        <title>Variable Data</title>
+        <indexterm>
+          <primary>Variable Data</primary>
+        </indexterm>
+        <para>
+In the design of the Variable Data fields of a form (I.e. the fields
+analagous to the entry spaces on a pre-printed form) the characters X, Y and
+8, 9 can be entered.
+</para>
+        <para>
+When variable data is being keyed in, X denotes an alphanumeric character
+and 9 denotes a numeric character. If it is required to. have two
+alphanumeric fields contiguous with each other, Y's are placed in the
+character positions of the second field. Similarly, for contiguous numeric
+fields 8*s are used.
+</para>
+        <example>
+          <para>
+    INVOICE NO ......
+  </para>
+        </example>
+        <para>
+Suppose in an application the operator must key in an Invoice Number. Then
+the fixed text in this example could be "INVOICE NO ......" One example
+value of an invoice number could be "CA3021". It is necessary to define the
+area and type of this variable data explicitly for the computer. Hence if
+the. invoice number always had two alphanumerics followed by four numerics,
+the user of FORMS-2 would key in XX9999 at the point on the screen (the dots
+in this example) where he wishes the operator to key the actual invoice
+number when the application Itself is running. (Note that CIS COBOL
+provides an automatic validation of numeric fields).
+</para>
+        <para>
+Additionally, if the- Standard Compiler option is taken at screen I01,
+special editing characters can be input to specify numeric edited fields.
+This feature is not implemented under RT-11. Note that these fields should
+be separated by spaces. Numeric Edited Fields are described in the
+<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>.
+The valid characters are:-
+</para>
+        <para>
+Z, *, +, -, CR, DB, .(period), ,(comma), B, /, 0(zero), $
+</para>
+        <para>
+The $ sign is the currency sign which may be replaced by another sign as
+specified in the SPECIAL-NAMES clause of the CIS COBOL program either
+directly or as specified during the Initialisation Phase of the FORMS-2 run
+(See Chapter 2).
+</para>
+        <note>
+          <para>
+The picture characters S, V, P are not allowed.
+</para>
+        </note>
+        <para>
+Variable data fields are checked for validity but only when a DDS file is
+being created. The user should consult the
+<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+(ACCEPT/DISPLAY Verbs) for detail of how CIS COBOL screen handling works.
+</para>
+      </section>
+    </section>
+    <section>
+      <title>COMMAND MODE</title>
+      <para>
+To switch to Command Mode from Edit Mode, the user simply presses the RETURN
+key.
+</para>
+      <para>
+Command Mode is identified, to the user as the mode in which two underline
+characters initially bound the cursor, and the cursor is constrained to stay
+within these two characters.
+</para>
+      <para>
+Commands are invoked by keying the command always followed by pressing the
+RETURN key.
+</para>
+      <para>
+When execution of a command is complete, all commands (except SPACE, ! and
+Q) return to Edit Mode.
+</para>
+      <para>
+The default command is the underline character (_) and this causes immediate
+re-entry to Edit Mode.
+</para>
+      <section>
+        <title>Commands</title>
+        <para>
+        The commands available to the user during the Work Phase fall into three
+main groups. All commands are entered by typing the command character/s
+followed by pressing the RETURN key.
+</para>
+        <orderedlist>
+          <listitem>
+            <para>
+General Commands
+</para>
+            <para>
+General commands perform such functions as releasing the Work Screen
+for processing.
+</para>
+          </listitem>
+          <listitem>
+            <para>
+Work Screen Manipulation Commands
+</para>
+            <para>
+Work Screen Manipulation commands assist in the preparation and editing
+of the Work Screen. It is recommended that all users become very
+familiar with these commands.
+</para>
+          </listitem>
+          <listitem>
+            <para>
+Programming Commands
+</para>
+            <para>
+Programming commands have been introduced mainly for the convenience of
+the COBOL programmer, and some of them will not be meaningful without
+an understanding of COBOL. They include commands to assist in
+producing efficient code, and to give more control over the files
+output.
+</para>
+          </listitem>
+        </orderedlist>
+        <note>
+          <para>
+Groups 1 and 2 are summarised within HELP screens 1 and 2 (H01, H02)
+Group 3 is summarised on HELP screens 3 and 4 (H03, H04) . See
+Appendix C.
+</para>
+        </note>
+        <section>
+          <title>General Work Screen Commands</title>
+          <indexterm>
+            <primary>General Work Screen Commands</primary>
+          </indexterm>
+          <para>
+A description of each general command is given below.
+</para>
+          <variablelist>
+            <varlistentry>
+              <term>?</term>
+              <listitem>
+                <para>
+Display Help Screens
+</para>
+                <para>
+Entry of the question mark then RETURN causes display of the
+first HELP screen, which includes a summary of the General
+Commands. This screen remains displayed until further input
+is made.
+</para>
+                <para>
+Keying RETURN alone at this stage returns to EDIT MODE.
+</para>
+                <para>
+Keying ? then RETURN again causes display of the next HELP
+screen, which is a summary of the Work Screen Manipulation
+commands, and if repeated, each HELP screen in sequence until
+the end of the series when the first screen Is displayed
+again.
+</para>
+                <para>
+The ? command is also available from the first (Select Text
+Type) screen W01.
+</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>?n</term>
+              <listitem>
+                <para>
+Display Help Screen specified by n
+        </para>
+                <para>
+The entry of ? followed by a numeric digit then RETURN
+directly displays the nth screen in the HELP series.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>(Space)</term>
+              <listitem>
+                <para>
+Terminate the Work Phase
+        </para>
+                <para>
+Entry of the space character terminates the current Work
+Phase and Initiates processing of the data just entered in
+that Work Screen.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>_ (Underline)</term>
+              <listitem>
+                <para>
+Return to Edit Mode
+        </para>
+                <para>
+Entry of the underline character exits from Command Mode back
+to Edit Mode.
+        </para>
+                <para>
+All commands except SPACE, ! and Q return to Edit Mode.
+The default command was introduced for convenience in case
+Command Mode is entered inadvertently.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>Q</term>
+              <listitem>
+                <para>
+Quit
+        </para>
+                <para>
+Entry of Q returns to Screen W01 (Select Type of Text).
+        </para>
+                <para>
+Whatever text type is then selected, the current
+Foreground/Background components of the Work Screen will be
+unchanged on re-entry to Edit Mode.
+        </para>
+                <para>
+The most likely use for this command is where the default
+option C (variable data fields) Is taken at screen W01 and
+then the Work Screen is incorrectly used to set up a fixed
+form. Validation, errors then occur with automatic
+re-entry to Edit Mode. To return to screen W01 and correct
+the selection without loss of the text just entered, key
+RETURN to enter Command Mode and enter the Q command. The
+screen type can now be corrected and the Work Screen has been
+preserved for reprocessing (as fixed text). The Q command is
+also available at screen I02, and again its function is to
+return a step within the phase (in this case back to screen
+I01).
+                  </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>!</term>
+              <listitem>
+                <para>
+Terminate FORMS-2 run
+        </para>
+                <para>
+Entry of the ! character causes termination of the program.
+This command is available throughout the FORMS-2 program, but
+is normally used on automatic return to screen W01 when a
+work phase has been completed. When used elsewhere it
+abandons the run.
+        </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>X</term>
+              <listitem>
+                <para>
+Reposition Command Area
+        </para>
+                <para>
+The standard command area is in columns 1 and 2 of line 1 as
+indicated by the two underline characters displayed on entry
+to Command Mode. FORMS-2 always attempts to restore any data
+in these positions upon return to Edit Mode. However to
+enable these positions to be preserved intact at all times,
+the facility to reposition the command area is provided. To
+achieve this, the cursor is placed at the desired location
+prior to Command Mode being entered. Entry of the character
+X then causes the required change. The next time Command
+Mode is entered the prompting underline characters will
+appear at the new specified location.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>*</term>
+              <listitem>
+                <para>
+Define Key/Data split for Index Program
+        </para>
+                <para>
+This command is particular to generation of the Index Program
+and is described in Chapter 8. Note however, that if the
+Index Program option G is taken at screen I02, at some stage
+prior to termination of the second Work Phase the cursor
+should be positioned at the first non-key variable data
+position and the * command entered.
+        </para>
+                <para>
+If this is not correctly done, FORMS-2 will continually return
+to Edit Mode until It is.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+          </variablelist>
+        </section>
+        <section>
+          <title>Work Screen Manipulation Commands</title>
+          <indexterm>
+            <primary>Work Screen Manipulation Commands</primary>
+          </indexterm>
+          <para>
+The commands F and D are preparation commands.
+</para>
+<variablelist>
+            <varlistentry>
+              <term>F</term>
+              <listitem>
+                <para>
+Invoke Foreground/Background Menu Screen (W02).
+        </para>
+                <para>
+Screen W02 contains options to assist in setting uo the
+Foreground component of the Work Screen. The concept of
+Foreground and Background is described earlier in this
+Chapter.
+        </para>
+                <para>
+The options made available by the FORMS-2 W02 Screen
+are:-   MANGLER!
+        </para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term>Fx</term>
+              <listitem>
+                <para>
+Specifies Required Foreground/Background Option
+        </para>
+                <para>
+x is the option code as contained in screen WP02 above. The
+specified option is executed and control returned to Edit
+Mode without display of the WP02 screen.
+        </para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>O1</term>
+              <listitem>
+                <para>
+"Switch Off" Automatic Background/Foreground Preparation.
+        </para>
+                <para>
+The Background/Foreground preparation sequence is described
+under BACKGROUND/FOREGROUND earlier in this Chapter. This
+command is used to prevent the current Foreground being
+merged into the Background or either area being cleared for
+the next phase.
+        </para>
+        <para>
+          The O1 command remains effective until the command 0
+(described below) is entered.
+</para>
+              </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+              <term>O or O0</term>
+              <listitem>
+                <para>
+Reset Background/Foreground Preparation.
+        </para>
+                <para>
+The Background/Foreground preparation sequence is reset to
+automatic (starting at the beginning of the next Work Phase).
+        </para>
+        <note>
+        <para>
+The Q command has a similar effect (beginning at the
+next phase).
+</para>
+</note>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <para>
+            The commands C, D, I, K and A are editing commands and are controlled by the
+position of the cursor at the time Command Mode is entered (i.e. the current
+cursor position) and operate only on the Foreground data. Background data
+remains on the same position.
+</para>
+<para>MANGLER VARIABLELIST</para>
+<para>
+  Commands U and V are cursor positioning commands.
+</para>
+<para>
+  Horizontal cursor positioning can be achieved by means of the _*- and -*_
+keys.
+</para>
+<para>
+  Vertical cursor positioning is partially achieved by means of the I and I
+keys, but the cursor is usually placed at column 1.
+</para>
+<para>
+  Vertical tabulation within the same column can be required when setting up a
+form. Two "tabulation" commands are provided.
+</para>
+<para>MANGLER VARIABLELIST</para>
+            </section>
+        <section>
+          <title>Programming Commands</title>
+          <indexterm>
+            <primary>Work Screen Manipulation Commands</primary>
+          </indexterm>
+          <para>
+G - The Dataname Structuring Command
+</para>
+<para>MANGLER VARIABLELIST</para>
+
+          <para>
+The commands J and M are Multiple Spaces and FILLER Commands
+</para>
+          <para>
+The CIS COBOL interactive ACCEPT and DISPLAY verbs operate only on named
+fields; FILLER areas are left alone. The time taken to display a screen
+depends both on the size and also the number of constituent fields.
+</para>
+          <para>
+When processing fixed text screens, FORMS-2 by default generates FILLER
+wherever multiple spaces appear. On some forms this can result in many
+small fields separated by small FILLER fields. The problem may be
+alleviated by:
+</para>
+<para>MANGLER VARIABLELIST</para>
+
+<note><title>Notes</title>
+            <orderedlist>
+              <listitem>
+                <para>
+        Delimiters do not corrupt Background/Foreground contents.
+      </para>
+              </listitem>
+              <listitem>
+                <para>
+The output Screen Image will include the full Foreground part o
+the Work Screen without delimiters, irrespective of whether
+window has been defined. This could be used to include annotatio:
+on the Screen Image which does not affect DDS generation.
+      </para>
+              </listitem>
+              <listitem>
+                <para>
+A useful purpose for the window facility would be if a form is
+required to be displayed in two stages: the first 10 lines then
+the second 10 lines. This could be created as a single Screen
+Image including both sections of the form, . and the programmer
+couid window in on the relevant portions as required when the
+DDS text is generated.
+      </para>
+              </listitem>
+            </orderedlist>
+          </note>
+        </section>
+      </section>
+    </section>
+  </section>
+  <section>
+    <title>WORK PHASE COMPLETION</title>
+    <para>
+    To complete the Work Phase of FORMS-2, the user selects Command Mode, keys
+the SPACE character and then the RETURN character. The SPACE character is
+the command to release the Work Screen for processing.
+</para>
+    <para>
+FORMS-2 completes the Work Phase (depending on the file selection at screen
+I02) as follows:
+</para>
+    <orderedlist>
+      <listitem>
+        <para>
+If this is a variable data field definition Work Phase (Option C or D
+at screen W01), validation then occurs with the message:
+      </para>
+        <para>
+WORK SCREEN VALIDATION in progress - DO NOT press RETURN
+      </para>
+      </listitem>
+      <listitem>
+        <para>
+If DDS file generation is selected at screen 102, the source code
+produced is echoed to the screen as it is- written to disk. If the S9
+command was specified processing stops after each line of code to
+enable changes to be made as required. This is recommended only if
+special requirements dictate its use.
+      </para>
+      </listitem>
+      <listitem>
+        <para>
+If a screen image file was requested at screen 102, the screen image is
+echoed to the screen as it is written to the disk file. The identity of
+the created file is displayed and the user must press RETURN to
+continue.
+      </para>
+      </listitem>
+      <listitem>
+        <para>
+Screen W01 is redisplayed so that the run can be terminated or
+continued.
+      </para>
+      </listitem>
+    </orderedlist>
+    <note><title>Notes</title>
+      <orderedlist>
+        <listitem>
+          <para>
+        During validation of variable data only those characters listed in the
+description of text-types are permitted (plus space). If any other
+character is encountered, an error is notified by the validation
+routine by alternately displaying "?" and the offending character to
+give a flashing effect. This error indication then ceases and FORMS-2
+returns to Edit Mode with the cursor positioned under the erroneous
+character. The user must reissue the SPACE command after making any
+corrections.
+      </para>
+        </listitem>
+        <listitem>
+          <para>
+If the Standard Compiler option is taken at Screen I01, FORMS-2 will
+allow editing characters but will not vet that the combinations of
+these are valid; CIS COBOL editing rules must therefore be obeyed to
+ensure error free code. Note that these fields should be separated by
+spaces. If the Compact Compiler option is taken, editing characters
+are not allowed and .full validation is performed. :
+      </para>
+        </listitem>
+        <listitem>
+          <para>
+Only Foreground data is output to the Screen Image file.
+      </para>
+        </listitem>
+      </orderedlist>
+    </note>
+  </section>
+</chapter>

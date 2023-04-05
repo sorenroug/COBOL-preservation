@@ -1,0 +1,636 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Introduction</title>
+  <section>
+    <title>GENERAL DESCRIPTION</title>
+    <indexterm>
+      <primary>General Description</primary>
+    </indexterm>
+    <section>
+      <title>FACILITIES</title>
+      <indexterm>
+        <primary>Facilities</primary>
+      </indexterm>
+      <para>
+The FORMS-2 package is an extension to the CIS COBOL software development
+system which enables interactive creation and editing of data entry screens
+for applications programs at a CRT. The package provides four powerful
+facilities to aid the design and development of interactive applications
+written in CIS COBOL:
+</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+Translation of user screen layouts into COBOL record descriptions
+for inclusion in CIS COBOL applications programs.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+Verification of user screen layouts in a Check-Out program before
+their incorporation in an application program.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+Retention of exact screen images of the user screens in disk files'
+for subsequent editing and printing.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+Generation of an entire CIS COBOL program to allow data capture,
+update and interrogation by means of application screens and an
+indexed sequential file.
+</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  <section>
+    <title>OUTPUTS</title>
+    <indexterm>
+      <primary>Outputs</primary>
+    </indexterm>
+    <para>
+The user can choose any valid combination of the above facilities and
+dependent on the options selected FORMS-2 will automatically produce the
+following four types of disk output file:-
+</para>
+    <itemizedlist>
+      <listitem>
+        <para>
+A source file of CIS COBOL Data Description Statements defining
+the user designed screens (forms). These statements can
+subsequently be included in a CIS COBOL application program using
+the COPY verb. The file is generated as filename.DDS.
+</para>
+      </listitem>
+      <listitem>
+        <para>
+A source file of a Check-Out program incorporating the Data
+Description Statements defining the user's screens. After
+compilation the user is able to verify the data entry form prior
+to building the actual application. The file is generated as
+filename.CHK.
+</para>
+      </listitem>
+      <listitem>
+        <para>
+Screen Image files of exact copies of the user defined forms. The
+files are generated as filename.Snn (nn is 00 to 99).
+</para>
+      </listitem>
+      <listitem>
+        <para>
+A file of the source of an Index program based on the user screen.
+After compilation the generated program can be used for the
+storage, retrieval, updating and deletion of data entered via the
+users form. The file is generated as filename.GEN.
+</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section>
+    <title>PHASES</title>
+    <indexterm>
+      <primary>Phases</primary>
+    </indexterm>
+    <para>
+FORMS-2 processing is divided between a number of logically distinct units
+but two main phases can be identified - Initialisation Phase and Work Phase:
+</para>
+    <section>
+      <title>Initialisation Phase</title>
+      <indexterm>
+        <primary>Initialisation Phase</primary>
+      </indexterm>
+      <para>
+The Initialisation phase is passed through once only and establishes the
+characteristics of this particular run of the program. It is a series of
+screens containing self-explanatory prompts to which the user replies as
+necessary.
+</para>
+    </section>
+    <section>
+      <title>Work Phase</title>
+      <indexterm>
+        <primary>Work Phase</primary>
+      </indexterm>
+      <para>
+At least two Work Phases are passed through for each data entry screen
+required by the application.
+</para>
+      <para>
+The FORMS-2 screen is analogous to a paper form in which the printed fixed
+text is used as a guide to entering the variable data in the spaces
+provided. To the human eye it is obvious where the variable data entry
+areas occur on a form but the computer needs to have these areas defined
+explicitly. There are, therefore, two types of Work Phase: one in which
+fixed text is specified and one in which variable data fields are specified.
+</para>
+  </section>
+    </section>
+  </section>
+  <section>
+    <title>OPERATOR INTERFACE</title>
+    <indexterm>
+      <primary>Operator Interface</primary>
+    </indexterm>
+    <para>
+FORMS-2 is written in CIS COBOL and uses the ACCEPT and DISPLAY COBOL verbs.
+These two verbs are described in the <citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>, as are the cursor control features.
+</para>
+    <para>
+Advantages of this CRT interface are:
+</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+Corrections can be directly overtyped
+</para>
+        </listitem>
+        <listitem>
+          <para>
+Numeric fields accept only numeric characters
+</para>
+        </listitem>
+        <listitem>
+          <para>
+The full stop or period (.) when keyed in a numeric field
+automatically zero-fills the field from the left.
+</para>
+        </listitem>
+      </itemizedlist>
+    <section>
+      <title>CURSOR MOVEMENT FACILTIES</title>
+      <indexterm>
+        <primary>Cursor Movement Facilties</primary>
+      </indexterm>
+      <para>
+The user has the ability to move the cursor quickly and easily about the
+screen using the standard CIS COBOL ACCEPT statement interactive facilities.
+</para>
+      <para>
+The general functions of the cursor control keys are summarised in the
+following table. The actual key may vary from that shown dependent on the
+particular CRT being used.
+</para>
+
+          <table frame="all" colsep="1" rowsep="1">
+            <title>Cursor Control Keys</title>
+            <tgroup cols="2">
+              <colspec colwidth="1.7in" colname="c1"/>
+              <colspec colwidth="3.3in" colname="c2"/>
+              <thead>
+                <row>
+                  <entry>KEY:</entry>
+                  <entry>FUNCTION:</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry>&#x2192;</entry>
+                  <entry>Position cursor right one data character</entry>
+                </row>
+                <row>
+                  <entry>&#x2190;</entry>
+                  <entry>Position cursor left one data character</entry>
+                </row>
+                <row>
+                  <entry>&#x2193;</entry>
+                  <entry>Position cursor at start of succeeding data field</entry>
+                </row>
+                <row>
+                  <entry>&#x2191;</entry>
+                  <entry>Position cutsor at start of preceding data field</entry>
+                </row>
+                <row>
+                  <entry>&#x2196; or HOM</entry>
+                  <entry>Move cursor to start of first data field</entry>
+                </row>
+                <row>
+                  <entry>TAB</entry>
+                  <entry>Position to next tab stop</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+      <para>
+In Edit Mode the screen is split into fields 80 characters long. There are
+22-24 fields per screen depending on the number of lines specified at Screen
+I01.
+</para>
+      <para>
+Corrections to text may be made by overtyping or by switching into Command
+Mode and using the editing commands.
+</para>
+
+
+
+    </section>
+  </section>
+  <section>
+    <title>GETTING STARTED</title>
+    <indexterm>
+      <primary>Getting Started</primary>
+    </indexterm>
+    <para>
+The FORMS-2 Issue Disk is a formatted data disk formatted to the
+requirements of the support Operating System.
+</para>
+    <para>
+Load the Operating System system disk and the FORMS-2 Issue Disk, bootstrap
+load the Operating System as usual, and obtain a directory of the FORMS-2
+Issue Disk. All the files listed in Table 1-2 should be present on the
+disk. If they are not, or any problems arise, contact your Distributor.
+</para>
+        <table frame="all" colsep="1" rowsep="1">
+          <title>FORMS-2 Issue Disk Contents.</title>
+          <tgroup cols="3">
+            <colspec colwidth="1.5in" colname="c1"/>
+            <colspec colwidth="2.5in" colname="c2"/>
+            <colspec colwidth="1.5in" colname="c3"/>
+            <thead>
+              <row>
+                <entry>FILE</entry>
+                <entry>CONTENTS</entry>
+                <entry>DESCRIPTION</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>FORMS2.COM<superscript>1</superscript>
+                </entry>
+                <entry>FORMS2 program</entry>
+                <entry>The manual</entry>
+              </row>
+              <row>
+                <entry>
+                  <literallayout>FORMS2.I01
+FORMS2.I02</literallayout>
+                </entry>
+                <entry>Initialisation Phase Screens</entry>
+                <entry>Chapter 2</entry>
+              </row>
+              <row>
+                <entry>
+                  <literallayout>FORMS2.W01
+FORMS2.W02</literallayout>
+                </entry>
+                <entry>Work Phase Screens</entry>
+                <entry>Chapter 3</entry>
+              </row>
+              <row>
+                <entry>
+                  <literallayout>FORMS2.H01
+FORMS2.H02
+FORMS2.H03
+FORMS2.H04</literallayout>
+                </entry>
+                <entry>Help Screens</entry>
+                <entry><literallayout>Chapter 3
+(? Command)</literallayout></entry>
+              </row>
+              <row>
+                <entry>
+                  <literallayout>FORMS2.CH1
+FORMS2.CH2</literallayout>
+                </entry>
+                <entry>Check-Out Program Skeleton</entry>
+                <entry>Chapter 5</entry>
+              </row>
+              <row>
+                <entry>
+                  <literallayout>FORMS2.GN1
+FORMS2.GN2</literallayout>
+                </entry>
+                <entry>Index Program Skeleton</entry>
+                <entry>Chapter 8</entry>
+              </row>
+              <row>
+                <entry>CONFIG.SAV<superscript>2</superscript>
+                </entry>
+                <entry>Configuration Program</entry>
+                <entry>Chapter 1</entry>
+              </row>
+                <row>
+                  <entry namest="c1" nameend="c3">
+                    <para>
+1 - FORMS2.SAV under RT-11, FORMS2 under BOS
+</para>
+                    <para>
+2 - Not supplied for BASF systems
+</para>
+                  </entry>
+                </row>
+
+            </tbody>
+          </tgroup>
+        </table>
+    <para>
+Some operating systems require additional files. See Appendix D for
+specific requirements of your operating system.
+</para>
+    <para>
+Having validated that all the files are present copy all of them to a
+working disk using the standard copy program provided with your operating
+system, and store the Issue Disk as a back-up master.
+</para>
+
+    <section>
+      <title>CRT CONFIGURATION</title>
+      <indexterm>
+        <primary>CRT Configuration</primary>
+      </indexterm>
+      <para>
+FORMS-2 is issued for use with a standard CRT dependent on your operating
+system (O/S). It can be configured for other CRTs using the CONFIG program
+supplied.
+</para>
+      <para>
+If your system is already configured for your specific CRT (i.e. BASF
+implementation), CONFIG is not supplied. Skip straight to the next heading
+FORMS-2 VALIDATION on the next page.
+</para>
+      <para>
+For non-standard systems, the notes given in Appendix D describe the most
+straightforward case. If you are using variants of the O/S or any
+non-standard CRTs you should refer to the <citetitle pubwork="book">CIS COBOL Operating Guide</citetitle> for a
+more detailed description of CONFIG.
+</para>
+      <para>
+Boot up as before with the Issue Disk in the second drive. Then load and
+run the CONFIG program by setting the O/S to access the second drive and
+then typing the CONFIG load command for your O/S.
+</para>
+      <para>
+The configurator will sign on and output questions as follows:
+</para>
+      <variablelist>
+        <varlistentry>
+          <term>CP/M</term>
+          <listitem>
+            <para>
+request for the name of the program to configure and the O/S
+prompt sign.
+</para>
+<para>
+Enter: FORMS2.COM&lt;&lt;
+</para>
+<para>
+and wait while the file is accessed. When it is ready, a prompt
+is displayed to ask if the CRT is to be tailored.
+</para>
+<para>
+Enter: Y
+</para>
+<para>
+A range of pre-defined CRT's is then offered. If the CRT is one
+of those shown, select the CRT and answer the final few questions
+described below. If the CRT is not one of those shown then type Z
+and answer the questions from CONFIG concerning the CRT
+characteristics.
+</para>
+<para>
+A final few questions are then asked associated with options
+designed to accommodate users who need to access their CRT and
+keyboard directly through the I-O ports without using the standard’
+O/S access methods.
+</para>
+<para>
+Unless any variants of the O/S are being used, the reply N (No) is
+made to the question relating to I-O ports, and to the byte mask
+facility. Likewise the tab defaults can be accepted by a N (No)
+reply.
+              </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>RT-11</term>
+          <listitem>
+            <para>
+A range of pre-defined CRT's are offered. If your CRT is one of
+those offered, make the appropriate selection, otherwise you will
+be prompted for CRT details.
+            </para>
+            <para>
+Tab positions are requested and then the question whether FORMS-2
+is required is asked.
+            </para>
+            <para>
+Enter: Y
+</para>
+          </listitem>
+        </varlistentry>
+        </variablelist>
+        <para>
+The FORMS-2 program is then modified on disk and there is a short delay
+while this takes place.
+        </para>
+<note>    <para>
+FORMS-2 is modified! However, it can be reconfigured whenever necessary.</para></note>
+    </section>
+    <section>
+      <title>FORMS-2 VALIDATION</title>
+      <indexterm>
+        <primary>FORMS-2 Validation</primary>
+      </indexterm>
+      <para>
+Once FORMS-2 is configured for the appropriate CRT, you should first
+validate the main files on your disk by performing the simple run below:
+</para>
+      <orderedlist>
+        <listitem>
+          <para>
+Boot the system up, and load FORMS-2 by entering the load command for
+your operating system. Note that the program name for file purposes is
+FORMS2.
+</para>
+<para>
+See Appendix D for specific Operating System format for this command.
+  </para>
+        </listitem>
+        <listitem>
+          <para>
+            The program will run, and will come up with the first screen, thus:
+          </para>
+  <xi:include href="screenI01.xml"/>
+  <para>
+    A six—character base for file—names and data—names is requested
+followed by four other questions. The question on CRT size needs to be
+answered if your CRT is a non-standard size. Otherwise all the default
+replies are accepted and you need only key DEMO followed by the RETURN
+key.
+  </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays Screen I02 to request the output file option type and
+drive number. (Note that RT-11 will only handle drives :F0: and :F1:):
+          </para>
+  <xi:include href="screenI02.xml"/>
+  <para>
+    Key F then RETURN.
+  </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays Screen W01 to request the Screen Type option, thus:
+          </para>
+  <xi:include href="screenW01.xml"/>
+          <para>
+            Note the default "A" and press the RETURN key.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays a blank screen. You are currently in Edit Mode, and
+should be able to position the cursor at any point on the screen. Use
+the cursor control keys and the normal character keys to set up the
+following text on the screen:
+          </para>
+<screen>
+
+            NAME      [                    ]
+
+
+
+
+
+
+</screen>
+          <para>
+            Finally press the RETURN key.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 puts _" in the top left of the screen indicating that you
+now in Command Mode. Enter ? and then press the RETURN key.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays screen H01, thus:
+          </para>
+  <xi:include href="screenH01.xml"/>
+  <para>
+    Enter ? then RETURN.
+  </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays screen H02, thus:
+          </para>
+  <xi:include href="screenH02.xml"/>
+  <para>
+    Enter ? then RETURN.
+  </para>
+        </listitem>
+        <listitem>
+          <para>
+            FORMS-2 displays screen H03, thus:
+          </para>
+  <xi:include href="screenH03.xml"/>
+  <para>
+    Enter ? then RETURN.
+  </para>
+        </listitem>
+                <listitem>
+          <para>
+            FORMS-2 displays screen H04, thus:
+          </para>
+  <xi:include href="screenH04.xml"/>
+  <para>
+    Simply press RETURN.
+  </para>
+          </listitem>
+        <listitem>
+          <para>
+FORMS-2 redisplays the fixed text that you keyed in at step 5. Press RETURN.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 puts "_" in the top left of the screen. Enter F then press
+RETURN          </para>
+        </listitem>
+                <listitem>
+          <para>
+            FORMS-2 displays screen W02, thus:
+          </para>
+  <xi:include href="screenW02.xml"/>
+    <para>
+    Enter A then RETURN.
+  </para>
+
+          </listitem>
+                <listitem>
+          <para>
+Again FORMS-2 redisplays the fixed text entered at step 5. Press
+Return.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 puts "__" in the top left hand of the screen. Press the SPACE
+and then RETURN keys.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 displays screen W01 again to request the Screen Type option.
+Note the default is "C" and press RETURN.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 displays the fixed text screen. Use the cursor control keys and
+key in X's alone to set up the screen as follows:
+          </para>
+<screen>
+
+            NAME      [XXXXXXXXXXXXXXXXXXXX]
+
+
+
+
+
+
+</screen>
+          <para>
+            Press RETURN.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 puts "__" in the top left of the screen. Press the SPACE key
+and then RETURN.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 displays screen W01 again. This time enter ! and press RETURN
+to complete the run.
+          </para>
+        </listitem>
+                <listitem>
+          <para>
+FORMS-2 terminates with the message:
+          </para>
+          <screen>
+            END OF FORMS2 RUN
+            
+            
+            FORMS2 COPYRIGHT (C) 1979 MICRO FOCUS LTD
+          </screen>
+
+        </listitem>
+      </orderedlist>
+      <para>
+You have now used all the FORMS-2 Screens and you can be sure that you have a
+usable product.
+</para>
+    </section>
+  </section>
+</chapter>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<appendix xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>WORK SCREENS</title>
+  <para>
+The Work Screen W01 shown below Is displayed at the start of the Work Phase.
+Work screen W02 can be summoned by the F command (See Chapter 3).
+</para>
+<xi:include href="screenW01.xml"/>
+<xi:include href="screenW02.xml"/>
+</appendix>

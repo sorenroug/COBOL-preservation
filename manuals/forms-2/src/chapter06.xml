@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook">
+  <title>SCREEN IMAGE FILE</title>
+  <para>
+This Chapter describes the Screen Image file that FORMS-2 can generate in
+addition to (or instead of) the CIS COBOL data description statements
+described in Chapter 4. These files contain exact text images of the user
+described forms. These form images can be:
+</para>
+  <itemizedlist>
+    <listitem>
+      <para>Used to provide the basis for amendments to the form</para>
+    </listitem>
+    <listitem>
+      <para>Printed to yield printed copies of the form.</para>
+    </listitem>
+    <listitem>
+      <para>Used as a means of communication between the system designer and
+the applications programmer.</para>
+    </listitem>
+  </itemizedlist>
+  <section>
+    <title>SCREEN IMAGE FILE GENERATION</title>
+    <indexterm>
+      <primary>SCREEN IMAGE FILE GENERATION</primary>
+    </indexterm>
+    <para>
+The facility is invoked by selection of an appropriate option at Screen 102
+during the Initialisation Phase. Note that the default option will cause
+screen image output.
+    </para>
+    <para>
+Screen images are output to files named:
+    </para>
+    <para>
+basename.S nn
+    </para>
+    <para>
+where: basename is the name entered by the user at screen 101
+the Initialisation Phase, nn is a number 00 - 99
+</para>
+    <para>
+The, default filename can be overriden by issuing the S3 command during the
+Work Phase. This causes FORMS-2 to request input of the required filename
+during processing of this Work Screen.
+</para>
+    <para>
+A separate file is created at the end of .each Work Phase, the numeric part
+of the name (nn) incremented by 1 each time. A screen image file Is
+structured as a standard line sequential file with a record for each line of
+the screen. Each screen inage contains only text entered during the Work
+Phase in which it is generated (i.e. Foreground data - see Chapter 3). Thus
+for a variable data Work Phase the output screen image contains only X's,
+9 s, Y s and 8's.
+</para>
+    <para>
+It Is possible to suppress the screen image output from any Work Phase by
+issuing the S2 command during that phase. If this command is used the
+numeric part of the filename extension will still be updated for the next
+phase to keep in line with the record numbering within the generated data
+descriptions (DDS)
+</para>
+  </section>
+  <section>
+    <title>FORMS-2 MAINTENANCE</title>
+    <indexterm>
+      <primary>FORMS-2 MAINTENANCE</primary>
+    </indexterm>
+    <para>
+CIS COBOL Data Description statements have been generated from a
+user-designated form by FORMS-2 in a DDS file. There is likely to be a
+continuing requirement to make corrections and adjustments to maintain the
+form. The DDS file can be maintained using a conventional text editor, but
+this involves the high risk of simple but expensive errors which FORMS-2
+eliminates. Therefore the user's form is output to a screen image file as
+an exact image, and FORMS-2 provides the facility to read screen images back
+from disc to allow for further amendment. This is achieved by running
+FORMS-2 and issuing the FF command once the first Work Screen is reached
+(see the Fx Work Screen Manipulation command in Chapter 3). The user is
+then prompted for the identity of the screen image required. FORMS-2 reads
+the screen image file into the Foreground area of the Work Screen and then
+returns to Edit Mode. The form is then displayed as if it had just been
+keyed and any required amendments can be made before releasing the screen
+for processing by means of the SPACE command.
+</para>
+    <note>
+      <para>
+When FORMS-2 is used for maintenance in this way it will overwrite the
+existing files, but only after issuing warnings that the files already
+exist, and receiving confirmation to proceed. For screen image files
+FORMS-2 offers the facility of specifying an alternative file identity
+if the user wishes to retain the old version.    
+</para>
+    </note>
+  </section>
+  <section>
+    <title>PRINTED FORMS</title>
+    <indexterm>
+      <primary>PRINTED FORMS</primary>
+    </indexterm>
+    <para>
+The screen image files are created as line sequential files in accordance
+with the conventions of the operating system. Standard software can
+therefore be used to print them, and the resultant hard copy will be an
+exact image of the user's form with no risk of transcription error.       
+</para>
+  </section>
+  <section>
+    <title>FORM IMAGES IN THE DESIGN PROCESS</title>
+    <indexterm>
+      <primary>FORM IMAGES IN THE DESIGN PROCESS</primary>
+    </indexterm>
+    <para>
+Form images can be used as a step within the applications design process,
+providing a valuable part of the designer/programmar interface.    
+</para>
+    <para>
+For interactive applications, design of the user interface (i.e. the screen
+layouts or forms) may take place well in advance of the actual program being
+written, and the forms designer need not have any detailed knowledge of
+COBOL.
+</para>
+    <para>
+FORMS-2 enables a non-technical user to generate valid CIS COBOL statements.
+An experienced COBOL programmer can make use of commands available to
+generate the most efficient code (e.g. by influencing the number of fields
+to be displayed).
+</para>
+    <para>
+Thus it may sometimes be advantageous to use screen image output alone as an
+intermediate stage in the design process, with the programmer using the
+image files as input to FORMS-2 to produce the final DDS file. If FORMS-2
+is used in this way, both fixed text and variable areas could conveniently
+be indicated on a single fixed text screen. The programmer can easily then
+use this screen to generate the DDS file, and the form designer does not
+need to know any details of COBOL data field specifications.
+</para>
+  </section>
+</chapter>

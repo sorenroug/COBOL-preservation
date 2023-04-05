@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[
+FORMS2 V1.1                        WORK PHASE                 SCREEN W02
+
+FOREGROUND/BACKGROUND OPERATIONS:
+
+             OPTION           [ ]        (A = Re-enter EDIT MODE)
+                                         (B = Clear FOREGROUND)
+                                         (C - Clear BACKGROUND)
+                                         (D = Merge BACKGROUND into FOREGROUND)
+                                         (E = Merge-FOREGROUND into BACKGROUND)
+                                         (F = Merge screen image into FOREGROUND)
+                                         (G = Merge screen image into BACKGROUND)
+                                         (H = Display FOREGROUND)
+                                         (I = Display BACKGROUND)
+                                         (J = Display screen image)
+
+                              NOTE:                                         
+                                         (H & I & J display until RETURN pressed)
+
+             FILE-NAME          [               ]      (Screen image file)
+                                                       (F & G & J only)
+
+Press RETURN when complete
+]]></screen>

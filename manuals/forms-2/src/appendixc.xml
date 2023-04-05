@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<appendix xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>HELP SCREENS</title>
+  <para>
+The four screens contained in this Appendix (H01 to H04) can be summoned for
+display by the Operator keying ? from Command Mode at any time'. They ar'e'
+intended for advisory purposes only. The command ?n (where n is the number 1 to
+A corresponding to the screen number H0n) summons a particular Help Screen.
+</para>
+<xi:include href="screenH01.xml"/>
+<xi:include href="screenH02.xml"/>
+<xi:include href="screenH03.xml"/>
+<xi:include href="screenH04.xml"/>
+</appendix>

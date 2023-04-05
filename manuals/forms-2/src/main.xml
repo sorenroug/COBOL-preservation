@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:id="ciscobol" xml:lang="en" xsi:schemaLocation="http://docbook.org/xml/5.0/xsd/docbook.xsd">
+  <info>
+    <title>CIS COBOL FORMS-2 Utility Manual</title>
+    <subtitle>Version 1</subtitle>
+    <copyright>
+      <year>1980</year>
+      <holder>Micro Focus Limited</holder>
+    </copyright>
+    <legalnotice>
+      <para>
+Not to be copied without the consent of Micro Focus.
+</para>
+      <para>
+<address>Micro Focus Limited
+<street>58 Acacia Road, St. Johns Wood</street>
+<city>London</city>
+<postcode>NW8 6AG</postcode>
+</address>
+</para>
+
+      <para><trademark class="registered">CP/M</trademark> is a trademark of Digital Equipment Corp. Inc.</para>
+      <para><trademark class="registered">RT-11</trademark> is a trademark of Digital Equipment Corp. Inc.</para>
+
+</legalnotice>
+    <revhistory>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>January 1980</date>
+      </revision>
+    </revhistory>
+    <publisher>
+      <publishername>Micro Focus Limited</publishername>
+    </publisher>
+    <subjectset>
+      <subject>
+        <subjectterm>COBOL</subjectterm>
+      </subject>
+      <subject>
+        <subjectterm>programming language</subjectterm>
+      </subject>
+      <subject>
+        <subjectterm>software</subjectterm>
+      </subject>
+    </subjectset>
+  </info>
+
+  <preface>
+    <title>WELCOME TO FORMS-2!</title>
+    <para>
+This manual describes your FORMS-2 package to design, create and edit
+interactive screen layouts for use in CIS COBOL application programs.
+</para>
+    <para>
+Most application programs will be written separately according to individual
+requirements but FORMS-2 can automatically generate a powerful user-oriented
+indexed data entry and filing system maintained by use of the screen layouts
+(forms).
+</para>
+    <para>
+If you want to generate an automatic indexed filing system Index program and
+then use it, carry out Chapter 1 procedures, read Chapters 2 and 3 briefly
+and then refer straight to Chapter 8 before performing the comprehensive
+sample run in Chapter 9.</para>
+    <para>
+If you wish to generate some screen layouts, carry out the procedures in
+Chapter 1, read briefly Chapters 2 and 3, and then perform the comprehensive
+sample run in Chapter 7.
+</para>
+    <para>
+To gain a further understanding of the FORMS-2 features and FORMS-2 operation
+read Chapters 1, 2 and 3 in detail. Chapters 4, 5, 6 and 8 are descriptions
+of FORMS-2 output file contents and relate directly to optional features that
+can be used. Read these Chapters only if you require the feature described.
+</para>
+    <para>
+It is recommended that, in any case, you run the sample programs before
+using FORMS-2 to generate your own forms or indexed files.
+</para>
+    <section>
+      <title>NOTATION IN THIS MANUAL</title>
+      <para>
+Throughout this manual, the following notation is used to describe the
+format data input or output:
+</para>
+      <orderedlist>
+        <listitem>
+          <para>
+All words printed in small letters are generic terras representing names
+which will be devised by the programmer.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+The carriage return (CR) or equivalent data input terminator key is
+referred to throughout this manual as the RETURN key.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+The symbol &lt;&lt; in this manual indicates that the RETURN key must be
+pressed once.
+</para>
+        </listitem>
+        <listitem>
+          <para>
+The space bar or key is referred to throughout this manual as the
+SPACE key.
+</para>
+        </listitem>
+      </orderedlist>
+      <para>
+
+Headings are presented in this manual in the following order of importance:
+</para>
+<para><literallayout>
+     CHAPTER  N  
+                   Chapter Heading
+     TITLE
+     
+ORDER ONE HEADING
+ORDER TWO HEADING
+Order Three Heading      Text two lines down
+Order Four Heading
+Order Five Heading:      Text on same line
+</literallayout></para>
+      <para>
+Numbers one (1) to nine (9) are written in text as letters, e.g. one.
+</para>
+      <para>
+Numbers ten (10) upwards are written in text as numbers, e.g. 12.
+</para>
+    </section>
+    <section>
+      <title>RELATED PUBLICATIONS</title>
+      <para>
+For details of CIS COBOL operation and language respectively, refer to the.
+documents:
+</para>
+      <para><citetitle pubwork="book">CIS COBOL Operating Guide</citetitle>
+                </para>
+      <para><citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+                </para>
+    </section>
+    </preface>
+  <xi:include href="chapter01.xml"/>
+  <xi:include href="chapter02.xml"/>
+  <xi:include href="chapter03.xml"/>
+  <xi:include href="chapter04.xml"/>
+  <xi:include href="chapter05.xml"/>
+  <xi:include href="chapter06.xml"/>
+  <xi:include href="chapter07.xml"/>
+  <xi:include href="chapter08.xml"/>
+  <xi:include href="chapter09.xml"/>
+
+  <xi:include href="appendixa.xml"/>
+  <xi:include href="appendixb.xml"/>
+  <xi:include href="appendixc.xml"/>
+  <xi:include href="appendixd.xml"/>
+
+  <index/>
+  <colophon>
+    <para>This book was reconstructed into DocBook format from a scanned PDF found on the Internet.
+  The PDF file already had OCR performed and the text was embedded in the file.
+  </para>
+
+    <para>Source version: <?eval ${project.version}?>
+  </para>
+  </colophon>
+</book>
+
