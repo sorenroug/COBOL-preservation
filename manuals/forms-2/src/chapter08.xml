@@ -19,7 +19,7 @@ give no thought to setting up specific 'command' areas, but only to consider
 their data requirements.
     </para>
   <para>
-      It should be noted that the user must have access to the CIS COBOL software
+      It should be noted that the user must have access to the CIS or L/II COBOL software
 to compile the source Index program that FORMS-2 produces.
     </para>
   <para>
@@ -70,16 +70,13 @@ remaining fields are known as the data fields.
 and maintain a file of names, addresses and telephone numbers.
   </para>
   <section>
-    <title>INPEX PROGIAM GENERATION</title>
-    <indexterm>
-      <primary>INPEX PROGIAM GENERATION</primary>
-    </indexterm>
+    <title>INDEX PROGRAM GENERATION</title>
     <para>
 An Index program is generated using FORMS-2 as described in Chapters 2 and 3.
 </para>
     <para>
 All existing FORMS-2 facilities are present, but logic is incorporated to
-prevent  the use of inappropriate features if the Index Program option is
+prevent the use of inappropriate features if the Index Program option is
 taken. The steps involved are:-
     </para>
     <orderedlist>
@@ -91,15 +88,13 @@ taken. The steps involved are:-
           <listitem>
             <para>
               <literallayout>Screen I01
-                Specify name-base etc. as normal.
-              </literallayout>
+Specify name-base etc. as normal.</literallayout>
             </para>
           </listitem>
           <listitem>
             <para>
               <literallayout>Screen I02
-                Specify option G for Index program generation.
-              </literallayout>
+Specify option G for Index program generation.</literallayout>
             </para>
           </listitem>
         </orderedlist>
@@ -217,7 +212,8 @@ abandon the run when generating the Index Program.
 The following files are written to disk by FORMS-2.
 </para>
 <screen>
-basename.S00  -   Screen image file
+basename.S00  -   Screen image files
+basename.S01
 basename.DDS  -   COBOL data description statement file
 basename.GEN  -   Source file for the generated Index program.
 </screen>
@@ -251,7 +247,7 @@ FORMS2.GN2</literallayout></term>
             </variablelist>
             <para>
               The Index program is then compiled in the usual way by entering the standard
-CIS COBOL compilation command for your Operating System (O/S) to load the
+CIS and L/II COBOL compilation command for your Operating System (O/S) to load the
 Index program from file:
 </para>
 <screen>
@@ -261,8 +257,8 @@ Index program from file:
   See Appendix D
 </para>
 <para>
-  Details of compilation using the CIS COBOL compiler are given in the
-  <citetitle pubwork="book">CIS COBOL Operating Guide</citetitle>.
+  Details of compilation using the CIS and L/II COBOL compilers are given in the
+  appropiate Operating Guides.
 </para>
 <para>
   After compilation, the user can run the generated program.
@@ -286,7 +282,7 @@ file:
       <para>
 However, to be able to load directly in subsequent use the = directive of
 the command must be used, and the SAVE file renamed to basename.COM. See
-Appendix D for the commands for your 0/S and the CIS COBOL Operating Guide
+Appendix D for the commands for your O/S and the CIS or L/II COBOL Operating Guide
 for fuller details of load directives. Thereafter the direct load command
 can be used.
 </para>
@@ -317,45 +313,48 @@ description.
         <para>
     Amend key fields only to required key, and press RETURN. The required
 record is displayed. If the record Is not found (i.e. key cannot be found)
-the message RECORD NOT FOUND is displayed.
+the message <computeroutput>RECORD NOT FOUND</computeroutput> is displayed.
 </para>
       </section>
       <section>
         <title>Sequential Enquiry</title>
         <para>
     Simply press RETURN to show next record. If the end of the file is reached,
-A. the message END OF FILE REACHED - RETURN- WILL TERMINATE- is displayed.
+the message <computeroutput>END OF FILE REACHED - RETURN WILL TERMINATE</computeroutput> is displayed.
 </para>
       </section>
       <section>
         <title>Amend Displayed Record</title>
         <para>
-    Amend data fields only and press RETURN. The message RECORD AMENDED is
-displayed.
+    Amend data fields only and press RETURN.
+    The message <computeroutput>RECORD AMENDED</computeroutput> is displayed.
 </para>
       </section>
       <section>
         <title>Delete Displayed Record</title>
         <para>
-    Press the HOM or &#x2196; key then press RETURN. The message RECORD DELETED is
+    Press the HOM or &#x2196; key then press RETURN.
+    The message <computeroutput>RECORD DELETED</computeroutput> is
 displayed and the data fields are blanked out.
 </para>
       </section>
       <section>
         <title>Insert New Record</title>
         <para>
-    Amend key and data fields as required and press RETURN-. . If- the data fields
+    Amend key and data fields as required and press RETURN. If the data fields
 currently displayed do not need changing (i.e. it is required to enter the
 existing data fields under a new key) prior to pressing RETURN
-<emphasis>either</emphasis> press HOM (&#x2196;) <emphasis>or</emphasis> press &#x2191; repeatedly until end of the list data field
+<emphasis>either</emphasis> press HOM (&#x2196;) <emphasis>OR</emphasis> press &#x2191; repeatedly until end of the list data field
 is reached.
 </para>
         <para>
-  The message NEW RECORD WRITTEN is displayed if insertion takes place.
+  The message <computeroutput>NEW RECORD WRITTEN</computeroutput> is displayed if insertion takes place.
 </para>
         <para>
   If a record already exists with the specified key the current display is
-retained and the warning message RECORD ALREADY EXISTS WITH THIS KEY Is
+retained and the warning message
+<computeroutput>RECORD ALREADY EXISTS WITH THIS KEY</computeroutput> is
+displayed. The facilities available on the subsequent input are restricted
 to three as follows:
 </para>
         <orderedlist>
@@ -364,11 +363,10 @@ to three as follows:
       Force replacement of existing record:
     </para>
             <para>
-      Either press HOM <emphasis>or</emphasis> press &#x2191; repeatedly until the cursor reaches the end
-of the last data field, then press RETURN.
+      Either press HOM <emphasis>or</emphasis> press &#x2191; repeatedly until the cursor reaches the end of the last data field, then press RETURN.
     </para>
             <para>
-      The record is replaced and, the message RECORD REPLACED is displayed.
+      The record is replaced and, the message <computeroutput>RECORD REPLACED</computeroutput> is displayed.
     </para>
           </listitem>
           <listitem>
@@ -397,10 +395,105 @@ combination of enquiry by key to a specific record, then sequential enquiry.
 </para>
         <para>
 When end-of-file is reached the message
-END OF FILE REACHED -RETURN WILL TERMINATE is displayed. Press RETURN to terminate the run.
+<computeroutput>END OF FILE REACHED - RETURN WILL TERMINATE</computeroutput> is displayed.
+Press RETURN to terminate the run.
 </para>
       </section>
     </section>
+    <section>
+      <title>USE ON MULTI-USER SYSTEMS</title>
+      <para>
+The Index program is compatible with the FILESHARE optional product for use
+with LEVEL II and CIS COBOL.</para>
+<para>
+  The Index program will lock any record that you access, thus preventing
+another user from updating that record whilst you are processing it. The
+lock is released when you move on to another record. Similarly it will not
+make available to you a record which another user has locked. 
+</para>
+<para>
+  The effects on Index operation are as follows:-
+</para>
+<section>
+  <title>Enquiry</title>
+  <para>
+    If you attempt to read a record, either by sequential enquiry or by key,
+and that record is locked, the message RECORD LOCKED is displayed. The
+key of the locked record is displayed but the data fields are blanked out.
+On the subsequent input you may: 
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Retry the enquiry,
+Press RETURN only.
+</para>
+</listitem>
+<listitem>
+  <para>
+    Abandon the enquiry and read next record;
+Move cursor away from default (start-of-data) position and press
+RETURN.
+</para>
+</listitem>
+<listitem>
+  <para>
+    All other functions operate as normal:
+i.e., as though the enquiry had failed with RECORD NOT FOUND. 
+</para>
+</listitem>
+</orderedlist>
+</section>
+<section>
+  <title>Amend Displayed Record</title>
+  <para>
+    This will be unaffected because the preceding read will have locked the
+record, denying any other user access. 
+  </para>
+</section>
+<section>
+  <title>Insert New Record</title>
+  <para>
+    If a record exists with the specified key then RECORD ALREADY EXISTS WITH
+THIS KEY will be returned irrespective of whether the record is locked or
+not. The subsequent input is as described earlier for that condition,
+except that:
+  </para>
+    <orderedlist>
+    <listitem>
+      <para>
+        If you attempt to force replacement and the record is locked, the
+message EXISTING RECORD LOCKED is displayed. The subsequent imput is
+again as described for the RECORD ALREADY EXISTS condition. 
+</para>
+</listitem>
+<listitem>
+  <para>
+If you simply try to display the existing record and it is locked, this
+will be handled exactly as described under ENQUIRY.
+</para>
+</listitem>
+</orderedlist>
+
+<note>
+    <para>
+      Immediately after update operations (Amend/Insert), Index attempts
+to read the record again to re-establish the lock: 
+  </para>
+  <para>
+    Under exceptional circumstances it is possible for another user
+to read the record, thus locking it for his own purposes, before
+the lock can be re-established. In this case the normal message
+confirming the update will be displayed, immediately followed by
+the RECORD LOCKED message and blanking of the data fields. You
+will then be in the same position as if an enquiry had failed
+because of a locked record, and the subsequent input is as
+described under Enquiry
+  </para>
+</note>
+</section>
+</section>
+
     <section>
       <title>USER REQUIREMENT INTERPRETATION SUMMARY</title>
       <para>
@@ -449,7 +542,8 @@ processing is as described under Key and Data Changed
           <listitem>
             <para>
       Otherwise an enquiry with respect to this key is assumed, and
-either the record is displayed or its absence is reported.
+either the record is displayed or its absence is reported, or
+a lock condition is reported.
 </para>
           </listitem>
         </itemizedlist>
@@ -457,8 +551,8 @@ either the record is displayed or its absence is reported.
       <section>
         <title>Key Unchanged and Data Changed</title>
         <para>
-   This is a request to update the file, and either a new record is written or
-the existing record amended as appropriate.
+ This is a request to update the file. If a lock has previously been established against this record it will be amended. Otherwise an insert attempt
+is assumed, and processing is as described under Key and Data Changed. 
 </para>
       </section>
       <section>
@@ -478,15 +572,19 @@ position:
             <itemizedlist>
               <listitem>
                 <para>
-      If the cursor has been moved to either the HOM position of the
-last data character position, insertion of the new record is
-forced, and the existing record is overwritten.
+ If the cursor has been moved to either the HOM position or the
+last data character position, a request to overwrite the existing
+record is assumed. Either the existing record is overwritten, or
+an existing-record-locked condition is reported in which case the
+subsequent input is processed in the same way as the current input. 
 </para>
               </listitem>
               <listitem>
                 <para>
-      If the cursor is at any other position a request to abandon the
-insertion attempt and display the existing record is assumed,
+If the cursor is at any other position a request to abandon the
+insertion attempt and display the existing record is assumed, and
+processing is as described under
+Key Changed and Data Unchanged. 
 </para>
               </listitem>
             </itemizedlist>

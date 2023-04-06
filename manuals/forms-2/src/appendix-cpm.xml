@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<appendix xmlns="http://docbook.org/ns/docbook">
+  <title>OPERATING FORMS-2 WITH CP/M</title>
+  <para>
+To clarify the sequences, the CP/M prompts are included before the commands
+in this Appendix.
+The symbol &lt;&lt; indicates that the RETURN key or equivalent should be pressed once.
+</para>
+  <para>
+It is assumed that CP/M is loaded, and that the issued files have been copied
+to the CIS COBOL CP/M system disk.
+</para>
+<note>
+  <para>
+    FORMS-2 is preconfigured for your CRT. It can be reconfigured if
+    necessary for any other special CRT.
+  </para>
+</note>
+  <section>
+    <title>FORMS-2 LOADING</title>
+    <para>To load FORMS-2 as issued, the command is:</para>
+    <screen>
+  B&gt;FORMS2&lt;&lt;
+</screen>
+  </section>
+  <section>
+    <title>FORMS 2 CHECKOUT PROGRAM COMPILATION.</title>
+    <para>To compile the Check-Out program that enables you to check your fixed text and
+    variable data fields, the general command is:
+    </para>
+    <screen>
+  B&gt;COBOL basename.CHK COPYLIST&lt;&lt;
+</screen>
+    <para>
+  In the sample runs in Chapters 2, 7 and 9, basename is, of course, DEMO1 and
+DEMO2 respectively.
+</para>
+  </section>
+  <section>
+    <title>FORMS-2 CHECK-OUT PROGRAM RUNNING</title>
+    <para>The Check-Out program that enables you to check your fixed text and variable
+      data fields can be loaded immediately after compilation by the general command:
+    </para>
+    <screen>
+  B&gt;RUN basename.INT&lt;&lt;
+</screen>
+    <para>
+  In the sample runs in Chapters 2, 7 and 9, basename is, of course, DEMO1 and
+DEMO2 respectively.
+</para>
+    <para>To be able to load the Check-Out program directly in subsequent use the
+following general command is entered:
+    </para>
+    <screen>
+  B&gt;RUN = basename.INT&lt;&lt;
+</screen>
+    <para>Thereafter the general command following can be used to load the Check-Out
+program:
+    </para>
+    <screen>
+  B&gt;basename&lt;&lt;
+</screen>
+
+</section>
+  <section>
+    <title>FORMS-2 INDEX PROGRAM COMPILATION</title>
+    <para>To enable the Index program that processes an indexed sequential data file from
+your FORMS-2 screens to be compiled the following general command is entered:
+</para>
+    <screen>
+  B&gt;COBOL basename.GEN COPYLIST&lt;&lt;
+</screen>
+
+  </section>
+  <section>
+    <title>FORMS-2 INDEX PROGRAM RUNNING</title>
+    <para>The Index program that processes an Indexed sequential data file from your
+FORMS-2 screens can be loaded immediately after compilation by the general
+command:
+</para>
+    <screen>
+  B&gt;RUN basename.INT&lt;&lt;
+</screen>
+    <para>
+In the sample run in Chapter 9 basename is, of course, DEMO2.
+</para>
+    <para>To be able to load the Index program directly in subsequent use the
+following general command is entered:
+    </para>
+    <screen>
+  B&gt;RUN = basename.INT&lt;&lt;
+</screen>
+    <para>Thereafter the general command following can be used to load the Index
+program:
+    </para>
+    <screen>
+  B&gt;basename&lt;&lt;
+</screen>
+  </section>
+</appendix>

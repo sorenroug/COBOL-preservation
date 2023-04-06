@@ -2,18 +2,18 @@
 <chapter xmlns="http://docbook.org/ns/docbook">
   <title>WORK PHASE</title>
   <para>
-   The user defines the screen layouts (forms) to be used in a CIS COBOL
+   The user defines the screen layouts (forms) to be used in a CIS or L/II COBOL
 application by entering text at the keyboard to produce model forms on the
-screen. The user may define as many forms as he wishes in a single FORMS-2
+screen. The user may define as many forms as he wishes in a single FORMS-2 run.
 To define one form requires at least two distinct Work Phases: one to
 define the fixed text of the form, and another to define the variable data
 entry fields.
 </para>
   <para>
-  Most commonly the first Work Phase is used to specify the fixed text form
+Most commonly the first Work Phase is used to specify the fixed text form
 and the subsequent Work Phase to specify the variable data fields within the
 form. However this need not always be the case and FORMS-2 needs to known
-w ch type of text is to be input in a particular phase. Therefore the Work
+which type of text is to be input in a particular phase. Therefore the Work
 Phase is introduced by a screen presenting the various options (W01).
 </para>
   <section>
@@ -77,9 +77,6 @@ results in larger application programs.
     </section>
     <section>
       <title>TERMINATING THE RUN</title>
-      <indexterm>
-        <primary>TERMINATING THE RUN</primary>
-      </indexterm>
       <para>
 Screen W01 is redisplayed after completion of each Work Phase, and is the
 screen used to terminate the program. This is done by entering the
@@ -97,7 +94,7 @@ then output of the Check-out program to disk is completed and the CHK file
 is closed with an identification message displayed.
 </para>
       <para>
-  Termination occurs automatically after the second Work Phase if an Index
+Termination occurs automatically after the second Work Phase if an Index
 program is being generated (see Chapter 8).
 </para>
     </section>
@@ -191,8 +188,8 @@ screen type selected at the start of this Work Phase.
       <section>
         <title>Fixed Text</title>
         <para>
-In the design cf the Fixed Text of a form (i.e. the fixed fields analagous
-to the pre printed text on a paper form) any legible characters can be
+In the design of the Fixed Text of a form (i.e. the fixed fields analagous
+to the pre-printed text on a paper form) any legible characters can be
 entered anywhere on the screen. This text will be displayed as "prompt"
 text during a data entry run of the application.
 </para>
@@ -203,18 +200,19 @@ text during a data entry run of the application.
           <primary>Variable Data</primary>
         </indexterm>
         <para>
-In the design of the Variable Data fields of a form (I.e. the fields
+In the design of the Variable Data fields of a form (i.e. the fields
 analagous to the entry spaces on a pre-printed form) the characters X, Y and
 8, 9 can be entered.
 </para>
         <para>
 When variable data is being keyed in, X denotes an alphanumeric character
-and 9 denotes a numeric character. If it is required to. have two
+and 9 denotes a numeric character. If it is required to have two
 alphanumeric fields contiguous with each other, Y's are placed in the
 character positions of the second field. Similarly, for contiguous numeric
-fields 8*s are used.
+fields 8's are used.
 </para>
-        <example>
+<example>
+  <title>Example</title>
           <para>
     INVOICE NO ......
   </para>
@@ -227,7 +225,7 @@ area and type of this variable data explicitly for the computer. Hence if
 the. invoice number always had two alphanumerics followed by four numerics,
 the user of FORMS-2 would key in XX9999 at the point on the screen (the dots
 in this example) where he wishes the operator to key the actual invoice
-number when the application Itself is running. (Note that CIS COBOL
+number when the application Itself is running. (Note that CIS and L/II COBOL
 provides an automatic validation of numeric fields).
 </para>
         <para>
@@ -235,7 +233,7 @@ Additionally, if the- Standard Compiler option is taken at screen I01,
 special editing characters can be input to specify numeric edited fields.
 This feature is not implemented under RT-11. Note that these fields should
 be separated by spaces. Numeric Edited Fields are described in the
-<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>.
+<citetitle pubwork="book">CIS or L/II COBOL Language Reference Manual</citetitle>.
 The valid characters are:-
 </para>
         <para>
@@ -243,7 +241,7 @@ Z, *, +, -, CR, DB, .(period), ,(comma), B, /, 0(zero), $
 </para>
         <para>
 The $ sign is the currency sign which may be replaced by another sign as
-specified in the SPECIAL-NAMES clause of the CIS COBOL program either
+specified in the SPECIAL-NAMES clause of the COBOL program either
 directly or as specified during the Initialisation Phase of the FORMS-2 run
 (See Chapter 2).
 </para>
@@ -252,19 +250,20 @@ directly or as specified during the Initialisation Phase of the FORMS-2 run
 The picture characters S, V, P are not allowed.
 </para>
         </note>
+<!--
         <para>
 Variable data fields are checked for validity but only when a DDS file is
 being created. The user should consult the
 <citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
 (ACCEPT/DISPLAY Verbs) for detail of how CIS COBOL screen handling works.
 </para>
+        -->
       </section>
     </section>
     <section>
       <title>COMMAND MODE</title>
       <para>
-To switch to Command Mode from Edit Mode, the user simply presses the RETURN
-key.
+To switch to Command Mode from Edit Mode, the user simply presses the RETURN key.
 </para>
       <para>
 Command Mode is identified, to the user as the mode in which two underline
@@ -379,9 +378,8 @@ directly displays the nth screen in the HELP series.
         </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
-              <term>(Space)</term>
+              <term>&#160; (Space)</term>
               <listitem>
                 <para>
 Terminate the Work Phase
@@ -393,7 +391,6 @@ that Work Screen.
         </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
               <term>_ (Underline)</term>
               <listitem>
@@ -411,7 +408,6 @@ Command Mode is entered inadvertently.
         </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
               <term>Q</term>
               <listitem>
@@ -442,7 +438,6 @@ I01).
                   </para>
               </listitem>
             </varlistentry>
-
             <varlistentry>
               <term>!</term>
               <listitem>
@@ -458,7 +453,6 @@ abandons the run.
         </para>
               </listitem>
             </varlistentry>
-
             <varlistentry>
               <term>X</term>
               <listitem>
@@ -480,7 +474,6 @@ appear at the new specified location.
         </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
               <term>*</term>
               <listitem>
@@ -501,7 +494,6 @@ to Edit Mode until It is.
         </para>
               </listitem>
             </varlistentry>
-            
           </variablelist>
         </section>
         <section>
@@ -510,9 +502,9 @@ to Edit Mode until It is.
             <primary>Work Screen Manipulation Commands</primary>
           </indexterm>
           <para>
-The commands F and D are preparation commands.
+The commands F and O are preparation commands.
 </para>
-<variablelist>
+          <variablelist>
             <varlistentry>
               <term>F</term>
               <listitem>
@@ -527,11 +519,92 @@ Chapter.
         </para>
                 <para>
 The options made available by the FORMS-2 W02 Screen
-are:-   MANGLER!
+are:-
+</para>
+                <variablelist>
+                  <varlistentry>
+                    <term>A</term>
+                    <listitem>
+                      <para>Return to Edit Mode.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>B</term>
+                    <listitem>
+                      <para>Clear Foreground to spaces.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>C</term>
+                    <listitem>
+                      <para>Clear Background to spaces.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>D</term>
+                    <listitem>
+                      <para>Overlay Background data on to Foreground.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>E</term>
+                    <listitem>
+                      <para>Overlay Foreground data on to Background.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>F</term>
+                    <listitem>
+                      <para>Overlay a Screen Image file onto
+Foreground. This option allows forms
+defined in previous runs (and also
+earlier in this run) to be amended. If
+selected the user is prompted for the
+identity of the required file.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>G</term>
+                    <listitem>
+                      <para>Overlay a Screen Image file onto Background.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>H</term>
+                    <listitem>
+                      <para>Show Foreground. This displays just the
+Foreground component of the Work Screen
+for examination. The full Work Screen
+will be restored on return to Edit Mode.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>I</term>
+                    <listitem>
+                      <para>Show Background. This displays just the
+Background component of the Work Screen
+for examination. </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>J</term>
+                    <listitem>
+                      <para>Show a Screen Image file. The user is
+prompted for the identity and _ the
+specified file is displayed, but without
+corrupting the current contents of either
+Foreground or Background. This enables a
+check to be made prior to using option D.</para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+                <note>
+                  <para>
+The options H, I and J cause a display which remains until RETURN is pressed. 
         </para>
+                </note>
               </listitem>
             </varlistentry>
-
             <varlistentry>
               <term>Fx</term>
               <listitem>
@@ -545,7 +618,6 @@ Mode without display of the WP02 screen.
         </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
               <term>O1</term>
               <listitem>
@@ -559,13 +631,12 @@ command is used to prevent the current Foreground being
 merged into the Background or either area being cleared for
 the next phase.
         </para>
-        <para>
+                <para>
           The O1 command remains effective until the command 0
 (described below) is entered.
 </para>
               </listitem>
             </varlistentry>
-            
             <varlistentry>
               <term>O or O0</term>
               <listitem>
@@ -576,54 +647,171 @@ Reset Background/Foreground Preparation.
 The Background/Foreground preparation sequence is reset to
 automatic (starting at the beginning of the next Work Phase).
         </para>
-        <note>
-        <para>
+                <note>
+                  <para>
 The Q command has a similar effect (beginning at the
 next phase).
 </para>
-</note>
+                </note>
               </listitem>
             </varlistentry>
           </variablelist>
           <para>
-            The commands C, D, I, K and A are editing commands and are controlled by the
+The commands C, D, I, K and A are editing commands and are controlled by the
 position of the cursor at the time Command Mode is entered (i.e. the current
 cursor position) and operate only on the Foreground data. Background data
 remains on the same position.
 </para>
-<para>MANGLER VARIABLELIST</para>
-<para>
+          <variablelist>
+            <varlistentry>
+              <term>Cn</term>
+              <listitem>
+                <para>Insert Spaces</para>
+                <para>Inserts <replaceable>n</replaceable> (1-9) spaces prior to the character at the current
+cursor position. Only the current line is affected. </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Dn</term>
+              <listitem>
+                <para>Delete Characters</para>
+                <para>Deletes <replaceable>n</replaceable> (1-9) characters including the character at the
+current cursor position. Only the current line is affected.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>In</term>
+              <listitem>
+                <para>Insert Blank Lines</para>
+                <para>Inserts <replaceable>n</replaceable> (1-9) lines prior to the line containing the
+current cursor position, irrespective of the column. Only
+whole lines can be inserted.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Kn</term>
+              <listitem>
+                <para>Delete (Kill) Lines</para>
+                <para>Deletes <replaceable>n</replaceable> (1-9) lines including the line containing the
+current cursor position. Only whole lines can be deleted
+using this command.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>An</term>
+              <listitem>
+                <para>Repeat Current Line </para>
+                <para>Repeats the line containing the current cursor position
+<replaceable>n</replaceable> (1-9) times.</para>
+                <note>
+                  <para>
+    This does not act as an insert. Any Foreground
+    data in the next <replaceable>n</replaceable> lines will be overwritten.</para>
+                </note>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <para>
   Commands U and V are cursor positioning commands.
 </para>
-<para>
-  Horizontal cursor positioning can be achieved by means of the _*- and -*_
-keys.
+          <para>
+  Horizontal cursor positioning can be achieved by means of the &#x2192; and &#x2190; keys.
 </para>
-<para>
-  Vertical cursor positioning is partially achieved by means of the I and I
+          <para>
+  Vertical cursor positioning is partially achieved by means of the &#x2193; and &#x2191;
 keys, but the cursor is usually placed at column 1.
 </para>
-<para>
+          <para>
   Vertical tabulation within the same column can be required when setting up a
 form. Two "tabulation" commands are provided.
 </para>
-<para>MANGLER VARIABLELIST</para>
-            </section>
+          <variablelist>
+            <varlistentry>
+              <term>Un</term>
+              <listitem>
+                <para>Move Cursor Up </para>
+                <para>Moves the cursor up <replaceable>n</replaceable> (1-9) lines from the current cursor
+position. Cursor position within the line is maintained.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Vn</term>
+              <listitem>
+                <para>Move Cursor Down</para>
+                <para>Moves the cursor down <replaceable>n</replaceable> (1-9) lines from the current cursor
+position. Cursor position within the line is maintained.</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </section>
         <section>
           <title>Programming Commands</title>
-          <indexterm>
-            <primary>Work Screen Manipulation Commands</primary>
-          </indexterm>
-          <para>
-G - The Dataname Structuring Command
+          <variablelist>
+            <varlistentry>
+              <term>G</term>
+              <listitem>
+                <para>The Dataname Structuring Command</para>
+                <para>This command is not available if option G (for Index Program) is
+specified at screen I02.</para>
+                <para>The default recordname format generated by FORMS-2 for inclusion
+in the user's COBOL source program for screen formatting is as
+follows:</para>
+                <screen>
+  bbbbbb-rr (01 level)
+</screen>
+                <para>
+  where: <replaceable>bbbbbb</replaceable> is the 1-6 character base specified at screen 101 
 </para>
-<para>MANGLER VARIABLELIST</para>
-
+                <para>
+  <replaceable>rr</replaceable> is the record number, starting at 00 in the first
+Work Phase and increasing by one for each subsequent
+Work Phase.
+</para>
+                <note>
+                  <para>
+    If the window commands are used to define a window
+starting in other than line 1 then the default
+recordname generated will be:</para>
+                  <screen>
+  bbbbbb-rr-ll
+</screen>
+                  <para>
+  where <replaceable>ll</replaceable> is the line number.
+</para>
+                </note>
+                <para>
+  The default elementary dataname structure generated by FORMS-2 for
+inclusion in the COBOL source program for screen formatting is
+as follows:
+</para>
+                <screen>
+  bbbbbb-rr-nnnn
+</screen>
+                <para>
+  where: <replaceable>nnnn</replaceable> is the sequence of this field within the screen,
+starting at 0001.
+</para>
+                <para>
+  Alternatively: 
+</para>
+                <para>
+  The G (or G0) command causes nnnn within the dataname to be the
+screen coordinates of the start of the field. This can sometimes
+be of use to the programmer as a reference guide when using
+COBOL facilities to set cursor position.
+</para>
+                <para>
+  The G1 command restores the default dataname generation to using
+sequential field numbers.
+</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
           <para>
-The commands J and M are Multiple Spaces and FILLER Commands
+The commands J and M are Multiple Spaces and FILLER Commands.
 </para>
           <para>
-The CIS COBOL interactive ACCEPT and DISPLAY verbs operate only on named
+The COBOL interactive ACCEPT and DISPLAY verbs operate only on named
 fields; FILLER areas are left alone. The time taken to display a screen
 depends both on the size and also the number of constituent fields.
 </para>
@@ -633,9 +821,217 @@ wherever multiple spaces appear. On some forms this can result in many
 small fields separated by small FILLER fields. The problem may be
 alleviated by:
 </para>
-<para>MANGLER VARIABLELIST</para>
-
-<note><title>Notes</title>
+          <variablelist>
+            <varlistentry>
+              <term>Jn</term>
+              <listitem>
+                <para>Reset Multiple Spaces</para>
+                <para>The Jn command resets the number of contiguous spaces FORMS-2 will
+allow within the VALUE clause of a named field. This is initially
+set to 1. </para>
+                <para>n may be 0 - 9</para>
+                <note>
+                  <para>J or J0 will force FILLER's even for single spaces.</para>
+                </note>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <para>
+  An alternative method of forcing spaces within named fields is by use of the
+underline which is designated for this purpose. Use of the underline
+character in a field results in an actual space in the corresponding
+position in the generated VALUE clause.
+</para>
+          <para>
+If it is required to change the designated character from underline to
+something else (presumably because there is a requirement to generate VALUE
+"_"), the command M is used as follows: 
+</para>
+          <variablelist>
+            <varlistentry>
+              <term>Mx</term>
+              <listitem>
+                <para>Change Default "space" </para>
+                <para>The Mx command changes the default character (underline) to that specified by x.
+</para>
+                <note>
+                  <para>If the space character ( ) itself is specified this will
+force generation of named fields for the entire screen
+without any FILLER's.</para>
+                </note>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Sn</term>
+              <listitem>
+                <para>File Output Control Command </para>
+                <para>This command is not available if Option G (for Index Program)
+is specified at screen I02. 
+</para>
+                <para>S (or S0) cancels any other Sn commands in effect at the time.</para>
+                <variablelist spacing="compact">
+                  <varlistentry>
+                    <term>S1</term>
+                    <listitem>
+                      <para>suppresses DDS (&amp; CHK) text generation for this Work
+Screen. Generation of this text resumes for the next
+Work Screen unless the same command is repeated in the
+next phase.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>S2</term>
+                    <listitem>
+                      <para>suppresses Screen Image (Snn) text generation for this
+Work Screen. Commonly used to suppress Screen Images of
+just variable data fields. Again the effect only lasts
+for the current phase.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>S3</term>
+                    <listitem>
+                      <para>results in the user being given the opportunity to
+override the default Screen Image file identifier for
+the current Work Screen. Normally if a file already
+exists with the default identifier the user is given the
+option of overriding it. If he rejects this option he
+is prompted for an alternative file identifier. This
+command forces the alternative file identifier to be
+requested even when no file exists with the default
+identifier.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>S9</term>
+                    <listitem>
+                      <para>causes FORMS-2 to halt after display of each line of
+code during DDS generation. FORMS-2 re-ACCEPTs the line
+before outputting it to the .DDS file. This provides
+the programmer with a limited editing capability, which
+may prove useful under special circumstances.
+This facility is not available if option C or G (for
+generated programs) is specified at screen I02.</para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>P</term>
+              <listitem>
+                <para>Cursor Coordinate Command</para>
+                <para>Causes the coordinates of the current cursor position to be
+displayed at the command area position. This display lasts a
+few seconds, after which the Work Screen contents at the
+command area are restored and control is returned
+automatically to EDIT MODE. Where sequential field numbers
+are being used within datanames, this command provides an
+easy alternative method of ascertaining the coordinates of
+any field. 
+</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Wn</term>
+              <listitem>
+                <para>Window Commands</para>
+                <para>These commands are not available if option G (for Index
+Program) is specified at screen I02. 
+</para>
+                <para>The "window" defines the area (full lines) to be processed by
+FORMS-2 when generating DDS text. By default the window is
+the full screen. Where window start or end is other than
+start or end of screen, a delimiting line of hyphens may
+optionally be displayed on the line just outside the window.
+e.g. if window starts in line 4, delimiters appear along the
+length of line 3. </para>
+                <para>The principal use of the window is to allow a form to be
+created in situ, but save memory by avoiding the description
+of blank lines at the top of the screen. </para>
+                <note>
+                  <para>Where window is used in this way the generated record
+name incorporates the start line number of the window
+which can then act as a guide to the programmer, using
+the CIS or L/II COBOL ACCEPT/DISPLAY AT coordinates
+facility. </para>
+                </note>
+                <para>The detailed commands give the user very comprehensive window
+formatting capability as follows:</para>
+                <variablelist spaceing="compact">
+                  <varlistentry>
+                    <term>W</term>
+                    <listitem>
+                      <para>(or W0) positions the cursor at current window start.
+This is the equivalent of the HOM (\) key when the
+window facility is in use. </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W1</term>
+                    <listitem>
+                      <para>sets start of window to current line with delimiters on
+previous line.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W2</term>
+                    <listitem>
+                      <para>sets end of window at end of current line with
+delimiters on next line.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W3</term>
+                    <listitem>
+                      <para>sets start of window to current line without delimiters.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W4</term>
+                    <listitem>
+                      <para>sets end of window at end of current line without
+delimiters.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W5</term>
+                    <listitem>
+                      <para>displays delimiters preceding current window start. </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W6</term>
+                    <listitem>
+                      <para>displays delimiters following current window end. </para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W7</term>
+                    <listitem>
+                      <para>erases start delimiters and restores any Work Screen
+data to display.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W8</term>
+                    <listitem>
+                      <para>erases end delimiters and restores any Work Screen data
+to display.</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>W9</term>
+                    <listitem>
+                      <para>positions the cursor at current window end. </para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+          <note>
+            <title>Notes</title>
             <orderedlist>
               <listitem>
                 <para>
@@ -689,7 +1085,7 @@ WORK SCREEN VALIDATION in progress - DO NOT press RETURN
       </listitem>
       <listitem>
         <para>
-If DDS file generation is selected at screen 102, the source code
+If DDS file generation is selected at screen I02, the source code
 produced is echoed to the screen as it is- written to disk. If the S9
 command was specified processing stops after each line of code to
 enable changes to be made as required. This is recommended only if
@@ -698,7 +1094,7 @@ special requirements dictate its use.
       </listitem>
       <listitem>
         <para>
-If a screen image file was requested at screen 102, the screen image is
+If a screen image file was requested at screen I02, the screen image is
 echoed to the screen as it is written to the disk file. The identity of
 the created file is displayed and the user must press RETURN to
 continue.
@@ -711,7 +1107,8 @@ continued.
       </para>
       </listitem>
     </orderedlist>
-    <note><title>Notes</title>
+    <note>
+      <title>Notes</title>
       <orderedlist>
         <listitem>
           <para>
@@ -725,14 +1122,13 @@ character. The user must reissue the SPACE command after making any
 corrections.
       </para>
         </listitem>
+        
         <listitem>
           <para>
-If the Standard Compiler option is taken at Screen I01, FORMS-2 will
-allow editing characters but will not vet that the combinations of
-these are valid; CIS COBOL editing rules must therefore be obeyed to
+FORMS-2 will allow editing characters but will not verify that the combinations of
+these are valid; COBOL editing rules must therefore be obeyed to
 ensure error free code. Note that these fields should be separated by
-spaces. If the Compact Compiler option is taken, editing characters
-are not allowed and .full validation is performed. :
+spaces.
       </para>
         </listitem>
         <listitem>

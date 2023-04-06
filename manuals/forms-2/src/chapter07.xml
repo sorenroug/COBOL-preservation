@@ -32,7 +32,7 @@ TEL       [88326    ]
 </screen>
   <para>
 It is assumed the system is booted, the issued files have been copied to the
-CIS COBOL O/S system disk so that the CHK file contents can be compiled
+CIS or L/II COBOL O/S system disk so that the CHK file contents can be compiled
 (Step 13), and that FORMS-2 has been configured to your CRT.
 </para>
   <para>
@@ -41,16 +41,15 @@ The following steps must then be carried out:
   <orderedlist>
     <listitem>
       <para>The operator loads FORMS-2 by entering the load command for your O/S.</para>
-      <para>Note that the program name for load purposes is F0RMS2.</para>
+      <para>Note that the program name for load purposes is FORMS2.</para>
       <para>See Appendix D for specific Operating System format for this command.</para>
     </listitem>
     <listitem>
-      <para>FORMS-2 displays Screen 101 requesting a six-character base for
+      <para>FORMS-2 displays Screen I01 requesting a six-character base for
 file-names and data-names followed by four other questions. If the CRT
-is standard (24 lines) and the Standard CIS COBOL compiler is In use no
+is standard (24 lines) no
 further questions need be answered for this screen. Key DEMO1 followed
-by the RETURN key if the default screen size (24) is correct and the
-standard compiler is in use.
+by the RETURN key if the default screen size (24) is correct.
 </para>
     </listitem>
     <listitem>
@@ -113,7 +112,7 @@ the default is "C" and press the RETURN key.
     <listitem>
       <para>
   FORMS-2 displays the fixed text screen as background data. The
-operator then uses the cursor control keys and keys in X&#x2019;s and 9*s
+operator then uses the cursor control keys and keys in X's and 9's
 alone to set up the screen as follows:
 </para>
       <screen>
@@ -142,7 +141,7 @@ the screen content, during which the following message is displayed:
     </listitem>
     <listitem>
       <para>
-  FORMS-2 processes the X&#x2019;s and 9&#x2019;s to create a variable data form, with
+  FORMS-2 processes the X's and 9's to create a variable data form, with
 the following displays to the CRT as it goes:
 </para>
       <screen>
@@ -151,21 +150,21 @@ the following displays to the CRT as it goes:
 </screen>
       <para>
   A message is then displayed giving the name of the variable data screen
-image file created. Press RETORN as requested.
+image file created. Press RETURN as requested.
 </para>
     </listitem>
     <listitem>
       <para>
   FORMS-2 displays screen W01 again. Key ! followed by RETURN to.
-terminate the run. FORMS-2 displays the names of the DDS and CH.K files
-created and displays an END OF RUN message.
+terminate the run. FORMS-2 displays the names of the DDS and CHK files
+created and displays an <computeroutput>END OF RUN</computeroutput> message.
 </para>
     </listitem>
     <listitem>
       <para>
   Compile the check-out program by typing the standard CIS COBOL
 compilation command for your Operating System with the directive
-COPYLIST and file name DEMO1.CHK (See Appendix D).
+COPYLIST and file name <filename>DEMO1.CHK</filename> (See Appendix D).
 </para>
     </listitem>
     <listitem>
@@ -178,18 +177,18 @@ intermediate code from file:
   DEMO1.INT
 </screen>
       <para>
-  See Appendix D
+  See Appendix D.
 </para>
     </listitem>
     <listitem>
       <para>
-  The Demonstration program will then run. The fixed data form Is
+  The Demonstration program will then run. The fixed data form is
 displayed on the screen. The variable data form is used to accept
 data.
 </para>
       <para>
 Satisfy yourself that the cursor can only be placed in the variable
-fields, and that the data keyable -Into the fields depends on whether X
+fields, and that the data keyable into the fields depends on whether X
 or 9 was specified. The effect of left fill character "." may also be
 tested.
   </para>
@@ -217,7 +216,7 @@ follows:
     The variable form is used in the demonstration for ACCEPTing data. In
 practice the form can be used for DISPLAYing data as well as ACCEPTing
 it. The demonstration shows the extent and type of each field which
-will be the same in DISPLAY as well&#x2019; as ACCEPT. A useful technique for
+will be the same in DISPLAY as well as ACCEPT. A useful technique for
 clearing just the variable data fields on the screen Is to move spaces
 to the ACCEPT record and then display it.
 </para>
@@ -230,7 +229,7 @@ to the ACCEPT record and then display it.
       <screen>
       DEMO1.DDS
       DEMO1.CHK
-      DEMO1.S02
+      DEMO1.S00
       DEMO1.S01
       DEMO1.INT
       DEMO1.LST
@@ -242,7 +241,7 @@ to the ACCEPT record and then display it.
     <listitem>
       <para>
   You have now learnt how to use FORMS-2 to create screens of fixed and
-variable data automatically for inclusion in your CIS COBOL program.
+variable data automatically for inclusion in your CIS or L/II COBOL program.
 </para>
       <para>
 If you continue with steps 19 onwards you will learn to update both the
@@ -252,19 +251,19 @@ background into foreground.
     </listitem>
     <listitem>
       <para>
-  Reload FORMS-2 by typing the load command for your 0/S. See Appendix D.
+  Reload FORMS-2 by typing the load command for your O/S. See Appendix D.
 </para>
     </listitem>
     <listitem>
       <para>
-  FORMS-2 displays Screen 101 requesting the six-character file- and
+  FORMS-2 displays Screen I01 requesting the six-character file- and
 data-name base as at step 2. Answer the questions as necessary at step
 2 and press RETURN.
 </para>
     </listitem>
     <listitem>
       <para>
-  FORMS-2 displays Screen 102 requesting the output file option type and
+  FORMS-2 displays Screen I02 requesting the output file option type and
 drive number; key RETURN to accept the default values.
 </para>
     </listitem>
@@ -319,7 +318,7 @@ it must be in Foreground).
     <listitem>
       <para>
   FORMS-2 displays the Foreground option screen. Enter option F then the
-filename DEMO1.S00, then press RETURN.
+filename <filename>DEMO1.S00</filename>, then press RETURN.
 </para>
     </listitem>
     <listitem>
@@ -345,7 +344,7 @@ press RETURN.
       <para>
   FORMS-2 displays the following message reminding you that your altered
 fixed text Screen Image is about to overwrite your previous Screen
-Image In the file:
+Image in the file:
 </para>
       <screen>
   DEMO1.S00 already exists
@@ -356,7 +355,7 @@ Image In the file:
 </para>
       <note>
         <para>
-    If the No default is entered here, a file Identity for a new
+    If the No default is entered here, a file identity for a new
 Screen Image would be requested.
 </para>
       </note>
@@ -402,7 +401,8 @@ Press RETURN to enter Command Mode then F then RETURN.
     <listitem>
       <para>
 FORMS-2 displays the Foreground/Background Operations screen again.
-Enter the option F then the file name DEMO1.S01, then press RETURN to
+Enter the option F then the file name <filename>DEMO1.S01</filename>,
+then press RETURN to
 retrieve your variable text created at step 9.
 </para>
     </listitem>

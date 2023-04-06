@@ -2,7 +2,7 @@
 <appendix xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>INITIALISATION SCREENS</title>
   <para>
-The Initialisation screens 101 and 102 shown below are displayed automatically
+The Initialisation screens I01 and I02 shown below are displayed automatically
 at Initialisation Phase (See Chapter 2).
 </para>
   <xi:include href="screenI01.xml"/>

@@ -25,7 +25,7 @@ the applications programmer.</para>
       <primary>SCREEN IMAGE FILE GENERATION</primary>
     </indexterm>
     <para>
-The facility is invoked by selection of an appropriate option at Screen 102
+The facility is invoked by selection of an appropriate option at Screen I02
 during the Initialisation Phase. Note that the default option will cause
 screen image output.
     </para>
@@ -33,25 +33,25 @@ screen image output.
 Screen images are output to files named:
     </para>
     <para>
-basename.S nn
+basename.S<replaceable>nn</replaceable>
     </para>
     <para>
-where: basename is the name entered by the user at screen 101
-the Initialisation Phase, nn is a number 00 - 99
+where: basename is the name entered by the user at screen I01
+the Initialisation Phase, <replaceable>nn</replaceable> is a number 00 - 99
 </para>
     <para>
-The, default filename can be overriden by issuing the S3 command during the
+The default filename can be overriden by issuing the S3 command during the
 Work Phase. This causes FORMS-2 to request input of the required filename
 during processing of this Work Screen.
 </para>
     <para>
-A separate file is created at the end of .each Work Phase, the numeric part
-of the name (nn) incremented by 1 each time. A screen image file Is
+A separate file is created at the end of each Work Phase, the numeric part
+of the name (nn) incremented by 1 each time. A screen image file is
 structured as a standard line sequential file with a record for each line of
 the screen. Each screen inage contains only text entered during the Work
 Phase in which it is generated (i.e. Foreground data - see Chapter 3). Thus
 for a variable data Work Phase the output screen image contains only X's,
-9 s, Y s and 8's.
+9's, Y's and 8's.
 </para>
     <para>
 It Is possible to suppress the screen image output from any Work Phase by
@@ -67,7 +67,7 @@ descriptions (DDS)
       <primary>FORMS-2 MAINTENANCE</primary>
     </indexterm>
     <para>
-CIS COBOL Data Description statements have been generated from a
+The COBOL Data Description statements have been generated from a
 user-designated form by FORMS-2 in a DDS file. There is likely to be a
 continuing requirement to make corrections and adjustments to maintain the
 form. The DDS file can be maintained using a conventional text editor, but
@@ -121,7 +121,7 @@ written, and the forms designer need not have any detailed knowledge of
 COBOL.
 </para>
     <para>
-FORMS-2 enables a non-technical user to generate valid CIS COBOL statements.
+FORMS-2 enables a non-technical user to generate valid COBOL statements.
 An experienced COBOL programmer can make use of commands available to
 generate the most efficient code (e.g. by influencing the number of fields
 to be displayed).

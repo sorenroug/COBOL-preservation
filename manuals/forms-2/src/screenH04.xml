@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
-<screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[
-FORMS2 V1.1                         HELP SCREEN                  SCREEN H04
+<screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[FORMS2 V1.3                     HELP SCREEN                          SCREEN H04
 
 PROGRAMMING COMMAND SUMMARY:
-                              W  = Position cursor to current window start
-                              W1 = Start window at cursor line
-                              W2 = End window at cursor line
-                              W3 = Start window et cursor Line, no delim's.
-                              W4 = End window at cursor line, no delim's
-                              W5 = Display start window delimiters
-                              W6 = Display end window delimiters
-                              W7 = Re-display data overwritten by start delim's
-                              W8 = Re-display data overwritten by end delim's
-                              W9 = Position cursor to current window end
+                             W  = Position cursor to current window start
+                             W1 = Start window at cursor line
+                             W2 = End window at cursor line
+                             W3 = Start window et cursor Line, no delim's.
+                             W4 = End window at cursor line, no delim's
+                             W5 = Display start window delimiters
+                             W6 = Display end window delimiters
+                             W7 = Re-display data overwritten by start delim's
+                             W8 = Re-display data overwritten by end delim's
+                             W9 = Position cursor to current window end
 
-     HELP option          [_] (_ = Re-enter EDIT mode)
-                              (? = Display next HELP screen)
-                              (! = Abandon FORMS2 run immediately)
+    HELP option     [_]     (_  = Re-enter EDIT mode)
+                            (?  = Display next HELP screen)
+                            (!  = Abandon FORMS2 run immediately)
                               
 Press RETURN when complete
 ]]></screen>

@@ -21,31 +21,20 @@ enables the user to:
     </listitem>
   </itemizedlist>
   <para>
-The Check-Out source code which is in CIS COBOL includes a COPY statement
+The Check-Out source code which is in COBOL includes a COPY statement
 for the DDS file exactly as it would be coded in the user's application and
 is therefore a true validation of the DDS file when compiled.
 </para>
-  <note>
-    <para>
-FORMS-2 always' generates valid code for the Compact CIS COBOL option
-with which numeric-edited fields are not allowed. However, if
-numeric-edited fields are Included in the Variable Data fields of a
-form, error free code is not guaranteed with Standard CIS COBOL.
-Compilation is necessary to achieve full validation of numeric-edited
-fields. If numeric-edited fields do cause compilation errors, use can
-be made of the FORMS-2 Screen Image facility to recall the offending
-screen and alter the Variable Text/numeric-edited fields as necessary.
-</para>
-  </note>
   <para>
 The Check-Out program logic is a sequence of DISPLAY or ACCEPT statements
 for the screens defined in the FORMS-2 run, in the order in which they were
 created. Therefore by entering all required forms in a single FORMS-2 run, a
 demonstration program using all the forms can be simply and rapidly created
 with no programming necessary. For a complex application the best method
-rnfwc o t0 c^_eate each forra 111 isolation, using screen image output only.
+method might be to create each form in isolation, using screen image output only.
 FORMS-2 can then be run again to produce the required Check-Out program,
-using the facility to re-input screen images (the F command and the D option
+using the facility to re-input screen images
+(the FF command or the F command and the F option
 in the subsequent screen display). Use of this facility would also enable a
 complex sequence of screens to be set up for demonstratlbn purposes
 Incorporating the same screen more than once.
@@ -53,7 +42,7 @@ Incorporating the same screen more than once.
   <para>
 After passing through the sequence of screens, Check-Out gives the option of
 repeating the whole sequence. On the second pass previously entered data is
-initial 5 ^ allowlnS the user to check the use of his forms for both
+redisplayed, allowing the user to check the use of his forms for both
 initial data entry and data amendment.
 </para>
   <section>
@@ -87,18 +76,16 @@ present during compilation:
 </para>
     <para>
 basename.DDS - the DDS file produced in the FORMS2 run. This must be
-on the drive selected at Screen 102, or the logged drive
+on the drive selected at Screen I02, or the logged drive
 if none was selected.       
 </para>
     <para>
-FORMS 2.CH1
-FORMS 2.CH2
-the skeleton for the Check-Out program on the logged
-drive.       
+FORMS2.CH1,
+FORMS2.CH2 - the skeleton for the Check-Out program on the default device/directory
 </para>
     <para>
 The Check-Out program is then compiled in the usual way by enterine the
-standard CIS COBOL compile command for your Operating System ^.th the source file:       
+standard CIS or L/II COBOL compile command for your Operating System with the source file:       
 </para>
     <para>
 basename.CHK      
@@ -107,8 +94,8 @@ basename.CHK
 See Appendix D      
 </para>
     <para>
-Details of compilation using the CIS COBOL Compiler are given in the
-CIS COBOL Operating Guide.    
+Details of compilation using the CIS or L/II COBOL Compiler are given in the
+appropiate Operating Guide.    
 </para>
   </section>
   <section>
@@ -118,12 +105,9 @@ CIS COBOL Operating Guide.
     </indexterm>
     <section>
       <title>LOADING</title>
-      <indexterm>
-        <primary>LOADING</primary>
-      </indexterm>
       <para>
 The program can be loaded immediately after compilation by use of the
-standard 0/S run command and the name of the intermediate code file;-
+standard O/S run command and the name of the intermediate code file:
 </para>
       <para>
 basename.INT
@@ -164,8 +148,13 @@ RETURN.
 Fixed text on clear screen
 </para>
         <para>
-If option B was taken for the creation of the screen, any text displayed
-remains on the CRT except where it Is overwritten by the text of the new
+If option A was taken for the creation of the form, Check-Out clears the CRT
+before displaying the screen. 
+</para>
+<para>Fixed text on last screen </para>
+<para>
+  If option B was taken for the creation of the screen, any text displayed
+remains on the CRT except where it is overwritten by the text of the new
 screen.
 </para>
       </section>
@@ -183,7 +172,7 @@ of X's and 9's etc.).
 Users can check the extents of the fields. For numeric fields they can also
 check that only numeric characters may be entered, and the effect of
 entering the left zero fill character ".". (Use of the "." character is
-described in the <citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+described in the <citetitle pubwork="book">CIS or L/II COBOL Language Reference Manual</citetitle>
 under the ACCEPT Statement).
         </para>
         <para>
@@ -202,7 +191,7 @@ that the normalised fields are not automatically echoed to the CRT.
       <title>CHECK-OUT COMPLETION</title>
       <para>
 After the entire sequence of screens has been passed, the Check-Out program
-      displays:
+displays:
 </para>
       <screen>
 CHECK-OUT completed

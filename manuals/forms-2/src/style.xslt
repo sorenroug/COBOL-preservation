@@ -5,6 +5,7 @@
         xmlns:fo="http://www.w3.org/1999/XSL/Format"
         xmlns:xlink='http://www.w3.org/1999/xlink'
         xmlns:cbl="http://www.roug.org/cobol/v1.0"
+        xmlns:fox="http://xmlgraphics.apache.org/fop/extensions"
         exclude-result-prefixes="xlink d"
         version="1.0">
 
@@ -239,4 +240,15 @@
     </xsl:choose>
   </fo:block>
 </xsl:template>
+
+<xsl:attribute-set name="monospace.verbatim.properties">
+  <xsl:attribute name="border">1px solid #c6c8cb</xsl:attribute>
+  <xsl:attribute name="background-color">#f0f0f0</xsl:attribute>
+  <!--
+  <xsl:attribute name="border-collapse">separate</xsl:attribute>
+  <xsl:attribute name="fox:border-radius">10px</xsl:attribute>
+  <xsl:attribute name="padding">10px</xsl:attribute>
+  -->
+</xsl:attribute-set>
+
 </xsl:stylesheet>

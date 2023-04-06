@@ -16,7 +16,7 @@ I01 and I02.
       This screen is displayed immediately FORMS-2 is loaded.
     </para>
     <para>
-      Five items of information are requested. Note that the effect of pressing
+      Four items of information are requested. Note that the effect of pressing
 the RETURN key during this screen display immediately enters all responses
 so far made and any remaining defaults. Do not therefore press RETURN until
 all the required entries have been made, for the following:
@@ -32,11 +32,13 @@ Data-name and the File-name Base
 Lines per CRT Screen
 </para>
       </listitem>
+<!--
       <listitem>
         <para>
 CIS COBOL Compiler
 </para>
       </listitem>
+-->
       <listitem>
         <para>
 Currency Sign
@@ -51,7 +53,7 @@ Decimal-Point Representation
     <section>
       <title>DATA-NAME AND FILE-NAME BASE</title>
       <indexterm>
-        <primary>Outputs</primary>
+        <primary>DATA-NAME AND FILE-NAME BASE</primary>
       </indexterm>
       <para>
 The record/filename base keyed in at this point is used in the following
@@ -77,7 +79,7 @@ It is taken as the main filename for files generated. These can consist of:-
           <term>filename .DDS</term>
           <listitem>
             <para>
-for CIS COBOL Data Description Statements (See Chapter 4)
+for COBOL Data Description Statements (See Chapter 4)
 </para>
           </listitem>
         </varlistentry>
@@ -121,12 +123,16 @@ screen image file is output for each screen built.
       </indexterm>
       <para>
 FORMS-2 can be used with screens of 22, 23 or 24 lines. FORMS-2 defaults to
-24 for this entry. If your CRT has fewer than 24 lines, FORMS-2 will not
+24 for this entry.
+<!--
+If your CRT has fewer than 24 lines, FORMS-2 will not
 function correctly if this default is taken. With certain CRT's it may be
 necessary to specify one fewer than the lines on the screen to avoid a
-problem whereby the screen is "rolled-up" a line unnecessarily
+problem whereby the screen is "rolled-up" a line unnecessarily.
+-->
 </para>
     </section>
+<!--
     <section>
       <title>CIS COBOL COMPILER</title>
       <indexterm>
@@ -145,6 +151,7 @@ for the last two entries must be accepted.
 </para>
       </note>
     </section>
+-->
     <section>
       <title>CURRENCY SIGN</title>
       <indexterm>
@@ -160,7 +167,7 @@ generated data description statements.
       <note>
         <para>
 The specified character is not validated. Users should refer to the
-<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle> for a list of valid characters.
+<citetitle pubwork="book">CIS COBOL or L/II COBOL Language Reference Manual</citetitle> for a list of valid characters.
 </para>
       </note>
     </section>
@@ -196,12 +203,12 @@ Types of files to be created
       </listitem>
       <listitem>
         <para>
-Disk drive to which files are to be written.
+Device/Directory to which files are to be written.
 </para>
       </listitem>
     </itemizedlist>
     <para>
-        Once screen I02 is released by pressing RETURN the Work Phase is entered and
+Once screen I02 is released by pressing RETURN the Work Phase is entered and
 it is no longer possible to amend information specified during the
 Initialisation Phase.
 </para>
@@ -217,24 +224,22 @@ identified by a unique file name extension as follows:
       <orderedlist>
         <listitem>
           <para>
-DDS &#x2014; The user may generate CIS COBOL source Data Description
+DDS &#x2014; The user may generate COBOL source Data Description
 ( Statements (DDS) corresponding to the screens he has created. These
 are output to a standard ASCII text file and may be subsequently
 compiled into any program using the standard COBOL COPY facility. In
-Particular they are used by the Check-Out and Index programs, (see
-below).
+Particular they are used by the Check-Out and Index programs, (see below).
 </para>
           <para>
-The reader who is unfamiliar with screen handling in a CIS COBOL
-program should consult the
-<citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+The reader who is unfamiliar with screen handling in a CIS COBOL or L/II
+program should consult the appropriate Language Reference Manual
 (especially the sections on ACCEPT/DISPLAY, FILLER, REDEFINES).
 </para>
         </listitem>
         <listitem>
           <para>
 CMK &#x2014; in addition to generating DDS, FORMS-2 can also generate a
-Checkout' program. This consists of simply the Procedure Division
+Checkout program. This consists of simply the Procedure Division
 statements (ACCEPT and DISPLAY) which correspond to the screens that
 have been created. These statements are contained in filename.CHK (see
 record/filename prefix) and they are combined with the following COPY
@@ -283,21 +288,19 @@ discussed in detail in Chapter 8.
       <note>
         <para>
     If the Q command (see Chapter 3) is entered at this point, FORMS-2 will
-quit back to screen I01, allowing amendment of information given
-there. This can be useful If RETURN is inadvertently pressed before
+"quit" back to screen I01, allowing amendment of information given
+there. This can be useful if RETURN is inadvertently pressed before
 all options have been entered.
 </para>
       </note>
     </section>
     <section>
-      <title>OUTPUT DISK DRIVE</title>
-      <indexterm>
-        <primary>OUTPUT DISK DRIVE</primary>
-      </indexterm>
+      <title>DEVICE/DIRECTORY PREFIX</title>
       <para>
-All the files output by FORMS-2 are on the same drive. If the space
-character is entered for the drive number, the files will be created on the
-lagged in drive.
+All the files output by FORMS-2 are on the same device/directory. Specify
+the mnemonic device/directory prefix as required by your operating system.
+If this reply field is left blank, the files will be created on the default
+device/directory.
 </para>
     </section>
   </section>

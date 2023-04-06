@@ -2,10 +2,10 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:id="ciscobol" xml:lang="en" xsi:schemaLocation="http://docbook.org/xml/5.0/xsd/docbook.xsd">
   <info>
     <title>CIS COBOL FORMS-2 Utility Manual</title>
-    <subtitle>Version 1</subtitle>
+    <subtitle>Version 1.3</subtitle>
     <copyright>
-      <year>1980</year>
-      <holder>Micro Focus Limited</holder>
+      <year>1980, 1983</year>
+      <holder>Micro Focus Ltd</holder>
     </copyright>
     <legalnotice>
       <para>
@@ -18,12 +18,15 @@ Not to be copied without the consent of Micro Focus.
 <postcode>NW8 6AG</postcode>
 </address>
 </para>
-
-      <para><trademark class="registered">CP/M</trademark> is a trademark of Digital Equipment Corp. Inc.</para>
-      <para><trademark class="registered">RT-11</trademark> is a trademark of Digital Equipment Corp. Inc.</para>
-
+<!--
+<para><trademark class="registered">CP/M</trademark> is a trademark of Digital Research Corp. Inc.</para>
+-->
 </legalnotice>
     <revhistory>
+      <revision>
+        <revnumber>9</revnumber>
+        <date>November 1983</date>
+      </revision>
       <revision>
         <revnumber>2</revnumber>
         <date>January 1980</date>
@@ -49,7 +52,12 @@ Not to be copied without the consent of Micro Focus.
     <title>WELCOME TO FORMS-2!</title>
     <para>
 This manual describes your FORMS-2 package to design, create and edit
-interactive screen layouts for use in CIS COBOL application programs.
+interactive screen layouts for use in CIS or L/II COBOL application programs.
+</para>
+<para>
+  As the product is compatible with both the Micro Focus base COBOL products
+CIS COBOL and LEVEL II COBOL, the common abbreviation "CIS or L/II COBOL" is
+used throughout this manual.
 </para>
     <para>
 Most application programs will be written separately according to individual
@@ -134,12 +142,12 @@ Numbers ten (10) upwards are written in text as numbers, e.g. 12.
     <section>
       <title>RELATED PUBLICATIONS</title>
       <para>
-For details of CIS COBOL operation and language respectively, refer to the.
+For details of CIS or L/II COBOL operation and language respectively, refer to the.
 documents:
 </para>
-      <para><citetitle pubwork="book">CIS COBOL Operating Guide</citetitle>
+      <para><citetitle pubwork="book">CIS or Level II COBOL COBOL Operating Guide</citetitle>
                 </para>
-      <para><citetitle pubwork="book">CIS COBOL Language Reference Manual</citetitle>
+      <para><citetitle pubwork="book">CIS or Level II COBOL COBOL Language Reference Manual</citetitle>
                 </para>
     </section>
     </preface>
@@ -156,9 +164,10 @@ documents:
   <xi:include href="appendixa.xml"/>
   <xi:include href="appendixb.xml"/>
   <xi:include href="appendixc.xml"/>
-  <xi:include href="appendixd.xml"/>
-
+  <xi:include href="appendix-cpm.xml"/>
+<!--
   <index/>
+-->
   <colophon>
     <para>This book was reconstructed into DocBook format from a scanned PDF found on the Internet.
   The PDF file already had OCR performed and the text was embedded in the file.

@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[
-FORMS2 V1.1                   INITIALISATION PHASE                 SCREEN I02
+<screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[FORMS2 V1.3                  INITIALISATION PHASE                    SCREEN I02
 
 FILES TO BE CREATED:
 
-               FILE COMBINATIONS        [C]       (A = DDS)
+             FILE COMBINATIONS         [C]        (A = DDS)
                                                   (B = DDS & CHK)
                                                   (C = DDS & CHK & Snn)
                                                   (D = DDS & Snn)
@@ -12,8 +11,10 @@ FILES TO BE CREATED:
                                                   (F = No files output)
                                                   (G = DDS & Snn & GEN)
 
-               FILE DRIVE               [ ]       (SPACE = no drive prefix)
-                                                  (A thru H = :F0: thru :F7:)
+
+DEVICE/DIRECTORY PREFIX (0-40 Chars) [                                        ]
+
+
 
 
 Press RETURN when complete

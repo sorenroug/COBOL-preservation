@@ -37,7 +37,7 @@ TEL       [88326    ]
 ]]></screen>
   <para>
 It is assumed the system is booted, the issued files have been copied to the
-CIS COBOL O/S system disk so that the e Index program can be compiled (Step
+CIS or L/II COBOL O/S system disk so that the Index program can be compiled (Step
 13), and that FORMS-2 has been configured from your CRT.
 </para>
   <para>
@@ -51,10 +51,9 @@ The following steps must then be carried out:
     <listitem>
       <para>FORMS-2 displays Screen I01 requesting a six-character base for
 file-names and data-names followed by four other questions. If the CRT
-is standard (24 lines) and the Standard CIS COBOL compiler is in use no
+is standard (24 lines), no
 further questions need be answered for this screen. Key DEMO2 followed
-by the RETURN key if the default screen size (24) is correct and the
-standard compiler is in use.
+by the RETURN key if the default screen size (24) is correct.
 </para>
     </listitem>
     <listitem>
@@ -170,7 +169,7 @@ FORMS-2 terminates automatically after displaying the end of run screen:
     </listitem>
     <listitem>
       <para>
-  Compile the Index program by typing the standard CIS COBOL
+  Compile the Index program by typing the standard CIS or L/II COBOL
 compilation command for your Operating System (O/S) using the Index program source
 file name:
 </para>
@@ -278,17 +277,30 @@ DEMO2.DDS - Data Description Statements for form (COBOL source)
 DEMO2.GEN - Source code of Index program DEMO2
 DEMO2.INT - Intermediate code of Index program DEMO2
 DEMO2.LST - List file code of Index program DEMO2
-DEMO2.IDX - Index file            ⎫
-                                  ⎬  Indexed Sequential file
-DEMO2.DAT - Sequential data file  ⎭
+DEMO2.IDX - Index file
+                                   Indexed Sequential file
+DEMO2.DAT - Sequential data file
 </screen>
-<note>
+</listitem>
+  </orderedlist>
+<note><title>Notes</title>
+  <orderedlist>
+    <listitem>
   <para>
 The two files DEMO2.IDX and DEMO2.DAT constitute the Indexed Sequential
 file created by the generated Index program, and in any further runs of
 this program these two files will be used.
 </para>
-</note>
-</listitem>
+    </listitem>
+    <listitem>
+<para>
+  This example shows the demonstration program run in a _ single-user
+environment. The program does however include facilities for use in a
+file-sharing environment with the Micro Focus FILESHARE package and
+appropriate error handling and notification is provided if used in this
+environment and locked files or records are encountered.
+</para>
+    </listitem>
   </orderedlist>
+</note>
 </chapter>
