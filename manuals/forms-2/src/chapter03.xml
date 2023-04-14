@@ -234,6 +234,7 @@ Numeric Edited Fields are described in the
 <citetitle pubwork="book">CIS or L/II COBOL Language Reference Manual</citetitle>.
 The valid characters are:-
 </para>
+<para>
         <simplelist type='inline'>
 <member>Z</member>
 <member>*</member>
@@ -248,6 +249,7 @@ The valid characters are:-
 <member>0(zero)</member>
   <member>$</member>
 </simplelist>
+</para>
         <para>
 The $ sign is the currency sign which may be replaced by another sign as
 specified in the SPECIAL-NAMES clause of the COBOL program either
