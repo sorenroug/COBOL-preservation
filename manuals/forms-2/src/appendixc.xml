@@ -3,9 +3,10 @@
   <title>HELP SCREENS</title>
   <para>
 The four screens contained in this Appendix (H01 to H04) can be summoned for
-display by the Operator keying ? from Command Mode at any time'. They ar'e'
-intended for advisory purposes only. The command ?n (where n is the number 1 to
-A corresponding to the screen number H0n) summons a particular Help Screen.
+display by the Operator keying ? from Command Mode at any time. They are
+intended for advisory purposes only. The command ?<replaceable>n</replaceable>
+(where <replaceable>n</replaceable> is the number 1 to 4
+corresponding to the screen number H0<replaceable>n</replaceable>) summons a particular Help Screen.
 </para>
 <xi:include href="screenH01.xml"/>
 <xi:include href="screenH02.xml"/>

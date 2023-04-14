@@ -12,7 +12,7 @@
 
   <groupId>org.roug.cobol-preservation</groupId>
   <artifactId>forms-2</artifactId>
-  <version>0.9</version>
+  <version>1.0</version>
   <name>CIS COBOL FORMS-2 Utility Manual</name>
   <packaging>pom</packaging>
 

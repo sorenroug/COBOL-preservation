@@ -36,8 +36,8 @@ FORMS-2 can then be run again to produce the required Check-Out program,
 using the facility to re-input screen images
 (the FF command or the F command and the F option
 in the subsequent screen display). Use of this facility would also enable a
-complex sequence of screens to be set up for demonstratlbn purposes
-Incorporating the same screen more than once.
+complex sequence of screens to be set up for demonstration purposes
+incorporating the same screen more than once.
 </para>
   <para>
 After passing through the sequence of screens, Check-Out gives the option of
@@ -76,15 +76,15 @@ present during compilation:
 </para>
     <para>
 basename.DDS - the DDS file produced in the FORMS2 run. This must be
-on the drive selected at Screen I02, or the logged drive
-if none was selected.       
+on the device/directory selected at Screen I02, or the
+default drive if none was selected.
 </para>
     <para>
 FORMS2.CH1,
 FORMS2.CH2 - the skeleton for the Check-Out program on the default device/directory
 </para>
     <para>
-The Check-Out program is then compiled in the usual way by enterine the
+The Check-Out program is then compiled in the usual way by entering the
 standard CIS or L/II COBOL compile command for your Operating System with the source file:       
 </para>
     <para>
@@ -144,14 +144,12 @@ The fixed text of a form is displayed. If there are two consecutive fixed
 text forms, Check-Out pauses after the first display until the user presses
 RETURN.
 </para>
-        <para>
-Fixed text on clear screen
-</para>
+        <para><emphasis>Fixed text on clear screen</emphasis></para>
         <para>
 If option A was taken for the creation of the form, Check-Out clears the CRT
 before displaying the screen. 
 </para>
-<para>Fixed text on last screen </para>
+<para><emphasis>Fixed text on last screen</emphasis></para>
 <para>
   If option B was taken for the creation of the screen, any text displayed
 remains on the CRT except where it is overwritten by the text of the new
@@ -198,7 +196,7 @@ CHECK-OUT completed
 Repeat? [N] (Y=Yes)
 </screen>
       <para>
-  If It is required to repeat the sequence of screens. Key Y and press RETURN.
+  If it is required to repeat the sequence of screens. Key Y and press RETURN.
 </para>
       <para>
 Otherwise simply press RETURN to take the default to terminate the program.

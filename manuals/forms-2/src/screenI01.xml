@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <screen xmlns="http://docbook.org/ns/docbook" width="80"><![CDATA[FORMS2 V1.3                  INITIALISATION PHASE                    SCREEN I01
 
+
 FORMS2 PARAMETERS:
 
              DATA-NAME & FILE-NAME     [      ]   (1-6 alphanumeric characters)
 
-             CRT lines                 [24]       (22 or 23 or 24)
+             CRT lines                 [23]       (22 or 23 or 24)
 
-             CIS COBOL Compiler        [A]        (A = CIS COBOL Standard)
-                                                  (B = CIS COBOL Compact )
 
-SPECIAL-NAMES clause:                             (CIS COBOL Standard only)
+SPECIAL-NAMES clause:
 
-               CURRENCY SIGN            [$]       (ANSI currency signs only)
+             CURRENCY SIGN             [$]        (ANSI currency signs only)
 
-               DECIMAL-POINT            [.]       ("." or ",")
+             DECIMAL-POINT             [.]        ("." or ",")
+
 
 
 

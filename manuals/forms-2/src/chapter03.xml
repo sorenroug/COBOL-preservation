@@ -212,7 +212,6 @@ character positions of the second field. Similarly, for contiguous numeric
 fields 8's are used.
 </para>
 <example>
-  <title>Example</title>
           <para>
     INVOICE NO ......
   </para>
@@ -229,16 +228,26 @@ number when the application Itself is running. (Note that CIS and L/II COBOL
 provides an automatic validation of numeric fields).
 </para>
         <para>
-Additionally, if the- Standard Compiler option is taken at screen I01,
-special editing characters can be input to specify numeric edited fields.
-This feature is not implemented under RT-11. Note that these fields should
-be separated by spaces. Numeric Edited Fields are described in the
+Additionally, special editing characters can be input to specify numeric
+edited fields. Note that these fields should be separated by spaces. 
+Numeric Edited Fields are described in the
 <citetitle pubwork="book">CIS or L/II COBOL Language Reference Manual</citetitle>.
 The valid characters are:-
 </para>
-        <para>
-Z, *, +, -, CR, DB, .(period), ,(comma), B, /, 0(zero), $
-</para>
+        <simplelist type='inline'>
+<member>Z</member>
+<member>*</member>
+<member>+</member>
+<member>-</member>
+<member>CR</member>
+<member>DB</member>
+<member>.(period)</member>
+<member>,(comma)</member>
+<member>B</member>
+<member>/</member>
+<member>0(zero)</member>
+  <member>$</member>
+</simplelist>
         <para>
 The $ sign is the currency sign which may be replaced by another sign as
 specified in the SPECIAL-NAMES clause of the COBOL program either
@@ -424,9 +433,9 @@ unchanged on re-entry to Edit Mode.
         </para>
                 <para>
 The most likely use for this command is where the default
-option C (variable data fields) Is taken at screen W01 and
+option C (variable data fields) is taken at screen W01 and
 then the Work Screen is incorrectly used to set up a fixed
-form. Validation, errors then occur with automatic
+form. Validation errors then occur with automatic
 re-entry to Edit Mode. To return to screen W01 and correct
 the selection without loss of the text just entered, key
 RETURN to enter Command Mode and enter the Q command. The
@@ -490,7 +499,7 @@ position and the * command entered.
         </para>
                 <para>
 If this is not correctly done, FORMS-2 will continually return
-to Edit Mode until It is.
+to Edit Mode until it is.
         </para>
               </listitem>
             </varlistentry>
@@ -512,7 +521,7 @@ The commands F and O are preparation commands.
 Invoke Foreground/Background Menu Screen (W02).
         </para>
                 <para>
-Screen W02 contains options to assist in setting uo the
+Screen W02 contains options to assist in setting up the
 Foreground component of the Work Screen. The concept of
 Foreground and Background is described earlier in this
 Chapter.
@@ -590,7 +599,7 @@ for examination. </para>
                     <term>J</term>
                     <listitem>
                       <para>Show a Screen Image file. The user is
-prompted for the identity and _ the
+prompted for the identity and the
 specified file is displayed, but without
 corrupting the current contents of either
 Foreground or Background. This enables a
@@ -606,13 +615,13 @@ The options H, I and J cause a display which remains until RETURN is pressed.
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Fx</term>
+              <term>F<replaceable>x</replaceable></term>
               <listitem>
                 <para>
 Specifies Required Foreground/Background Option
         </para>
                 <para>
-x is the option code as contained in screen WP02 above. The
+<replaceable>x</replaceable> is the option code as contained in screen WP02 above. The
 specified option is executed and control returned to Edit
 Mode without display of the WP02 screen.
         </para>
@@ -664,7 +673,7 @@ remains on the same position.
 </para>
           <variablelist>
             <varlistentry>
-              <term>Cn</term>
+              <term>C<replaceable>n</replaceable></term>
               <listitem>
                 <para>Insert Spaces</para>
                 <para>Inserts <replaceable>n</replaceable> (1-9) spaces prior to the character at the current
@@ -672,7 +681,7 @@ cursor position. Only the current line is affected. </para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Dn</term>
+              <term>D<replaceable>n</replaceable></term>
               <listitem>
                 <para>Delete Characters</para>
                 <para>Deletes <replaceable>n</replaceable> (1-9) characters including the character at the
@@ -680,7 +689,7 @@ current cursor position. Only the current line is affected.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>In</term>
+              <term>I<replaceable>n</replaceable></term>
               <listitem>
                 <para>Insert Blank Lines</para>
                 <para>Inserts <replaceable>n</replaceable> (1-9) lines prior to the line containing the
@@ -689,7 +698,7 @@ whole lines can be inserted.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Kn</term>
+              <term>K<replaceable>n</replaceable></term>
               <listitem>
                 <para>Delete (Kill) Lines</para>
                 <para>Deletes <replaceable>n</replaceable> (1-9) lines including the line containing the
@@ -698,7 +707,7 @@ using this command.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>An</term>
+              <term>A<replaceable>n</replaceable></term>
               <listitem>
                 <para>Repeat Current Line </para>
                 <para>Repeats the line containing the current cursor position
@@ -727,7 +736,7 @@ form. Two "tabulation" commands are provided.
 </para>
           <variablelist>
             <varlistentry>
-              <term>Un</term>
+              <term>U<replaceable>n</replaceable></term>
               <listitem>
                 <para>Move Cursor Up </para>
                 <para>Moves the cursor up <replaceable>n</replaceable> (1-9) lines from the current cursor
@@ -735,7 +744,7 @@ position. Cursor position within the line is maintained.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Vn</term>
+              <term>V<replaceable>n</replaceable></term>
               <listitem>
                 <para>Move Cursor Down</para>
                 <para>Moves the cursor down <replaceable>n</replaceable> (1-9) lines from the current cursor
@@ -769,7 +778,7 @@ Work Phase.
 </para>
                 <note>
                   <para>
-    If the window commands are used to define a window
+If the window commands are used to define a window
 starting in other than line 1 then the default
 recordname generated will be:</para>
                   <screen>
@@ -795,7 +804,7 @@ starting at 0001.
   Alternatively: 
 </para>
                 <para>
-  The G (or G0) command causes nnnn within the dataname to be the
+  The G (or G0) command causes <replaceable>nnnn</replaceable> within the dataname to be the
 screen coordinates of the start of the field. This can sometimes
 be of use to the programmer as a reference guide when using
 COBOL facilities to set cursor position.
@@ -823,13 +832,13 @@ alleviated by:
 </para>
           <variablelist>
             <varlistentry>
-              <term>Jn</term>
+              <term>J<replaceable>n</replaceable></term>
               <listitem>
                 <para>Reset Multiple Spaces</para>
-                <para>The Jn command resets the number of contiguous spaces FORMS-2 will
+                <para>The J<replaceable>n</replaceable> command resets the number of contiguous spaces FORMS-2 will
 allow within the VALUE clause of a named field. This is initially
 set to 1. </para>
-                <para>n may be 0 - 9</para>
+                <para><replaceable>n</replaceable> may be 0 - 9</para>
                 <note>
                   <para>J or J0 will force FILLER's even for single spaces.</para>
                 </note>
@@ -849,10 +858,10 @@ something else (presumably because there is a requirement to generate VALUE
 </para>
           <variablelist>
             <varlistentry>
-              <term>Mx</term>
+              <term>M<replaceable>x</replaceable></term>
               <listitem>
                 <para>Change Default "space" </para>
-                <para>The Mx command changes the default character (underline) to that specified by x.
+                <para>The M<replaceable>x</replaceable> command changes the default character (underline) to that specified by <replaceable>x</replaceable>.
 </para>
                 <note>
                   <para>If the space character ( ) itself is specified this will
@@ -862,13 +871,13 @@ without any FILLER's.</para>
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Sn</term>
+              <term>S<replaceable>n</replaceable></term>
               <listitem>
                 <para>File Output Control Command </para>
                 <para>This command is not available if Option G (for Index Program)
 is specified at screen I02. 
 </para>
-                <para>S (or S0) cancels any other Sn commands in effect at the time.</para>
+                <para>S (or S0) cancels any other S<replaceable>n</replaceable> commands in effect at the time.</para>
                 <variablelist spacing="compact">
                   <varlistentry>
                     <term>S1</term>
@@ -882,7 +891,7 @@ next phase.</para>
                   <varlistentry>
                     <term>S2</term>
                     <listitem>
-                      <para>suppresses Screen Image (Snn) text generation for this
+                      <para>suppresses Screen Image (S<replaceable>nn</replaceable>) text generation for this
 Work Screen. Commonly used to suppress Screen Images of
 just variable data fields. Again the effect only lasts
 for the current phase.</para>
@@ -933,7 +942,7 @@ any field.
               </listitem>
             </varlistentry>
             <varlistentry>
-              <term>Wn</term>
+              <term>W<replaceable>n</replaceable></term>
               <listitem>
                 <para>Window Commands</para>
                 <para>These commands are not available if option G (for Index
@@ -1035,14 +1044,14 @@ to display.</para>
             <orderedlist>
               <listitem>
                 <para>
-        Delimiters do not corrupt Background/Foreground contents.
+Delimiters do not corrupt Background/Foreground contents.
       </para>
               </listitem>
               <listitem>
                 <para>
-The output Screen Image will include the full Foreground part o
+The output Screen Image will include the full Foreground part of
 the Work Screen without delimiters, irrespective of whether
-window has been defined. This could be used to include annotatio:
+window has been defined. This could be used to include annotation
 on the Screen Image which does not affect DDS generation.
       </para>
               </listitem>
@@ -1051,8 +1060,8 @@ on the Screen Image which does not affect DDS generation.
 A useful purpose for the window facility would be if a form is
 required to be displayed in two stages: the first 10 lines then
 the second 10 lines. This could be created as a single Screen
-Image including both sections of the form, . and the programmer
-couid window in on the relevant portions as required when the
+Image including both sections of the form, and the programmer
+could 'window in' on the relevant portions as required when the
 DDS text is generated.
       </para>
               </listitem>
@@ -1086,7 +1095,7 @@ WORK SCREEN VALIDATION in progress - DO NOT press RETURN
       <listitem>
         <para>
 If DDS file generation is selected at screen I02, the source code
-produced is echoed to the screen as it is- written to disk. If the S9
+produced is echoed to the screen as it is written to disk. If the S9
 command was specified processing stops after each line of code to
 enable changes to be made as required. This is recommended only if
 special requirements dictate its use.

@@ -162,9 +162,9 @@ automatically zero-fills the field from the left.
         </listitem>
       </itemizedlist>
     <section>
-      <title>CURSOR MOVEMENT FACILTIES</title>
+      <title>CURSOR MOVEMENT FACILITIES</title>
       <indexterm>
-        <primary>Cursor Movement Facilties</primary>
+        <primary>Cursor Movement Facilities</primary>
       </indexterm>
       <para>
 The user has the ability to move the cursor quickly and easily about the
@@ -441,6 +441,7 @@ See Appendix D for specific Operating System format for this command.
 <para>
 Boot the system up, and load FORMS-2 by entering the command: 
           </para>
+          <screen>FORMS2&lt;&lt;</screen>
         </listitem>
         <listitem>
           <para>

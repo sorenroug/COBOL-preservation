@@ -94,9 +94,8 @@ RETURN keys
   FORMS-2 processes the screen to create a fixed text form. This takes a
 short period and involves the following displays on the CRT:
 </para>
-      <screen>
-  DDS source code as generated, followed by a redisplay of the fixed
-  text as it is written to the Screen Image file.
+      <screen>DDS source code as generated, followed by a redisplay of the fixed
+text as it is written to the Screen Image file.
 </screen>
       <para>
   A message is then displayed giving the name of the fixed text Screen
@@ -135,8 +134,7 @@ Press the RETURN key.
 SPACE and RETURN keys. There is a short pause while FORMS-2 validates
 the screen content, during which the following message is displayed:
 </para>
-      <screen>
-  WORK SCREEN VALIDATION in progress - DO NOT press RETURN
+      <screen>WORK SCREEN VALIDATION in progress - DO NOT press RETURN
 </screen>
     </listitem>
     <listitem>
@@ -144,12 +142,11 @@ the screen content, during which the following message is displayed:
   FORMS-2 processes the X's and 9's to create a variable data form, with
 the following displays to the CRT as it goes:
 </para>
-      <screen>
-  DDS source code as generated, followed by a redisplay of the fixed
-  text as it is written to the Screen Image file.
+      <screen>DDS source code as generated, followed by a redisplay of the fixed
+text as it is written to the Screen Image file.
 </screen>
       <para>
-  A message is then displayed giving the name of the variable data screen
+A message is then displayed giving the name of the variable data screen
 image file created. Press RETURN as requested.
 </para>
     </listitem>
@@ -173,8 +170,7 @@ COPYLIST and file name <filename>DEMO1.CHK</filename> (See Appendix D).
 using the standard run command for your Operating System to load the
 intermediate code from file:
 </para>
-      <screen>
-  DEMO1.INT
+      <screen>  DEMO1.INT
 </screen>
       <para>
   See Appendix D.
@@ -196,8 +192,7 @@ tested.
 When satisfied, press RETURN to complete. A message is displayed as
 follows:
 </para>
-      <screen>
-  CHECK-OUT completed
+      <screen>  CHECK-OUT completed
   Repeat? [N] (Y=Yes)
 </screen>
       <para>
@@ -208,8 +203,7 @@ follows:
       <para>
   The Check-Out program displays:
 </para>
-      <screen>
-  END OF FORMS2 CHECK-OUT
+      <screen>  END OF FORMS2 CHECK-OUT
 </screen>
       <note>
         <para>
@@ -226,14 +220,14 @@ to the ACCEPT record and then display it.
       <para>
   You can now examine the disk files:
 </para>
-      <screen>
-      DEMO1.DDS
-      DEMO1.CHK
-      DEMO1.S00
-      DEMO1.S01
-      DEMO1.INT
-      DEMO1.LST
-</screen>
+<simplelist type='vert' columns='1'>
+<member>DEMO1.DDS</member>
+<member>DEMO1.CHK</member>
+<member>DEMO1.S00</member>
+<member>DEMO1.S01</member>
+<member>DEMO1.INT</member>
+<member>DEMO1.LST</member>
+</simplelist>
       <para>
   to check the output from FORMS-2 during this use.
 </para>
@@ -271,8 +265,7 @@ drive number; key RETURN to accept the default values.
       <para>
   FORMS-2 displays the message:
 </para>
-      <screen>
-  DEMO1.DDS already exists
+      <screen>  DEMO1.DDS already exists
   overwrite? [N] (Y=Yes)
 </screen>
       <para>
@@ -288,8 +281,7 @@ drive number; key RETURN to accept the default values.
       <para>
   FORMS-2 displays the message:
 </para>
-      <screen>
-  DEMO1.CHK already exists
+      <screen>  DEMO1.CHK already exists
   overwrite? [N] (Y=Yes)
 </screen>
       <para>
@@ -346,8 +338,7 @@ press RETURN.
 fixed text Screen Image is about to overwrite your previous Screen
 Image in the file:
 </para>
-      <screen>
-  DEMO1.S00 already exists
+      <screen>  DEMO1.S00 already exists
   overwrite? [N] (Y=Yes)
 </screen>
       <para>
@@ -365,8 +356,7 @@ Screen Image would be requested.
   FORMS-2 displays the screen image and then displays the file name as
 follows:
 </para>
-      <screen>
-  File created = DEMO1.S00
+      <screen>  File created = DEMO1.S00
 </screen>
       <para>
   Press RETURN to continue.
@@ -411,7 +401,7 @@ retrieve your variable text created at step 9.
   FORMS-2 displays Screen W02 with option H as default. If you press
 RETURN to accept this default, FORMS-2 displays the current Foreground
 contents. Note that this is only the X's and 9's that define the
-variable data fields (the fixed text Is in the Background area). Press
+variable data fields (the fixed text is in the Background area). Press
 RETURN to re-invoke Screen W02.
 </para>
     </listitem>
@@ -443,8 +433,7 @@ there is a pause while FORMS-2 validates the variable fields.
       <para>
   FORMS-2 produces the DDS file then displays the message:
 </para>
-      <screen>
-  DEMO1.S01 already exists
+      <screen>  DEMO1.S01 already exists
   overwrite? [N] (Y=Yes)
 </screen>
     </listitem>
@@ -452,8 +441,7 @@ there is a pause while FORMS-2 validates the variable fields.
       <para>
   A message is displayed as follows:
 </para>
-      <screen>
-  File created = DEMO1.S00
+      <screen>  File created = DEMO1.S00
 </screen>
     </listitem>
     <listitem>

@@ -7,7 +7,6 @@ of names, addresses and telephone numbers with name as key field, and
 process these records using the form as used in Chapter 7:
 </para>
   <screen width="80"><![CDATA[
-
 NAME      [                   ]
 ADDRESS   [                   ]
           [                   ]
@@ -22,7 +21,7 @@ NAME and ADDRESS are alphanumeric fields and TEL is a numeric field.
 </para>
 <para>
 At data entry time after insertion of the name, address and telephone
-number P. Smith, 8 George Street, Plymouth, Devon, 88326, the fora is
+number P. Smith, 8 George Street, Plymouth, Devon, 88326, the form is
 required to appear as:
 </para>
   <screen width="80"><![CDATA[
@@ -100,9 +99,8 @@ RETURN keys.
   FORMS-2 processes the screen to create a fixed text form. This takes a
 short period and involves the following displays on the CRT:
 </para>
-      <screen width="80"><![CDATA[
-  DDS source code as generated, followed by a redisplay of the fixed
-  text as it is written to the Screen Image file.
+      <screen width="80"><![CDATA[DDS source code as generated, followed by a redisplay of the fixed
+text as it is written to the Screen Image file.
 ]]></screen>
       <para>
 A message is then displayed giving the name of the fixed text Screen
@@ -152,17 +150,15 @@ progress.
   FORMS-2 processes the X's and 9's to create a variable data form, with
 the following displays to the CRT as it goes:
 </para>
-      <screen width="80"><![CDATA[
-  DDS source code as generated, followed by a redisplay of the fixed
-  text as it is written to the Screen Image file.
+      <screen width="80"><![CDATA[DDS source code as generated, followed by a redisplay of the fixed
+text as it is written to the Screen Image file.
 ]]></screen>
     </listitem>
     <listitem>
       <para>
 FORMS-2 terminates automatically after displaying the end of run screen:
 </para>
-<screen width="80"><![CDATA[
-  Files created DEMO2.DDS
+<screen width="80"><![CDATA[  Files created DEMO2.DDS
                 DEMO2.GEN
   END OF FORMS2 RUN
 ]]></screen>
@@ -173,8 +169,7 @@ FORMS-2 terminates automatically after displaying the end of run screen:
 compilation command for your Operating System (O/S) using the Index program source
 file name:
 </para>
-<screen>
-  DEMO2.GEN
+<screen>  DEMO2.GEN
 </screen>
 <para>
 and the COPYLIST directive of this command.
@@ -186,8 +181,7 @@ When the compilation finishes, the generated Index program DEMO2 can be
 run by use of the standard run command for your O/S to load the program
 intermediate code from file:
 </para>
-<screen>
-  DEMO2.INT
+<screen>  DEMO2.INT
 </screen>
       <para>
 The compilation and run commands for your O/S are described in
@@ -272,8 +266,7 @@ you wish, generate a more ambitious Index program or reload as at step
       <para>
 Before you do this, however, you can examine the files on the disk.
 </para>
-      <screen>
-DEMO2.DDS - Data Description Statements for form (COBOL source)
+      <screen>DEMO2.DDS - Data Description Statements for form (COBOL source)
 DEMO2.GEN - Source code of Index program DEMO2
 DEMO2.INT - Intermediate code of Index program DEMO2
 DEMO2.LST - List file code of Index program DEMO2

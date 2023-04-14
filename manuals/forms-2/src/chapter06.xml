@@ -54,7 +54,7 @@ for a variable data Work Phase the output screen image contains only X's,
 9's, Y's and 8's.
 </para>
     <para>
-It Is possible to suppress the screen image output from any Work Phase by
+It is possible to suppress the screen image output from any Work Phase by
 issuing the S2 command during that phase. If this command is used the
 numeric part of the filename extension will still be updated for the next
 phase to keep in line with the record numbering within the generated data

@@ -23,10 +23,10 @@ their data requirements.
 to compile the source Index program that FORMS-2 produces.
     </para>
   <para>
-The generated Index program Is written to the file <filename>filename.GEN</filename> and provides the following facilities required for the creation and maintenance of an
+The generated Index program is written to the file <filename>filename.GEN</filename> and provides the following facilities required for the creation and maintenance of an
 indexed sequential file.
     </para>
-  <itemizedlist>
+  <itemizedlist spacing="compact">
     <listitem>
       <para>Select records by key field for display (Enquiry by key field)</para>
     </listitem>
@@ -119,7 +119,7 @@ for fixed text entry by refusing to accept anything else. (except
               Fixed Text Work Screen
             </para>
             <para>
-              A blank work screen Is then displayed for input of the fixed text form.
+              A blank work screen is then displayed for input of the fixed text form.
             </para>
             <para>
               FORMS-2 commands as described in Chapter are available <emphasis>except</emphasis>:-
@@ -211,8 +211,7 @@ abandon the run when generating the Index Program.
     <para>
 The following files are written to disk by FORMS-2.
 </para>
-<screen>
-basename.S00  -   Screen image files
+<screen>basename.S00  -   Screen image files
 basename.S01
 basename.DDS  -   COBOL data description statement file
 basename.GEN  -   Source file for the generated Index program.
@@ -250,8 +249,7 @@ FORMS2.GN2</literallayout></term>
 CIS and L/II COBOL compilation command for your Operating System (O/S) to load the
 Index program from file:
 </para>
-<screen>
-  basename.GEN
+<screen>  basename.GEN
 </screen>
 <para>
   See Appendix D
@@ -276,8 +274,7 @@ The program can be loaded immediately after compilation by using the
 standard run command for your Operating System to load the program from
 file:   
 </para>
-      <screen>
-  basename.INT
+      <screen>  basename.INT
 </screen>
       <para>
 However, to be able to load directly in subsequent use the = directive of
@@ -305,7 +302,7 @@ messages are displayed in an unused area of the screen as necessary.
       <para>
   The basic operator functions and Index program messages are described below,
 and will suffice in general use. Details of the Index program
-Interpretation of data manipulation and cursor position follow this
+interpretation of data manipulation and cursor position follow this
 description.
 </para>
       <section>
@@ -418,8 +415,8 @@ make available to you a record which another user has locked.
   <title>Enquiry</title>
   <para>
     If you attempt to read a record, either by sequential enquiry or by key,
-and that record is locked, the message RECORD LOCKED is displayed. The
-key of the locked record is displayed but the data fields are blanked out.
+and that record is locked, the message <computeroutput>RECORD LOCKED</computeroutput> is displayed.
+The key of the locked record is displayed but the data fields are blanked out.
 On the subsequent input you may: 
   </para>
   <orderedlist>
@@ -439,7 +436,7 @@ RETURN.
 <listitem>
   <para>
     All other functions operate as normal:
-i.e., as though the enquiry had failed with RECORD NOT FOUND. 
+i.e., as though the enquiry had failed with <computeroutput>RECORD NOT FOUND</computeroutput>. 
 </para>
 </listitem>
 </orderedlist>
@@ -454,8 +451,8 @@ record, denying any other user access.
 <section>
   <title>Insert New Record</title>
   <para>
-    If a record exists with the specified key then RECORD ALREADY EXISTS WITH
-THIS KEY will be returned irrespective of whether the record is locked or
+    If a record exists with the specified key then <computeroutput>RECORD ALREADY EXISTS WITH
+THIS KEY</computeroutput> will be returned irrespective of whether the record is locked or
 not. The subsequent input is as described earlier for that condition,
 except that:
   </para>
@@ -463,8 +460,8 @@ except that:
     <listitem>
       <para>
         If you attempt to force replacement and the record is locked, the
-message EXISTING RECORD LOCKED is displayed. The subsequent imput is
-again as described for the RECORD ALREADY EXISTS condition. 
+message <computeroutput>EXISTING RECORD LOCKED</computeroutput> is displayed. The subsequent imput is
+again as described for the <computeroutput>RECORD ALREADY EXISTS</computeroutput> condition. 
 </para>
 </listitem>
 <listitem>
@@ -485,10 +482,10 @@ to read the record again to re-establish the lock:
 to read the record, thus locking it for his own purposes, before
 the lock can be re-established. In this case the normal message
 confirming the update will be displayed, immediately followed by
-the RECORD LOCKED message and blanking of the data fields. You
+the <computeroutput>RECORD LOCKED</computeroutput> message and blanking of the data fields. You
 will then be in the same position as if an enquiry had failed
 because of a locked record, and the subsequent input is as
-described under Enquiry
+described under Enquiry.
   </para>
 </note>
 </section>
